@@ -11,9 +11,10 @@ struct ContentView: View {
     var body: some View {
         ZStack{
             VStack {
-                Image(systemName: "globe")
+                Image(systemName: "checkmark")
                     .imageScale(.large)
-                    .foregroundStyle(.tint)
+                    .foregroundStyle(.green)
+                    .padding()
                 Text("Hello, world!")
             }
         .padding()
