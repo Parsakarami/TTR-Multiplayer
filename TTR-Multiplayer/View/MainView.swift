@@ -32,6 +32,9 @@ struct MainView: View {
                             .padding(25)
                             .frame(width: 200)
                             .background(.green)
+                           
+                            NavigationLink("Create an account", destination: LoginView())
+                                .foregroundColor(.blue)
                         }
                         .tabItem {
                             Label("Board",systemImage: "gamecontroller.fill")
