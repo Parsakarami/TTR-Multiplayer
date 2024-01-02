@@ -16,7 +16,7 @@ struct TTRButton: View {
     var body: some View {
         Button(action: {
             action()
-        }, label: {
+        }){
             ZStack{
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(bgColor)
@@ -27,10 +27,7 @@ struct TTRButton: View {
                     Spacer()
                 }.frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             }
-                
             }
-            
-        )
     }
 }
 

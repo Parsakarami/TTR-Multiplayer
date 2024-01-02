@@ -13,6 +13,7 @@
 		425B77BB2B44614800F30BAF /* TTRButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77BA2B44614800F30BAF /* TTRButton.swift */; };
 		425B77BD2B44691200F30BAF /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77BC2B44691200F30BAF /* RegisterView.swift */; };
 		425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */; };
+		425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */; };
 		42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */; };
 		42DB26902B430DE20051C31A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268F2B430DE20051C31A /* MainView.swift */; };
 		42DB26922B430DE20051C31A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42DB26912B430DE20051C31A /* Assets.xcassets */; };
@@ -54,6 +55,7 @@
 		425B77BA2B44614800F30BAF /* TTRButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTRButton.swift; sourceTree = "<group>"; };
 		425B77BC2B44691200F30BAF /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackButton.swift; sourceTree = "<group>"; };
 		42DB268A2B430DE20051C31A /* TTR-Multiplayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TTR-Multiplayer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTR_MultiplayerApp.swift; sourceTree = "<group>"; };
 		42DB268F2B430DE20051C31A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -106,6 +108,14 @@
 				425B77BA2B44614800F30BAF /* TTRButton.swift */,
 			);
 			path = Button;
+			sourceTree = "<group>";
+		};
+		425B77C02B448F0A00F30BAF /* NavigationBar */ = {
+			isa = PBXGroup;
+			children = (
+				425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */,
+			);
+			path = NavigationBar;
 			sourceTree = "<group>";
 		};
 		42DB26812B430DE20051C31A = {
@@ -186,6 +196,7 @@
 		42DB26D82B4388360051C31A /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				425B77C02B448F0A00F30BAF /* NavigationBar */,
 				425B77B92B44612200F30BAF /* Button */,
 				42DB26DE2B439A780051C31A /* SideMenu */,
 			);
@@ -319,6 +330,7 @@
 				425B77B82B44557100F30BAF /* LoginViewModel.swift in Sources */,
 				42DB26DD2B43968F0051C31A /* ViewExtensions.swift in Sources */,
 				42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */,
+				425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */,
 				425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

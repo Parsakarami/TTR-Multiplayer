@@ -25,13 +25,13 @@ struct MainView: View {
                                 withAnimation(.smooth(duration: 0.3)){
                                     showMenu.toggle()
                                 }
-                            }, label: {
+                            }){
                                 Text("Show Menu")
-                            })
-                            .foregroundColor(.white)
-                            .padding(25)
-                            .frame(width: 200)
-                            .background(.green)
+                                    .foregroundColor(.white)
+                                    .padding(25)
+                                    .frame(width: 200)
+                                    .background(.green)
+                            }
                            
                             NavigationLink("Create an account", destination: LoginView())
                                 .foregroundColor(.blue)
@@ -55,6 +55,9 @@ struct MainView: View {
                 }
             }
         }
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: NavigationBackButton())
         .onChange(of: showMenu) { newValue in
             if showMenu && offset == 0 {
                 offset = sideBarWidth

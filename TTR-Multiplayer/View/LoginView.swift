@@ -74,6 +74,7 @@ struct LoginView: View {
         }
         .frame(alignment: .center)
     }
+        
     
     private func getUniqueRandomIndex() -> Int{
         var randomIndex = Int.random(in: 0...3)
