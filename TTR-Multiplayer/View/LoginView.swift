@@ -45,7 +45,7 @@ struct LoginView: View {
                                 .padding()
                                 .cornerRadius(6)
                             
-                            TextField("Password", text: $viewModel.password)
+                            SecureField("Password", text: $viewModel.password)
                                 .padding()
                                 .cornerRadius(6)
                             
