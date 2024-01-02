@@ -20,8 +20,6 @@ struct LoginView: View {
     var body: some View {
         ZStack{
             VStack(alignment: .center){
-                Spacer()
-                
                 if !isKeyboardOpened {
                     VStack (spacing: 10) {
                         Image(image)
@@ -33,13 +31,13 @@ struct LoginView: View {
                             .rotationEffect(isShown ? .degrees(0) : .degrees(-15))
                         Text("Ticket to Ride")
                             .font(.title)
-                            .padding(.top,20)
+                            .padding(.top,10)
                     }
                     .opacity(isKeyboardOpened ? 0 : 1)
                     .scaleEffect(isKeyboardOpened ? 0 : 1)
                     .animation(.snappy(duration: 0.2), value: isKeyboardOpened)
                 }
-                    
+                Spacer()
                         Form{
                             TextField("Email", text: $viewModel.email )
                                 .padding()
@@ -49,15 +47,13 @@ struct LoginView: View {
                                 .padding()
                                 .cornerRadius(6)
                             
-                            TTRButton(action: {}, text: "Login", icon: "key", bgColor: .blue)
+                            TTRButton(action: {viewModel.login()}, text: "Login", icon: "key", bgColor: .blue)
                                 .frame(height: 50)
                                 .padding([.top,.bottom],15)
-                                
-                            
                         }
                         .cornerRadius(8)
-                    
-                
+                        .frame(height: 290)
+                Spacer()
                 VStack {
                     Text("New around here?")
                     Button(action: {
@@ -66,7 +62,7 @@ struct LoginView: View {
                         Text("Create an account")
                             .foregroundColor(.blue)
                     }
-                    .offset(y:10)
+                    .offset(y:5)
                 }
                 .opacity(isKeyboardOpened ? 0 : 1)
                 .animation(.snappy(duration: 0.2), value: isKeyboardOpened)
