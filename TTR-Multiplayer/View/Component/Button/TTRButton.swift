@@ -20,10 +20,13 @@ struct TTRButton: View {
             ZStack{
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(bgColor)
-                
-                    Label(text, systemImage: icon)
+                HStack{
+                    Spacer()
+                    Label(text,systemImage: icon)
                         .foregroundColor(fgColor)
-                }
+                    Spacer()
+                }.frame(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            }
                 
             }
             
