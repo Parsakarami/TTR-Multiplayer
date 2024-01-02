@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
     @State var showMenu : Bool = false
     @State var offset : CGFloat = 0
     @State var lastOffset : CGFloat = 0
@@ -67,5 +67,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    MainView()
 }

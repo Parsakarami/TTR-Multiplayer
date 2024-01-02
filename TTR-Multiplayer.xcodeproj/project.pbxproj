@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B32B4454F100F30BAF /* MainViewModel.swift */; };
+		425B77B62B44556400F30BAF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B52B44556300F30BAF /* LoginView.swift */; };
+		425B77B82B44557100F30BAF /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B72B44557100F30BAF /* LoginViewModel.swift */; };
+		425B77BB2B44614800F30BAF /* TTRButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77BA2B44614800F30BAF /* TTRButton.swift */; };
 		42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */; };
-		42DB26902B430DE20051C31A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268F2B430DE20051C31A /* ContentView.swift */; };
+		42DB26902B430DE20051C31A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268F2B430DE20051C31A /* MainView.swift */; };
 		42DB26922B430DE20051C31A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42DB26912B430DE20051C31A /* Assets.xcassets */; };
 		42DB26952B430DE20051C31A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42DB26942B430DE20051C31A /* Preview Assets.xcassets */; };
 		42DB269D2B430F380051C31A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 42DB269C2B430F380051C31A /* FirebaseAnalytics */; };
@@ -42,9 +46,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		425B77B32B4454F100F30BAF /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		425B77B52B44556300F30BAF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		425B77B72B44557100F30BAF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		425B77BA2B44614800F30BAF /* TTRButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTRButton.swift; sourceTree = "<group>"; };
 		42DB268A2B430DE20051C31A /* TTR-Multiplayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TTR-Multiplayer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTR_MultiplayerApp.swift; sourceTree = "<group>"; };
-		42DB268F2B430DE20051C31A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		42DB268F2B430DE20051C31A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		42DB26912B430DE20051C31A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42DB26942B430DE20051C31A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		42DB26D62B4318180051C31A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -88,6 +96,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		425B77B92B44612200F30BAF /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				425B77BA2B44614800F30BAF /* TTRButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
 		42DB26812B430DE20051C31A = {
 			isa = PBXGroup;
 			children = (
@@ -108,12 +124,10 @@
 			isa = PBXGroup;
 			children = (
 				42DB26DB2B4396750051C31A /* Extension */,
-				42DB26D52B4317760051C31A /* Other */,
+				42DB26D52B4317760051C31A /* ProjectFiles */,
 				42DB26D42B43160B0051C31A /* Model */,
 				42DB26D32B4316030051C31A /* ViewModel */,
 				42DB26D22B4315F70051C31A /* View */,
-				42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */,
-				42DB26912B430DE20051C31A /* Assets.xcassets */,
 				42DB26932B430DE20051C31A /* Preview Content */,
 			);
 			path = "TTR-Multiplayer";
@@ -130,7 +144,8 @@
 		42DB26D22B4315F70051C31A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				42DB268F2B430DE20051C31A /* ContentView.swift */,
+				42DB268F2B430DE20051C31A /* MainView.swift */,
+				425B77B52B44556300F30BAF /* LoginView.swift */,
 				42DB26D82B4388360051C31A /* Component */,
 			);
 			path = View;
@@ -139,6 +154,8 @@
 		42DB26D32B4316030051C31A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				425B77B32B4454F100F30BAF /* MainViewModel.swift */,
+				425B77B72B44557100F30BAF /* LoginViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -150,17 +167,20 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		42DB26D52B4317760051C31A /* Other */ = {
+		42DB26D52B4317760051C31A /* ProjectFiles */ = {
 			isa = PBXGroup;
 			children = (
+				42DB26912B430DE20051C31A /* Assets.xcassets */,
+				42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */,
 				42DB26D62B4318180051C31A /* GoogleService-Info.plist */,
 			);
-			path = Other;
+			path = ProjectFiles;
 			sourceTree = "<group>";
 		};
 		42DB26D82B4388360051C31A /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				425B77B92B44612200F30BAF /* Button */,
 				42DB26DE2B439A780051C31A /* SideMenu */,
 			);
 			path = Component;
@@ -284,10 +304,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				42DB26DA2B4390500051C31A /* SideMenu.swift in Sources */,
+				425B77BB2B44614800F30BAF /* TTRButton.swift in Sources */,
+				425B77B62B44556400F30BAF /* LoginView.swift in Sources */,
 				42DB26E02B439A930051C31A /* SideMenuItem.swift in Sources */,
-				42DB26902B430DE20051C31A /* ContentView.swift in Sources */,
+				42DB26902B430DE20051C31A /* MainView.swift in Sources */,
+				425B77B82B44557100F30BAF /* LoginViewModel.swift in Sources */,
 				42DB26DD2B43968F0051C31A /* ViewExtensions.swift in Sources */,
 				42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */,
+				425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

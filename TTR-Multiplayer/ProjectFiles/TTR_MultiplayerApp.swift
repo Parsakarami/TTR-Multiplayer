@@ -16,7 +16,7 @@ struct TTR_MultiplayerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
     }
 }
