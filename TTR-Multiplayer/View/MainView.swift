@@ -19,6 +19,7 @@ struct MainView: View {
                 SideMenu(isShowMenu: $showMenu,sideBarWidth: sideBarWidth).zIndex(2)
                 //Main TabBar
                 VStack {
+                    Spacer()
                     TabView{
                         VStack{
                             Button(action: {
@@ -28,19 +29,26 @@ struct MainView: View {
                             }){
                                 Text("Show Menu")
                                     .foregroundColor(.white)
-                                    .padding(25)
+                                    .padding(15)
                                     .frame(width: 200)
                                     .background(.green)
                             }
-                           
-                            NavigationLink("Create an account", destination: LoginView())
-                                .foregroundColor(.blue)
+                            Button(action: {}){
+                                NavigationLink("Create an account", destination: LoginView())
+                                    .foregroundColor(.white)
+                                    .padding(15)
+                                    .frame(width: 200)
+                                    .background(.green)
+                            }
+                            
+                            
                         }
                         .tabItem {
                             Label("Board",systemImage: "gamecontroller.fill")
                         }
                     }
                     .padding()
+                    Spacer()
                 }
                 .zIndex(1)
                 .overlay{
@@ -48,16 +56,13 @@ struct MainView: View {
                         .fill(Color.primary.opacity(Double((offset / sideBarWidth) / 5)))
                         .ignoresSafeArea(.container,edges: .vertical)
                         .onTapGesture{
-                            withAnimation(.smooth(duration: 0.3)){
+                            withAnimation(.snappy(duration: 0.3)){
                                 showMenu.toggle()
                             }
                         }
                 }
-            }
+            }.ignoresSafeArea(.container)
         }
-        .navigationBarTitle("", displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: NavigationBackButton())
         .onChange(of: showMenu) { newValue in
             if showMenu && offset == 0 {
                 offset = sideBarWidth
@@ -69,7 +74,7 @@ struct MainView: View {
                 lastOffset = 0
             }
         }
-    }
+        }
 }
 
 #Preview {
