@@ -12,26 +12,34 @@ struct LoginView: View {
     @State var isShown = true
     @State var images = ["Train","Train1","Train2","Train3"]
     @State var image = "Train3"
-    @State private var lastRandom = 0
+    @State private var lastRandom = 3
+    @State private var timer : Timer?
+    @State private var isShowRegisterForm = false
+    @State private var isInitialized = false
+    @State private var isKeyboardOpened = false
     var body: some View {
         ZStack{
             VStack(alignment: .center){
+                Spacer()
                 
-                Spacer()
-                VStack (spacing: 10) {
-                    Image(image)
-                        .resizable()
-                        .frame(width: 250,height: 250)
-                        .opacity(isShown ? 1 : 0)
-                        .animation(.spring(duration: 0.3), value: isShown)
-                        .scaleEffect(isShown ? 1 : 0.9)
-                        .rotationEffect(isShown ? .degrees(0) : .degrees(-15))
-                    Text("Ticket to Ride")
-                        .font(.title)
-                        .padding(.top,20)
+                if !isKeyboardOpened {
+                    VStack (spacing: 10) {
+                        Image(image)
+                            .resizable()
+                            .frame(width: 250,height: 250)
+                            .opacity(isShown ? 1 : 0)
+                            .animation(.spring(duration: 0.3), value: isShown)
+                            .scaleEffect(isShown ? 1 : 0.9)
+                            .rotationEffect(isShown ? .degrees(0) : .degrees(-15))
+                        Text("Ticket to Ride")
+                            .font(.title)
+                            .padding(.top,20)
+                    }
+                    .opacity(isKeyboardOpened ? 0 : 1)
+                    .scaleEffect(isKeyboardOpened ? 0 : 1)
+                    .animation(.snappy(duration: 0.2), value: isKeyboardOpened)
                 }
-                Spacer()
-                VStack{
+                    
                         Form{
                             TextField("Email", text: $viewModel.email )
                                 .padding()
@@ -41,38 +49,46 @@ struct LoginView: View {
                                 .padding()
                                 .cornerRadius(6)
                             
-                            TTRButton(action: {}, text: "Login", icon: "key")
-                                .padding([.top,.bottom],20)
+                            TTRButton(action: {}, text: "Login", icon: "key", bgColor: .blue)
+                                .frame(height: 50)
+                                .padding([.top,.bottom],15)
+                                
                             
-                        }.padding()
-                }
-                .cornerRadius(8)
-                .frame(width: getScreenSize().width, height: 350, alignment: .center)
-                
-                VStack{
-                    Text("New around here?")
-                    NavigationLink("Create an account",destination: {})
-                        .foregroundColor(.blue)
-                }
-            }
-            .onAppear{
-                Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
-                    withAnimation(.snappy(duration: 0.5)){
-                        isShown.toggle()
-                    }
-                    
-                    if !isShown {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                            image = images[getUniqueRandomIndex()]
                         }
+                        .cornerRadius(8)
+                    
+                
+                VStack {
+                    Text("New around here?")
+                    Button(action: {
+                        isShowRegisterForm = true
+                    }){
+                        Text("Create an account")
+                            .foregroundColor(.blue)
                     }
+                    .offset(y:10)
+                }
+                .opacity(isKeyboardOpened ? 0 : 1)
+                .animation(.snappy(duration: 0.2), value: isKeyboardOpened)
+            }
+            .sheet(isPresented: $isShowRegisterForm, content: {
+                RegisterView()
+                    .interactiveDismissDisabled()
+            })
+            .onAppear{
+                initAnimationTimer()
+                if !isInitialized {
+                    subscribeToKeyboard()
+                    isInitialized = true
                 }
             }
             .frame(alignment: .center)
             .padding()
-            
         }
         .frame(alignment: .center)
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: NavigationBackButton())
     }
         
     
@@ -84,6 +100,42 @@ struct LoginView: View {
         
         self.lastRandom = randomIndex
         return randomIndex
+    }
+    
+    private func initAnimationTimer() {
+        if timer == nil {
+            timer = Timer.scheduledTimer(withTimeInterval: 8, repeats: true) { _ in
+                withAnimation(.snappy) {
+                    isShown = false
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6)
+                {
+                    image = images[getUniqueRandomIndex()]
+                    withAnimation(.snappy){
+                        isShown = true
+                    }
+                }
+            }
+        }
+    }
+    
+    private func subscribeToKeyboard(){
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
+                                               object: nil,
+                                               queue: .main) { notification in
+            withAnimation(.snappy){
+                isKeyboardOpened = true
+            }
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
+                                               object: nil,
+                                               queue: .main) { notification in
+            withAnimation(.snappy){
+                isKeyboardOpened = false
+            }
+        }
     }
 }
 

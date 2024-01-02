@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct NavigationBackButton: View {
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+        Button(action: {
+            self.presentationMode.wrappedValue.dismiss()
+        }, label: {
             Image(systemName: "chevron.left")
-        })
+        }).foregroundColor(.white)
     }
 }
 
