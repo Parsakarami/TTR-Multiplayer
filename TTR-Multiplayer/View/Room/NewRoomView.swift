@@ -11,9 +11,8 @@ struct NewRoomView: View {
     @StateObject var viewModel = NewRoomViewModel()
     var body: some View {
         VStack{
-            AnimatedHeader()
-            Text("Create a room")
-                .font(.title)
+            Text("New Room")
+                .font(.system(size: 22,weight: .bold, design: .default))
             
             Form {
                 
@@ -23,7 +22,7 @@ struct NewRoomView: View {
                         .padding()
                 }
                 
-                TextField("Code", text: $viewModel.roomCode )
+                TextField("Access Code", text: $viewModel.roomCode )
                     .padding()
                     .monospacedDigit()
                     .cornerRadius(6)
@@ -44,11 +43,15 @@ struct NewRoomView: View {
                 
                 TTRButton(action: {}, text: "Create", icon: "plus", bgColor: .green)
                     .frame(height: 50)
+                    .padding()
                 
                 TTRButton(action: {}, text: "Back", icon: "chevron.left", bgColor: .blue)
                     .frame(height: 50)
+                    .padding()
             }
         }
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
