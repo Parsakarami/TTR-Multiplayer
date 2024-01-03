@@ -21,6 +21,9 @@ struct LoginView: View {
                     .scaleEffect(isKeyboardOpened ? 0 : 1)
                     .animation(.snappy(duration: 0.2), value: isKeyboardOpened)
                     .padding(.top,20)
+                    Text("Ticket to Ride")
+                        .font(.title)
+                        .padding(.top,10)
                 }
                 Spacer()
                         Form{
@@ -66,9 +69,6 @@ struct LoginView: View {
             .padding()
         }
         .frame(alignment: .center)
-        .navigationBarTitle("", displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: NavigationBackButton())
     }
     
     private func subscribeToKeyboard(){

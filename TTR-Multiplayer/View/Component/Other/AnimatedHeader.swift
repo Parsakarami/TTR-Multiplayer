@@ -18,15 +18,11 @@ struct AnimatedHeader: View {
         VStack (spacing: 10) {
             Image(image)
                 .resizable()
-                .frame(width: 235,height: 235)
+                .frame(maxWidth: 235,maxHeight:235)
                 .opacity(isShown ? 1 : 0)
                 .animation(.spring(duration: 0.3), value: isShown)
                 .scaleEffect(isShown ? 1 : 0.9)
                 .rotationEffect(isShown ? .degrees(0) : .degrees(-15))
-                .padding(.top,15)
-            Text("Ticket to Ride")
-                .font(.title)
-                .padding(.top,10)
         }
         .onAppear{
             if !isInitialized {
@@ -48,7 +44,7 @@ struct AnimatedHeader: View {
     
     private func initAnimationTimer() {
         if timer == nil {
-            timer = Timer.scheduledTimer(withTimeInterval: 8, repeats: true) { _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { _ in
                 withAnimation(.snappy) {
                     isShown = false
                 }
