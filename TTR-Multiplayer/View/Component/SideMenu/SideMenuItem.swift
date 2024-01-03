@@ -13,8 +13,7 @@ struct SideMenuItem: View {
         Text("**\(text)**")
             .foregroundColor(.white)
             .frame(alignment: .leading)
-            .padding(.top,20)
-            .padding(.bottom,20)
+            .padding([.top,.bottom],15)
             .font(.system(size: 18))
     }
 }

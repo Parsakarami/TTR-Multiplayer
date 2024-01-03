@@ -10,18 +10,18 @@ import FirebaseAuth
     
 struct SideMenu: View {
     @Binding var isShowMenu : Bool
-    @State var sideBarWidth : CGFloat
+    @State var sideBarWidth : CGFloat 
     var body: some View {
         VStack (alignment: .leading){
             HStack (alignment:.top){
                 VStack(alignment: .leading){
                     Image("User")
                         .resizable()
-                        .frame(width: 85,height: 85)
+                        .frame(width: 70,height: 70)
                         .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                         .clipShape(.circle)
                     Text("Parsa Karami")
-                        .font(.system(size: 22))
+                        .font(.system(size: 22,weight: .semibold, design: .default))
                         .foregroundColor(.white)
                         .padding(.top,10)
                 }
@@ -34,17 +34,18 @@ struct SideMenu: View {
                 })
                 .padding()
             }
-            .frame(width: sideBarWidth, height:180,alignment: .bottomLeading)
+            .frame(width: sideBarWidth, height:200,alignment: .bottomLeading)
             //.background(.gray)
-            
-            VStack(alignment: .leading, spacing: 10) {
-                SideMenuItem(text: "Home")
-                SideMenuItem(text: "Create room")
+            VStack(alignment: .leading, spacing: 0) {
+                SideMenuItem(text: "Board")
+                SideMenuItem(text: "Create a room")
+                SideMenuItem(text: "Join a room")
+                SideMenuItem(text: "History")
+                SideMenuItem(text: "Settings")
                 if Auth.auth().currentUser != nil {
                     Spacer()
                     VStack (alignment: .center) {
                         Spacer()
-                        
                         Button(action: {
                             try? Auth.auth().signOut()
                             closeMenu()
@@ -63,7 +64,7 @@ struct SideMenu: View {
                     .frame(width: sideBarWidth,height: 150)
                 }
             }
-            .padding(.top,40)
+            .padding(.top,80)
             .frame(width: sideBarWidth,alignment: .leading)
             Spacer()
         }
@@ -73,7 +74,6 @@ struct SideMenu: View {
         .frame(width: getScreenSize().width, height: getScreenSize().height, alignment: .leading)
         .offset(x: isShowMenu ? 0 : -getScreenSize().width)
         //test
-        //.offset(x: 0)
     }
     
     private func closeMenu() {
