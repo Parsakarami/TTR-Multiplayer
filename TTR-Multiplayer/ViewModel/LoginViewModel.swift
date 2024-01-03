@@ -6,17 +6,20 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 class LoginViewModel : ObservableObject {
     @Published var email : String = ""
     @Published var password : String = ""
     @Published var errorMessage : String = ""
-    
+    private let emailRegex = #"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$"#
     func login()
     {
-        if validate() {
-            
+        guard validate() else {
+            return
         }
+        
+        Auth.auth().signIn(withEmail: email, password: password)
     }
     
     func validate() -> Bool {
@@ -28,6 +31,12 @@ class LoginViewModel : ObservableObject {
         
         if password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             errorMessage = "Password cannot be empty"
+            return false
+        }
+        
+        let isValid = NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
+        if !isValid {
+            errorMessage = "Email address is not valid"
             return false
         }
         
