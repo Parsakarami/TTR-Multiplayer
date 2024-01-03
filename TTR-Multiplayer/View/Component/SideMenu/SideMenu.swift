@@ -10,7 +10,7 @@ import FirebaseAuth
     
 struct SideMenu: View {
     @Binding var isShowMenu : Bool
-    @State var sideBarWidth : CGFloat 
+    @State var sideBarWidth : CGFloat
     var body: some View {
         VStack (alignment: .leading){
             HStack (alignment:.top){
@@ -37,31 +37,21 @@ struct SideMenu: View {
             .frame(width: sideBarWidth, height:200,alignment: .bottomLeading)
             //.background(.gray)
             VStack(alignment: .leading, spacing: 0) {
-                SideMenuItem(text: "Board")
-                SideMenuItem(text: "Create a room")
-                SideMenuItem(text: "Join a room")
-                SideMenuItem(text: "History")
-                SideMenuItem(text: "Settings")
+                SideMenuItemButton(text: "Board", icon: "gamecontroller.fill", action: {closeMenu()})
+                SideMenuItemLink(text: "Create a room", icon: "house.fill", destination: getView(name: "new-room"))
+                SideMenuItemLink(text: "Join a room", icon: "point.3.connected.trianglepath.dotted", destination: getView(name: "join-room"))
+                SideMenuItemLink(text: "History", icon: "chart.bar.doc.horizontal", destination: getView(name: "history"))
+                SideMenuItemLink(text: "Settings", icon: "gear", destination: getView(name: "settings"))
                 if Auth.auth().currentUser != nil {
                     Spacer()
-                    VStack (alignment: .center) {
+                    VStack (alignment: .leading) {
                         Spacer()
-                        Button(action: {
+                        SideMenuItemButton(text:"Sign Out", icon:"arrow.left.square.fill", action: {
                             try? Auth.auth().signOut()
                             closeMenu()
-                        }){
-                            Text("Sign Out")
-                                .padding()
-                                .foregroundStyle(.white)
-                                .frame(width:150, alignment: .center)
-                                .background(.orange)
-                                .cornerRadius(8)
-                                .offset(x:-10)
-                        }
+                        })
                         Spacer()
                     }
-                    .padding()
-                    .frame(width: sideBarWidth,height: 150)
                 }
             }
             .padding(.top,80)
@@ -79,6 +69,17 @@ struct SideMenu: View {
     private func closeMenu() {
         withAnimation(.smooth(duration: 0.3)){
             isShowMenu = false
+        }
+    }
+    
+    private func getView(name:String) -> AnyView {
+        switch name {
+        case "main": 
+            return AnyView(MainView())
+        case "new-room":
+            return AnyView(NewRoomView())
+        default:
+            return AnyView(MainView())
         }
     }
 }
