@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4229F9032B44E528008B04BB /* AnimatedHeader.swift */; };
 		425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B32B4454F100F30BAF /* MainViewModel.swift */; };
 		425B77B62B44556400F30BAF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B52B44556300F30BAF /* LoginView.swift */; };
 		425B77B82B44557100F30BAF /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B72B44557100F30BAF /* LoginViewModel.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4229F9032B44E528008B04BB /* AnimatedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHeader.swift; sourceTree = "<group>"; };
 		425B77B32B4454F100F30BAF /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		425B77B52B44556300F30BAF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		425B77B72B44557100F30BAF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -64,6 +66,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4229F9022B44E519008B04BB /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				4229F9032B44E528008B04BB /* AnimatedHeader.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		425B77B92B44612200F30BAF /* Button */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +168,7 @@
 		42DB26D82B4388360051C31A /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				4229F9022B44E519008B04BB /* Other */,
 				425B77C02B448F0A00F30BAF /* NavigationBar */,
 				425B77B92B44612200F30BAF /* Button */,
 				42DB26DE2B439A780051C31A /* SideMenu */,
@@ -269,6 +280,7 @@
 				425B77B62B44556400F30BAF /* LoginView.swift in Sources */,
 				425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */,
 				42DB26E02B439A930051C31A /* SideMenuItem.swift in Sources */,
+				4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */,
 				42DB26902B430DE20051C31A /* MainView.swift in Sources */,
 				425B77B82B44557100F30BAF /* LoginViewModel.swift in Sources */,
 				42DB26DD2B43968F0051C31A /* ViewExtensions.swift in Sources */,

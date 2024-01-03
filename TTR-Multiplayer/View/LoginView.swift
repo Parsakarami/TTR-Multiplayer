@@ -9,11 +9,6 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject var viewModel = LoginViewModel()
-    @State var isShown = true
-    @State var images = ["Train","Train1","Train2","Train3"]
-    @State var image = "Train3"
-    @State private var lastRandom = 3
-    @State private var timer : Timer?
     @State private var isShowRegisterForm = false
     @State private var isInitialized = false
     @State private var isKeyboardOpened = false
@@ -21,21 +16,11 @@ struct LoginView: View {
         ZStack{
             VStack(alignment: .center){
                 if !isKeyboardOpened {
-                    VStack (spacing: 10) {
-                        Image(image)
-                            .resizable()
-                            .frame(width: 250,height: 250)
-                            .opacity(isShown ? 1 : 0)
-                            .animation(.spring(duration: 0.3), value: isShown)
-                            .scaleEffect(isShown ? 1 : 0.9)
-                            .rotationEffect(isShown ? .degrees(0) : .degrees(-15))
-                        Text("Ticket to Ride")
-                            .font(.title)
-                            .padding(.top,10)
-                    }
+                    AnimatedHeader()
                     .opacity(isKeyboardOpened ? 0 : 1)
                     .scaleEffect(isKeyboardOpened ? 0 : 1)
                     .animation(.snappy(duration: 0.2), value: isKeyboardOpened)
+                    .padding(.top,20)
                 }
                 Spacer()
                         Form{
@@ -72,7 +57,6 @@ struct LoginView: View {
                     .interactiveDismissDisabled()
             })
             .onAppear{
-                initAnimationTimer()
                 if !isInitialized {
                     subscribeToKeyboard()
                     isInitialized = true
@@ -85,35 +69,6 @@ struct LoginView: View {
         .navigationBarTitle("", displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: NavigationBackButton())
-    }
-        
-    
-    private func getUniqueRandomIndex() -> Int{
-        var randomIndex = Int.random(in: 0...3)
-        while (self.lastRandom == randomIndex) {
-            randomIndex = Int.random(in: 0...3)
-        }
-        
-        self.lastRandom = randomIndex
-        return randomIndex
-    }
-    
-    private func initAnimationTimer() {
-        if timer == nil {
-            timer = Timer.scheduledTimer(withTimeInterval: 8, repeats: true) { _ in
-                withAnimation(.snappy) {
-                    isShown = false
-                }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6)
-                {
-                    image = images[getUniqueRandomIndex()]
-                    withAnimation(.snappy){
-                        isShown = true
-                    }
-                }
-            }
-        }
     }
     
     private func subscribeToKeyboard(){

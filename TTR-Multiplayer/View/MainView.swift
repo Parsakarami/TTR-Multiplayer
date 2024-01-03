@@ -11,7 +11,7 @@ struct MainView: View {
     @State var showMenu : Bool = false
     @State var offset : CGFloat = 0
     @State var lastOffset : CGFloat = 0
-    
+    @State private var isShowLoginForm = false
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
         NavigationView{
@@ -33,8 +33,10 @@ struct MainView: View {
                                     .frame(width: 200)
                                     .background(.green)
                             }
-                            Button(action: {}){
-                                NavigationLink("Create an account", destination: LoginView())
+                            Button(action: {
+                                isShowLoginForm = true
+                                }){
+                                Text("Create an account")
                                     .foregroundColor(.white)
                                     .padding(15)
                                     .frame(width: 200)
@@ -62,8 +64,7 @@ struct MainView: View {
                         }
                 }
             }.ignoresSafeArea(.container)
-        }
-        .onChange(of: showMenu) { newValue in
+        }.onChange(of: showMenu) { newValue in
             if showMenu && offset == 0 {
                 offset = sideBarWidth
                 lastOffset = offset
@@ -73,8 +74,11 @@ struct MainView: View {
                 offset = 0
                 lastOffset = 0
             }
-        }
-        }
+        }.sheet(isPresented: $isShowLoginForm, content: {
+            LoginView()
+                .interactiveDismissDisabled()
+        })
+    }
 }
 
 #Preview {
