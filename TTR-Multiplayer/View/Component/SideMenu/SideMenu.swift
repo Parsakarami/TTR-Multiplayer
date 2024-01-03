@@ -39,9 +39,9 @@ struct SideMenu: View {
             VStack(alignment: .leading, spacing: 0) {
                 SideMenuItemButton(text: "Board", icon: "gamecontroller.fill", action: {closeMenu()})
                 SideMenuItemLink(text: "Create a room", icon: "house.fill", destination: getView(name: "new-room"))
-                SideMenuItemLink(text: "Join a room", icon: "point.3.connected.trianglepath.dotted", destination: getView(name: "join-room"))
-                SideMenuItemLink(text: "History", icon: "chart.bar.doc.horizontal", destination: getView(name: "history"))
-                SideMenuItemLink(text: "Settings", icon: "gear", destination: getView(name: "settings"))
+                SideMenuItemButton(text: "Join a room", icon: "point.3.connected.trianglepath.dotted", action: {})
+                SideMenuItemButton(text: "History", icon: "chart.bar.doc.horizontal", action: {})
+                SideMenuItemButton(text: "Settings", icon: "gear", action: {})
                 if Auth.auth().currentUser != nil {
                     Spacer()
                     VStack (alignment: .leading) {
