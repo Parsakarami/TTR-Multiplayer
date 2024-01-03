@@ -12,6 +12,7 @@ class LoginViewModel : ObservableObject {
     @Published var email : String = ""
     @Published var password : String = ""
     @Published var errorMessage : String = ""
+    @Published var isAuthorized : Bool = false
     private let emailRegex = #"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$"#
     func login()
     {
@@ -20,6 +21,7 @@ class LoginViewModel : ObservableObject {
         }
         
         Auth.auth().signIn(withEmail: email, password: password)
+        isAuthorized = true
     }
     
     func validate() -> Bool {

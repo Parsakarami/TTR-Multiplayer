@@ -10,9 +10,9 @@ import SwiftUI
 struct RegisterView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = RegisterViewModel()
-    @State private var isShowRegisterForm = false
     @State private var isInitialized = false
     @State private var isKeyboardOpened = false
+    
     var body: some View {
         ZStack {
             VStack(alignment: .center){
@@ -65,7 +65,7 @@ struct RegisterView: View {
                 Spacer()
                 Spacer()
             }
-            .sheet(isPresented: $isShowRegisterForm, content: {
+            .sheet(isPresented: .constant(viewModel.dismissTheRegisterSheet), content: {
                 RegisterView()
                     .interactiveDismissDisabled()
             })

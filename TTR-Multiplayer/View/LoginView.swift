@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import Combine
 
 struct LoginView: View {
+    @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = LoginViewModel()
     @State private var isShowRegisterForm = false
     @State private var isInitialized = false
     @State private var isKeyboardOpened = false
+    @State var cancellables: Set<AnyCancellable> = Set()
+    @Binding var isAuthorized: Bool
     var body: some View {
         ZStack{
             VStack(alignment: .center){
@@ -68,6 +72,15 @@ struct LoginView: View {
             .onAppear{
                 if !isInitialized {
                     subscribeToKeyboard()
+                    viewModel.$isAuthorized
+                        .sink { newValue in
+                            //userAuthenticated
+                            if newValue {
+                                //close this page
+                                isAuthorized.toggle()
+                            }
+                        }
+                        .store(in: &self.cancellables)
                     isInitialized = true
                 }
             }
@@ -81,7 +94,7 @@ struct LoginView: View {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
                                                object: nil,
                                                queue: .main) { notification in
-            withAnimation(.snappy){
+            withAnimation(.snappy) {
                 isKeyboardOpened = true
             }
         }
@@ -97,5 +110,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView(isAuthorized: .constant(false))
 }

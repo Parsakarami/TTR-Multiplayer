@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct MainView: View {
+    @StateObject var viewModel = MainViewModel()
     @State var showMenu : Bool = false
     @State var offset : CGFloat = 0
     @State var lastOffset : CGFloat = 0
-    @State private var isShowLoginForm = false
+    @State var isShowLoginForm : Bool = false
+    @State private var timer : Timer?
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
         NavigationView{
@@ -21,7 +23,7 @@ struct MainView: View {
                 VStack {
                     Spacer()
                     TabView{
-                        VStack{
+                        VStack(alignment: .center, spacing: 20){
                             Button(action: {
                                 withAnimation(.smooth(duration: 0.3)){
                                     showMenu.toggle()
@@ -33,17 +35,10 @@ struct MainView: View {
                                     .frame(width: 200)
                                     .background(.green)
                             }
-                            Button(action: {
-                                isShowLoginForm = true
-                                }){
-                                Text("Create an account")
-                                    .foregroundColor(.white)
-                                    .padding(15)
-                                    .frame(width: 200)
-                                    .background(.green)
-                            }
                             
+                            Text(viewModel.currentUserId)
                             
+                            Text(viewModel.isSignedIn ? "Atuhorized!" : "Not Atuhorized!")
                         }
                         .tabItem {
                             Label("Board",systemImage: "gamecontroller.fill")
@@ -74,10 +69,23 @@ struct MainView: View {
                 offset = 0
                 lastOffset = 0
             }
+            refreshUserAuth()
+        }
+        .onAppear{
+            refreshUserAuth()
+            if timer == nil {
+                timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
+                   refreshUserAuth()
+                }
+            }
         }.sheet(isPresented: $isShowLoginForm, content: {
-            LoginView()
+                LoginView(isAuthorized: $isShowLoginForm)
                 .interactiveDismissDisabled()
         })
+    }
+    
+    private func refreshUserAuth(){
+        isShowLoginForm = !(viewModel.isSignedIn && !viewModel.currentUserId.isEmpty)
     }
 }
 

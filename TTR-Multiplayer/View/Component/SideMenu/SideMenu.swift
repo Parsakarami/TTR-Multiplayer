@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
     
 struct SideMenu: View {
     @Binding var isShowMenu : Bool
@@ -23,30 +24,44 @@ struct SideMenu: View {
                         .font(.system(size: 22))
                         .foregroundColor(.white)
                         .padding(.top,10)
-    //                    Divider()
-    //                    .background(Rectangle().foregroundColor(.white).frame(height: 2))
-    //                    .frame(width: 150)
                 }
                 Spacer()
                 Button(action: {
-                    withAnimation(.smooth(duration: 0.3)){
-                        isShowMenu = false
-                    }
+                    closeMenu()
                 }, label: {
                     Label("", systemImage: "chevron.right")
                         .foregroundColor(.white)
                 })
                 .padding()
             }
-            .frame(width: sideBarWidth, height:200,alignment: .bottomLeading)
+            .frame(width: sideBarWidth, height:180,alignment: .bottomLeading)
             //.background(.gray)
             
             VStack(alignment: .leading, spacing: 10) {
                 SideMenuItem(text: "Home")
                 SideMenuItem(text: "Create room")
-                SideMenuItem(text: "Home")
-                SideMenuItem(text: "Home")
-                SideMenuItem(text: "Home")
+                if Auth.auth().currentUser != nil {
+                    Spacer()
+                    VStack (alignment: .center) {
+                        Spacer()
+                        
+                        Button(action: {
+                            try? Auth.auth().signOut()
+                            closeMenu()
+                        }){
+                            Text("Sign Out")
+                                .padding()
+                                .foregroundStyle(.white)
+                                .frame(width:150, alignment: .center)
+                                .background(.orange)
+                                .cornerRadius(8)
+                                .offset(x:-10)
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                    .frame(width: sideBarWidth,height: 150)
+                }
             }
             .padding(.top,40)
             .frame(width: sideBarWidth,alignment: .leading)
@@ -59,6 +74,12 @@ struct SideMenu: View {
         .offset(x: isShowMenu ? 0 : -getScreenSize().width)
         //test
         //.offset(x: 0)
+    }
+    
+    private func closeMenu() {
+        withAnimation(.smooth(duration: 0.3)){
+            isShowMenu = false
+        }
     }
 }
 
