@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4215F60D2B45CD7A007AD086 /* NewRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4215F60C2B45CD7A007AD086 /* NewRoomViewModel.swift */; };
+		4215F60F2B45CE77007AD086 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4215F60E2B45CE77007AD086 /* Room.swift */; };
+		4215F6122B45D242007AD086 /* NewRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4215F6112B45D242007AD086 /* NewRoomView.swift */; };
 		4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4229F9032B44E528008B04BB /* AnimatedHeader.swift */; };
 		425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B32B4454F100F30BAF /* MainViewModel.swift */; };
 		425B77B62B44556400F30BAF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B52B44556300F30BAF /* LoginView.swift */; };
@@ -35,6 +38,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4215F60C2B45CD7A007AD086 /* NewRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoomViewModel.swift; sourceTree = "<group>"; };
+		4215F60E2B45CE77007AD086 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		4215F6112B45D242007AD086 /* NewRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoomView.swift; sourceTree = "<group>"; };
 		4229F9032B44E528008B04BB /* AnimatedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHeader.swift; sourceTree = "<group>"; };
 		425B77B32B4454F100F30BAF /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		425B77B52B44556300F30BAF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -74,6 +80,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4215F60B2B45CD68007AD086 /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				4215F60C2B45CD7A007AD086 /* NewRoomViewModel.swift */,
+			);
+			path = Room;
+			sourceTree = "<group>";
+		};
+		4215F6102B45D231007AD086 /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				4215F6112B45D242007AD086 /* NewRoomView.swift */,
+			);
+			path = Room;
+			sourceTree = "<group>";
+		};
 		4229F9022B44E519008B04BB /* Other */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +161,7 @@
 		42DB26D22B4315F70051C31A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4215F6102B45D231007AD086 /* Room */,
 				42DB268F2B430DE20051C31A /* MainView.swift */,
 				425B77B52B44556300F30BAF /* LoginView.swift */,
 				425B77BC2B44691200F30BAF /* RegisterView.swift */,
@@ -150,6 +173,7 @@
 		42DB26D32B4316030051C31A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4215F60B2B45CD68007AD086 /* Room */,
 				425B77B32B4454F100F30BAF /* MainViewModel.swift */,
 				425B77B72B44557100F30BAF /* LoginViewModel.swift */,
 				425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */,
@@ -161,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				42F085942B44FC9700F171EE /* Player.swift */,
+				4215F60E2B45CE77007AD086 /* Room.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -297,7 +322,9 @@
 				42DB26DA2B4390500051C31A /* SideMenu.swift in Sources */,
 				425B77BD2B44691200F30BAF /* RegisterView.swift in Sources */,
 				425B77BB2B44614800F30BAF /* TTRButton.swift in Sources */,
+				4215F60F2B45CE77007AD086 /* Room.swift in Sources */,
 				425B77B62B44556400F30BAF /* LoginView.swift in Sources */,
+				4215F60D2B45CD7A007AD086 /* NewRoomViewModel.swift in Sources */,
 				425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */,
 				42DB26E02B439A930051C31A /* SideMenuItem.swift in Sources */,
 				42F085952B44FC9700F171EE /* Player.swift in Sources */,
@@ -308,6 +335,7 @@
 				42DB26DD2B43968F0051C31A /* ViewExtensions.swift in Sources */,
 				42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */,
 				425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */,
+				4215F6122B45D242007AD086 /* NewRoomView.swift in Sources */,
 				425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
