@@ -14,7 +14,7 @@ struct RegisterView: View {
     @State private var isInitialized = false
     @State private var isKeyboardOpened = false
     var body: some View {
-        ZStack{
+        ZStack {
             VStack(alignment: .center){
                 Spacer()
                 if !isKeyboardOpened {
@@ -22,9 +22,9 @@ struct RegisterView: View {
                     .opacity(isKeyboardOpened ? 0 : 1)
                     .scaleEffect(isKeyboardOpened ? 0 : 1)
                     .animation(.snappy(duration: 0.2), value: isKeyboardOpened)
-                    .frame(width: 180,height: 180)
+                    .frame(width: 150,height: 150)
                     .padding(.top,20)
-                    VStack (spacing:5){
+                    VStack (spacing:0){
                         Text("Don't have an account?")
                             .font(.title2)
                             .padding(.top,25)
@@ -34,6 +34,13 @@ struct RegisterView: View {
                 }
                 Spacer()
                         Form {
+                            
+                            if viewModel.errorMessage != "" {
+                                Text(viewModel.errorMessage)
+                                    .foregroundColor(.red)
+                                    .padding()
+                            }
+                            
                             TextField("Full Name", text: $viewModel.fullName )
                                 .padding()
                                 .cornerRadius(6)
@@ -46,11 +53,11 @@ struct RegisterView: View {
                                 .padding()
                                 .cornerRadius(6)
                             
-                            TTRButton(action: {}, text: "Sign up", icon: "pencil", bgColor: .green)
+                            TTRButton(action: { viewModel.register() }, text: "Sign up", icon: "pencil", bgColor: .green)
                                 .frame(height: 50)
                                 .padding(5)
                             
-                            TTRButton(action: {dismiss()}, text: "Close", icon: "xmark", bgColor: .red)
+                            TTRButton(action: { dismiss() }, text: "Close", icon: "xmark", bgColor: .red)
                                 .frame(height: 50)
                                 .padding(5)
                         }

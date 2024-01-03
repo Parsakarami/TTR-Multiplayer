@@ -27,6 +27,13 @@ struct LoginView: View {
                 }
                 Spacer()
                         Form{
+                            
+                            if viewModel.errorMessage != "" {
+                                Text(viewModel.errorMessage)
+                                    .foregroundColor(.red)
+                                    .padding()
+                            }
+                            
                             TextField("Email", text: $viewModel.email )
                                 .padding()
                                 .cornerRadius(6)
@@ -40,7 +47,6 @@ struct LoginView: View {
                                 .padding([.top,.bottom],15)
                         }
                         .cornerRadius(8)
-                        .frame(height: 290)
                 Spacer()
                 VStack {
                     Text("New around here?")
