@@ -13,6 +13,7 @@
 		4215F6142B45F361007AD086 /* SideMenuItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4215F6132B45F361007AD086 /* SideMenuItemButton.swift */; };
 		4215F6162B460E50007AD086 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4215F6152B460E50007AD086 /* SplashScreen.swift */; };
 		421661942B47218700F47CE2 /* RoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661932B47218700F47CE2 /* RoomService.swift */; };
+		421661962B472D7200F47CE2 /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661952B472D7200F47CE2 /* PlayerService.swift */; };
 		4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4229F9032B44E528008B04BB /* AnimatedHeader.swift */; };
 		425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B32B4454F100F30BAF /* MainViewModel.swift */; };
 		425B77B62B44556400F30BAF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B52B44556300F30BAF /* LoginView.swift */; };
@@ -47,6 +48,7 @@
 		4215F6132B45F361007AD086 /* SideMenuItemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuItemButton.swift; sourceTree = "<group>"; };
 		4215F6152B460E50007AD086 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		421661932B47218700F47CE2 /* RoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomService.swift; sourceTree = "<group>"; };
+		421661952B472D7200F47CE2 /* PlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerService.swift; sourceTree = "<group>"; };
 		4229F9032B44E528008B04BB /* AnimatedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHeader.swift; sourceTree = "<group>"; };
 		425B77B32B4454F100F30BAF /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		425B77B52B44556300F30BAF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				421661932B47218700F47CE2 /* RoomService.swift */,
+				421661952B472D7200F47CE2 /* PlayerService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				42DB26DD2B43968F0051C31A /* ViewExtensions.swift in Sources */,
 				42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */,
 				425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */,
+				421661962B472D7200F47CE2 /* PlayerService.swift in Sources */,
 				4215F6122B45D242007AD086 /* NewRoomView.swift in Sources */,
 				425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */,
 				4215F6142B45F361007AD086 /* SideMenuItemButton.swift in Sources */,
