@@ -20,6 +20,7 @@ class PlayerService {
         let db = Firestore.firestore()
         playerCollection = db.collection("players")
         currentUser = Auth.auth().currentUser
+        
         self.handler = Auth.auth().addStateDidChangeListener{ [weak self] _, user in
             DispatchQueue.main.async {
                 self?.currentUser = user
@@ -34,6 +35,22 @@ class PlayerService {
     public func signIn(email: String, password: String) -> Bool {
         Auth.auth().signIn(withEmail: email, password: password)
         return true
+    }
+    
+    public func signUp(fullName: String, email: String, password: String, completion: @escaping (Result<Bool,Error>) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            
+            guard let id = result?.user.uid else {
+                let error = NSError(domain: "TicketToRide", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to create user."])
+                return completion(.failure(error))
+            }
+            
+            self.insertPlayerIntoDatabase(id: id, fullName: fullName, email: email)
+            completion(.success(true))
+        }
     }
     
     public func signOut(){
@@ -68,6 +85,18 @@ class PlayerService {
                     }
                 }
             }
+    }
+    
+    private func insertPlayerIntoDatabase(id: String, fullName: String, email: String){
+        let newPlayer = Player(id: id,
+                            fullName: fullName,
+                            email: email,
+                            joinedDate: Date().timeIntervalSince1970)
+        
+        let db = Firestore.firestore()
+        db.collection("players")
+            .document(id)
+            .setData(newPlayer.asDictionary())
     }
     
 }

@@ -23,26 +23,14 @@ class RegisterViewModel : ObservableObject {
             return
         }
         
-        Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
-            guard let userId = result?.user.uid else {
-                return
+        PlayerService.instance.signUp(fullName: fullName, email: email, password: password) { [weak self] result in
+            do {
+                let value = try result.get()
+                self?.dismissTheRegisterSheet = value
+            } catch {
+                print("Error: \(error)")
             }
-            
-            self?.insertUserIntoDatabase(id: userId)
-            self?.dismissTheRegisterSheet = false
         }
-    }
-    
-    private func insertUserIntoDatabase(id: String){
-        let newPlayer = Player(id: id,
-                            fullName: fullName,
-                            email: email,
-                            joinedDate: Date().timeIntervalSince1970)
-        
-        let db = Firestore.firestore()
-        db.collection("players")
-            .document(id)
-            .setData(newPlayer.asDictionary())
     }
     
     func validate() -> Bool {
@@ -60,7 +48,6 @@ class RegisterViewModel : ObservableObject {
             errorMessage = "Password cannot be empty"
             return false
         }
-        
         
         let isValid = NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
         if !isValid {
