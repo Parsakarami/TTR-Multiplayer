@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Player:Codable {
+struct Player : Codable {
     let id: String
     let fullName: String
     let email: String

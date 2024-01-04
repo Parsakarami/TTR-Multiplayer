@@ -32,16 +32,17 @@ class RegisterViewModel : ObservableObject {
         }
     }
     
-    func insertUserIntoDatabase(id: String){
+    private func insertUserIntoDatabase(id: String){
         let newPlayer = Player(id: id,
                             fullName: fullName,
                             email: email,
                             joinedDate: Date().timeIntervalSince1970)
         
+        let playerDic = newPlayer.asDictionary()
         let db = Firestore.firestore()
         db.collection("players")
             .document(id)
-            .setData(newPlayer.asDictionary())
+            .setData(playerDic)
     }
     
     func validate() -> Bool {

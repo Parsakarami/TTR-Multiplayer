@@ -20,7 +20,7 @@ struct MainView: View {
         if isLoaded {
             NavigationView{
                 ZStack (alignment: Alignment(horizontal: .center, vertical: .top)) {
-                    SideMenu(isShowMenu: $showMenu,sideBarWidth: sideBarWidth).zIndex(2)
+                    SideMenu(isShowMenu: $showMenu, player: $viewModel.player, sideBarWidth: sideBarWidth).zIndex(2)
                     //Main TabBar
                     VStack {
                         TabView{

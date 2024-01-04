@@ -31,6 +31,7 @@ struct RegisterView: View {
                         Text("Fill the form, and register now!")
                             .font(.body)
                     }
+                    .offset(y:-10)
                 }
                 Spacer()
                         Form {

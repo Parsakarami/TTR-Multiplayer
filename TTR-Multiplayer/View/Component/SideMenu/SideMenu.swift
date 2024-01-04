@@ -10,7 +10,9 @@ import FirebaseAuth
     
 struct SideMenu: View {
     @Binding var isShowMenu : Bool
+    @Binding var player : Player?
     @State var sideBarWidth : CGFloat
+    
     var body: some View {
         VStack (alignment: .leading){
             HStack (alignment:.top){
@@ -20,7 +22,7 @@ struct SideMenu: View {
                         .frame(width: 70,height: 70)
                         .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                         .clipShape(.circle)
-                    Text("Parsa Karami")
+                    Text(player?.fullName ?? "")
                         .font(.system(size: 22,weight: .semibold, design: .default))
                         .foregroundColor(.white)
                         .padding(.top,10)
@@ -85,5 +87,5 @@ struct SideMenu: View {
 }
 
 #Preview {
-    SideMenu(isShowMenu: .constant(false),sideBarWidth: UIScreen.main.bounds.width - 120)
+    SideMenu(isShowMenu: .constant(false),player: .constant(nil),sideBarWidth: UIScreen.main.bounds.width - 120)
 }
