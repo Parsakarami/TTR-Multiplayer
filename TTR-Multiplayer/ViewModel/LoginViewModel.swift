@@ -20,8 +20,8 @@ class LoginViewModel : ObservableObject {
             return
         }
         
-        Auth.auth().signIn(withEmail: email, password: password)
-        isAuthorized = true
+        let result = PlayerService.instance.signIn(email: email, password: password)
+        isAuthorized = result
     }
     
     func validate() -> Bool {

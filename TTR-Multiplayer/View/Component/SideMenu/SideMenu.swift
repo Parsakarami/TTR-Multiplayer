@@ -44,16 +44,13 @@ struct SideMenu: View {
                 SideMenuItemButton(text: "Join a room", icon: "point.3.connected.trianglepath.dotted", action: {})
                 SideMenuItemButton(text: "History", icon: "chart.bar.doc.horizontal", action: {})
                 SideMenuItemButton(text: "Settings", icon: "gear", action: {})
-                if Auth.auth().currentUser != nil {
+                if player != nil {
                     Spacer()
                     VStack (alignment: .leading) {
                         Spacer()
                         SideMenuItemButton(text:"Sign Out", icon:"arrow.left.square.fill", action: {
                             closeMenu()
-                            try? Auth.auth().signOut()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                                
-                            }
+                            PlayerService.instance.signOut()
                         })
                         Spacer()
                     }
@@ -90,7 +87,5 @@ struct SideMenu: View {
 }
 
 #Preview {
-    SideMenu(isShowMenu: .constant(false),
-             player: .constant(nil),
-             sideBarWidth: UIScreen.main.bounds.width - 120)
+    SideMenu(isShowMenu: .constant(true), player:.constant(nil), sideBarWidth: UIScreen.main.bounds.width - 120)
 }

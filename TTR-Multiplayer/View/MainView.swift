@@ -12,10 +12,10 @@ struct MainView: View {
     @State var showMenu : Bool = false
     @State var offset : CGFloat = 0
     @State var lastOffset : CGFloat = 0
-    @State private var timer : Timer?
     @State private var isLoaded : Bool = false
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
+        
         if !isLoaded {
             SplashScreen(isLoaded: $isLoaded)
         } else {
@@ -24,7 +24,7 @@ struct MainView: View {
             } else {
                 NavigationView{
                     ZStack (alignment: Alignment(horizontal: .center, vertical: .top)) {
-                        SideMenu(isShowMenu: $showMenu, player: $viewModel.player, sideBarWidth: sideBarWidth).zIndex(2)
+                        SideMenu(isShowMenu: $showMenu, player:$viewModel.player, sideBarWidth: sideBarWidth).zIndex(2)
                         //Main TabBar
                         VStack {
                             TabView{
@@ -78,26 +78,9 @@ struct MainView: View {
                         offset = 0
                         lastOffset = 0
                     }
-                    refreshUserAuth()
-                }
-                .onAppear{
-                    if timer == nil {
-                        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
-                            refreshUserAuth()
-                        }
-                    }
                 }
             }
-            
         }
-//            .sheet(isPresented: $isShowLoginForm, content: {
-//                LoginView(isAuthorized: $isShowLoginForm)
-//                    .interactiveDismissDisabled()
-//            })
-    }
-    
-    private func refreshUserAuth(){
-        //isShowLoginForm = !(viewModel.isSignedIn && !viewModel.currentUserId.isEmpty)
     }
 }
 

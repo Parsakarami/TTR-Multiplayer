@@ -10,44 +10,30 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class MainViewModel : ObservableObject {
-    @Published var currentUserId : String = ""
     @Published var player : Player? = nil
     @Published var isAuthorized : Bool = false
     private var handler: AuthStateDidChangeListenerHandle?
     
     init(){
-        self.handler = Auth.auth().addStateDidChangeListener{ [weak self] _, user in
-            DispatchQueue.main.async {
-                let uid = user?.uid ?? ""
-                self?.currentUserId = uid
-                let hasId = !uid.trimmingCharacters(in: .whitespaces).isEmpty
-                
-                if hasId {
-                    self?.fetchPlayer(id: uid)
-                }
-                self?.isAuthorized = hasId
+        subscribeToAuthChange()
+        self.isAuthorized = PlayerService.instance.isSignedIn
+    }
+    
+    private func subscribeToAuthChange(){
+        
+        NotificationCenter.default.addObserver(
+            forName: .playerAuthStatusChanged,
+            object: nil,
+            queue: .main) { notification in
+            let status = notification.object as? authStatus
+            if status == .authorized {
+                self.player = PlayerService.instance.player
+                self.isAuthorized = true
+            } else {
+                self.player = nil
+                self.isAuthorized = false
             }
         }
-    }
-    
-    private func fetchPlayer(id:String) {
-        let db = Firestore.firestore()
-        db.collection("players")
-            .document(id)
-            .getDocument {(querySnapshot, error) in
-                if let error = error {
-                    print("Error getting document: \(error)")
-                } else {
-                    do {
-                        self.player = try querySnapshot?.data(as: Player.self)
-                    } catch {
-                        print("Cannot fetch date from database")
-                    }
-                }
-            }
-    }
-    
-    public var isSignedIn : Bool {
-        return Auth.auth().currentUser != nil
+        
     }
 }
