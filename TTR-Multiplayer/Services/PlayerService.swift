@@ -32,9 +32,23 @@ class PlayerService {
         }
     }
     
-    public func signIn(email: String, password: String) -> Bool {
-        Auth.auth().signIn(withEmail: email, password: password)
-        return true
+    public func signIn(email: String, password: String, completion: @escaping (Result<Bool,Error>) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            guard error == nil else {
+                return completion(.failure(error!))
+            }
+            
+            guard result != nil else {
+                return completion(.failure(error!))
+            }
+            
+            guard (result?.user.uid) != nil else {
+                let error = NSError(domain: "TicketToRide", code: 0, userInfo: [NSLocalizedDescriptionKey: "Email or password is incorrect."])
+                return completion(.failure(error))
+            }
+            
+            completion(.success(true))
+        }
     }
     
     public func signUp(fullName: String, email: String, password: String, completion: @escaping (Result<Bool,Error>) -> Void) {
@@ -44,7 +58,7 @@ class PlayerService {
             }
             
             guard let id = result?.user.uid else {
-                let error = NSError(domain: "TicketToRide", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to create user."])
+                let error = NSError(domain: "TicketToRide", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to sign up."])
                 return completion(.failure(error))
             }
             

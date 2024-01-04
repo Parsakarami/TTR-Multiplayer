@@ -20,8 +20,16 @@ class LoginViewModel : ObservableObject {
             return
         }
         
-        let result = PlayerService.instance.signIn(email: email, password: password)
-        isAuthorized = result
+        PlayerService.instance.signIn(email: email, password: password) { [weak self] result in
+            do {
+                let value = try result.get()
+                self?.isAuthorized = value
+            } catch {
+                self?.errorMessage = error.localizedDescription
+                self?.isAuthorized = false
+            }
+        }
+        
     }
     
     func validate() -> Bool {
