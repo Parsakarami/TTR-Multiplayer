@@ -14,8 +14,6 @@ struct LoginView: View {
     @State private var isShowRegisterForm = false
     @State private var isInitialized = false
     @State private var isKeyboardOpened = false
-    @State var cancellables: Set<AnyCancellable> = Set()
-    @Binding var isAuthorized: Bool
     var body: some View {
         ZStack{
             VStack(alignment: .center){
@@ -24,14 +22,13 @@ struct LoginView: View {
                     .opacity(isKeyboardOpened ? 0 : 1)
                     .scaleEffect(isKeyboardOpened ? 0 : 1)
                     .animation(.snappy(duration: 0.2), value: isKeyboardOpened)
-                    .padding(.top,20)
+                    .padding(.top,10)
                     Text("Ticket to Ride")
                         .font(.title)
-                        .padding(.top,10)
+                        .padding(.top,5)
                 }
                 Spacer()
                         Form{
-                            
                             if viewModel.errorMessage != "" {
                                 Text(viewModel.errorMessage)
                                     .foregroundColor(.red)
@@ -72,15 +69,6 @@ struct LoginView: View {
             .onAppear{
                 if !isInitialized {
                     subscribeToKeyboard()
-                    viewModel.$isAuthorized
-                        .sink { newValue in
-                            //userAuthenticated
-                            if newValue {
-                                //close this page
-                                isAuthorized.toggle()
-                            }
-                        }
-                        .store(in: &self.cancellables)
                     isInitialized = true
                 }
             }
@@ -110,5 +98,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(isAuthorized: .constant(false))
+    LoginView()
 }

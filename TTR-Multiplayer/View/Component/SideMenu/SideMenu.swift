@@ -49,8 +49,11 @@ struct SideMenu: View {
                     VStack (alignment: .leading) {
                         Spacer()
                         SideMenuItemButton(text:"Sign Out", icon:"arrow.left.square.fill", action: {
-                            try? Auth.auth().signOut()
                             closeMenu()
+                            try? Auth.auth().signOut()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                                
+                            }
                         })
                         Spacer()
                     }
@@ -87,5 +90,7 @@ struct SideMenu: View {
 }
 
 #Preview {
-    SideMenu(isShowMenu: .constant(false),player: .constant(nil),sideBarWidth: UIScreen.main.bounds.width - 120)
+    SideMenu(isShowMenu: .constant(false),
+             player: .constant(nil),
+             sideBarWidth: UIScreen.main.bounds.width - 120)
 }

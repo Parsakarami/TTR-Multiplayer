@@ -29,6 +29,7 @@ class RegisterViewModel : ObservableObject {
             }
             
             self?.insertUserIntoDatabase(id: userId)
+            self?.dismissTheRegisterSheet = false
         }
     }
     
@@ -38,11 +39,10 @@ class RegisterViewModel : ObservableObject {
                             email: email,
                             joinedDate: Date().timeIntervalSince1970)
         
-        let playerDic = newPlayer.asDictionary()
         let db = Firestore.firestore()
         db.collection("players")
             .document(id)
-            .setData(playerDic)
+            .setData(newPlayer.asDictionary())
     }
     
     func validate() -> Bool {

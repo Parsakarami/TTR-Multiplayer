@@ -12,6 +12,7 @@ import FirebaseFirestore
 class MainViewModel : ObservableObject {
     @Published var currentUserId : String = ""
     @Published var player : Player? = nil
+    @Published var isAuthorized : Bool = false
     private var handler: AuthStateDidChangeListenerHandle?
     
     init(){
@@ -19,9 +20,12 @@ class MainViewModel : ObservableObject {
             DispatchQueue.main.async {
                 let uid = user?.uid ?? ""
                 self?.currentUserId = uid
-                if !uid.trimmingCharacters(in: .whitespaces).isEmpty {
+                let hasId = !uid.trimmingCharacters(in: .whitespaces).isEmpty
+                
+                if hasId {
                     self?.fetchPlayer(id: uid)
                 }
+                self?.isAuthorized = hasId
             }
         }
     }

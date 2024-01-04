@@ -44,7 +44,7 @@ struct AnimatedHeader: View {
     
     private func initAnimationTimer() {
         if timer == nil {
-            timer = Timer.scheduledTimer(withTimeInterval: 4, repeats: true) { _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
                 withAnimation(.snappy) {
                     isShown = false
                 }
