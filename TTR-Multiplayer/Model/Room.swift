@@ -8,8 +8,11 @@
 import Foundation
 
 struct Room : Codable {
+    let id: String
     let ownerID : String
+    let roomCode : String
     let capacity : Int
+    let inUsed : Bool
     let winner : String?
     let createdDateTime : TimeInterval
 }

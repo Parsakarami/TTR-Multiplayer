@@ -6,31 +6,69 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseAuth
 
 class NewRoomViewModel : ObservableObject {
     @Published var roomCode : String = ""
     @Published var roomCapacity : Double = 1
     @Published var roomCreator : String = ""
-    
     @Published var errorMessage : String = ""
-    func addRoom() {
-        
+    @Published var isSuccessful : Bool = false
+    private var roomCollection : CollectionReference
+    private var userID : String
+    init() {
+        let db = Firestore.firestore()
+        roomCollection = db.collection("rooms")
+        userID = Auth.auth().currentUser?.uid ?? ""
     }
     
-    func validate() -> Bool {
+    func addNewRoom() {
+        guard validate() else {
+            return
+        }
         
-//        //Validate code
-//        if true == false {
-//            errorMessage = "The code is already in used!"
-//            return false
-//        }
+        let newRoom = Room(id: UUID().uuidString,
+                           ownerID: userID,
+                           roomCode: roomCode,
+                           capacity : Int(roomCapacity),
+                           inUsed: true,
+                           winner: nil,
+                           createdDateTime: Date().timeIntervalSince1970)
         
+        Task (priority: .high) {
+            let isInUsed = try await RoomService.instance.isRoomInUsed(code: roomCode)
+            if !isInUsed {
+                try await roomCollection.document(newRoom.id)
+                    .setData(newRoom.asDictionary())
+                
+                isSuccessful = true
+                errorMessage = "The room is created succesfully."
+            } else {
+                errorMessage = "The code is already in used!"
+            }
+        }
+    }
+    
+    private func validate() -> Bool {
+        //Check athentication
+        guard userID != "" else {
+            errorMessage = "You are not signed in!"
+            return false
+        }
         
+        //Check room code
+        guard !roomCode.isEmpty else {
+            errorMessage = "Room access code is empty!"
+            return false
+        }
+        
+        //Check capacity
         if roomCapacity < 1 && roomCapacity > 5 {
             errorMessage = "Room capacity is invalid!"
             return false
         }
-        
+            
         return true
     }
 }

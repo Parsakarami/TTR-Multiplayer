@@ -12,6 +12,7 @@
 		4215F6122B45D242007AD086 /* NewRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4215F6112B45D242007AD086 /* NewRoomView.swift */; };
 		4215F6142B45F361007AD086 /* SideMenuItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4215F6132B45F361007AD086 /* SideMenuItemButton.swift */; };
 		4215F6162B460E50007AD086 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4215F6152B460E50007AD086 /* SplashScreen.swift */; };
+		421661942B47218700F47CE2 /* RoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661932B47218700F47CE2 /* RoomService.swift */; };
 		4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4229F9032B44E528008B04BB /* AnimatedHeader.swift */; };
 		425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B32B4454F100F30BAF /* MainViewModel.swift */; };
 		425B77B62B44556400F30BAF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B52B44556300F30BAF /* LoginView.swift */; };
@@ -45,6 +46,7 @@
 		4215F6112B45D242007AD086 /* NewRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoomView.swift; sourceTree = "<group>"; };
 		4215F6132B45F361007AD086 /* SideMenuItemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuItemButton.swift; sourceTree = "<group>"; };
 		4215F6152B460E50007AD086 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		421661932B47218700F47CE2 /* RoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomService.swift; sourceTree = "<group>"; };
 		4229F9032B44E528008B04BB /* AnimatedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHeader.swift; sourceTree = "<group>"; };
 		425B77B32B4454F100F30BAF /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		425B77B52B44556300F30BAF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -100,6 +102,14 @@
 			path = Room;
 			sourceTree = "<group>";
 		};
+		421661922B47217800F47CE2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				421661932B47218700F47CE2 /* RoomService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		4229F9022B44E519008B04BB /* Other */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +154,7 @@
 		42DB268C2B430DE20051C31A /* TTR-Multiplayer */ = {
 			isa = PBXGroup;
 			children = (
+				421661922B47217800F47CE2 /* Services */,
 				42DB26DB2B4396750051C31A /* Extension */,
 				42DB26D52B4317760051C31A /* ProjectFiles */,
 				42DB26D42B43160B0051C31A /* Model */,
@@ -331,6 +342,7 @@
 				425B77BB2B44614800F30BAF /* TTRButton.swift in Sources */,
 				4215F60F2B45CE77007AD086 /* Room.swift in Sources */,
 				425B77B62B44556400F30BAF /* LoginView.swift in Sources */,
+				421661942B47218700F47CE2 /* RoomService.swift in Sources */,
 				4215F60D2B45CD7A007AD086 /* NewRoomViewModel.swift in Sources */,
 				425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */,
 				42DB26E02B439A930051C31A /* SideMenuItemLink.swift in Sources */,

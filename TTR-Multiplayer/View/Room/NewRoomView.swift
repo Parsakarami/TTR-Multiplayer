@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NewRoomView: View {
+    @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = NewRoomViewModel()
     var body: some View {
         VStack{
@@ -15,10 +16,9 @@ struct NewRoomView: View {
                 .font(.system(size: 22,weight: .bold, design: .default))
             
             Form {
-                
                 if viewModel.errorMessage != "" {
                     Text(viewModel.errorMessage)
-                        .foregroundColor(.red)
+                        .foregroundColor(viewModel.isSuccessful ? .green : .red)
                         .padding()
                 }
                 
@@ -36,18 +36,26 @@ struct NewRoomView: View {
                            in: 1...5, step: 1, minimumValueLabel: Text("1"), maximumValueLabel: Text("5")) {
                         Text("Parsa")
                     }
-                        
-                    
                 }
-                .padding()
+                .padding(5)
                 
-                TTRButton(action: {}, text: "Create", icon: "plus", bgColor: .green)
+                TTRButton(action: {
+                    if (!viewModel.isSuccessful) {
+                        viewModel.addNewRoom()
+                    }
+                }, text: "Add", icon: "plus", bgColor: viewModel.isSuccessful ? .gray : .green)
+                    .disabled(viewModel.isSuccessful)
                     .frame(height: 50)
                     .padding()
-                
-                TTRButton(action: {}, text: "Back", icon: "chevron.left", bgColor: .blue)
-                    .frame(height: 50)
-                    .padding()
+            }
+        }
+        .onChange(of: viewModel.isSuccessful) { value in
+            if value {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    if presentationMode.wrappedValue.isPresented {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
             }
         }
         .navigationTitle("")
