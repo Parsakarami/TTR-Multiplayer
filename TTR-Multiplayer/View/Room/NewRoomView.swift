@@ -42,7 +42,9 @@ struct NewRoomView: View {
                 
                 TTRButton(action: {
                     if (!viewModel.isSuccessful) {
-                        viewModel.addNewRoom()
+                        Task {
+                            await viewModel.addNewRoom()
+                        }
                     }
                 }, text: "Add", icon: "plus", bgColor: viewModel.isSuccessful ? .gray : .green)
                     .disabled(viewModel.isSuccessful)

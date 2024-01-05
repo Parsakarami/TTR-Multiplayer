@@ -11,3 +11,13 @@ enum authStatus {
     case authorized
     case notAuthorized
 }
+
+enum roomStatus {
+    case created
+    case playerJoined
+    case playerLeft
+    case closed
+    case deleted
+    case fetchedCurrentRoom
+}
+

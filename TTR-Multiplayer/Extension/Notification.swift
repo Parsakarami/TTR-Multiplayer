@@ -8,5 +8,9 @@
 import Foundation
 
 extension Notification.Name {
+    //Auth
     static let playerAuthStatusChanged = Notification.Name("playerAuthStatusChanged")
+    
+    //Room
+    static let roomStatusChanged = Notification.Name("roomStatusChanged")
 }

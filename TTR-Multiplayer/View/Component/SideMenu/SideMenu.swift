@@ -11,6 +11,7 @@ import FirebaseAuth
 struct SideMenu: View {
     @Binding var isShowMenu : Bool
     @Binding var player : Player?
+    @Binding var currentRoom : Room?
     @State var sideBarWidth : CGFloat
     
     var body: some View {
@@ -38,12 +39,20 @@ struct SideMenu: View {
                 }
                 .frame(width: sideBarWidth, height:200,alignment: .bottomLeading)
                 //.background(.gray)
-                VStack(alignment: .leading, spacing: 0) {
-                    SideMenuItemButton(text: "Board", icon: "gamecontroller.fill", action: {closeMenu()})
-                    SideMenuItemLink(text: "Create a room", icon: "house.fill", destination: getView(name: "new-room"))
-                    SideMenuItemLink(text: "Join a room", icon: "point.3.connected.trianglepath.dotted", destination: getView(name: "join-room"))
-                    SideMenuItemButton(text: "History", icon: "chart.bar.doc.horizontal", action: {})
-                    SideMenuItemButton(text: "Settings", icon: "gear", action: {})
+                VStack(alignment: .leading,spacing: 0) {
+                    VStack(alignment: .leading){
+                        SideMenuItemButton(text: "Board", icon: "gamecontroller.fill", action: {closeMenu()})
+                        if (currentRoom == nil) {
+                            SideMenuItemLink(text: "Create a room", icon: "house.fill", destination: getView(name: "new-room"))
+                            
+                            SideMenuItemLink(text: "Join a room", icon: "point.3.connected.trianglepath.dotted", destination: getView(name: "join-room"))
+                        }
+                        SideMenuItemButton(text: "History", icon: "chart.bar.doc.horizontal", action: {})
+                        SideMenuItemButton(text: "Settings", icon: "gear", action: {})
+                        Spacer()
+                    }
+                    .frame(minHeight: 300)
+                    .frame(alignment: .topLeading)
                     if player != nil {
                         Spacer()
                         VStack (alignment: .leading) {
@@ -80,17 +89,6 @@ struct SideMenu: View {
         }
     }
     
-    private func getActiveRoom() async {
-        guard player != nil else {
-            return
-        }
-        
-        Task(priority: .high) {
-            let room = try await RoomService.instance.fetchActiveRoom(userId: player?.id ?? "")
-            let x = room?.capacity
-        }
-    }
-    
     private func getView(name:String) -> AnyView {
         switch name {
         case "main": 
@@ -106,5 +104,5 @@ struct SideMenu: View {
 }
 
 #Preview {
-    SideMenu(isShowMenu: .constant(true), player:.constant(nil), sideBarWidth: UIScreen.main.bounds.width - 120)
+    SideMenu(isShowMenu: .constant(true), player:.constant(nil), currentRoom: .constant(nil), sideBarWidth: UIScreen.main.bounds.width - 120)
 }

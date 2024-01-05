@@ -23,8 +23,12 @@ class NewRoomViewModel : ObservableObject {
         userID = Auth.auth().currentUser?.uid ?? ""
     }
     
-    func addNewRoom() {
+    func addNewRoom() async {
         guard validate() else {
+            return
+        }
+        
+        guard let player = PlayerService.instance.player else {
             return
         }
         
@@ -36,17 +40,11 @@ class NewRoomViewModel : ObservableObject {
                            winner: nil,
                            createdDateTime: Date().timeIntervalSince1970)
         
-        Task (priority: .high) {
-            let isInUsed = try await RoomService.instance.isRoomInUsed(code: roomCode)
-            if !isInUsed {
-                try await roomCollection.document(newRoom.id)
-                    .setData(newRoom.asDictionary())
-                
-                isSuccessful = true
-                errorMessage = "The room is created succesfully."
-            } else {
-                errorMessage = "The code is already in used!"
-            }
+        do {
+            let result = try await RoomService.instance.addRoom(room: newRoom , player: player)
+            isSuccessful = result
+        }catch {
+            errorMessage = error.localizedDescription
         }
     }
     
