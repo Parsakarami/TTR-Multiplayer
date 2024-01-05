@@ -89,10 +89,6 @@ class PlayerService {
         }
     }
     
-    public func joinRoom(roomCode: String) {
-        
-    }
-    
     private func fetchPlayer(id:String, completion: @escaping (Result<Player,Error>) -> Void) {
         playerCollection.document(id).getDocument { (querySnapshot, error) in
                 guard error == nil else {

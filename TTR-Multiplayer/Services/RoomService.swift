@@ -26,4 +26,46 @@ class RoomService {
         
         return !snapShots.isEmpty
     }
+    
+    public func closeRoom(roomCode: String) {
+        let userid = PlayerService.instance.player?.id
+        
+    }
+    
+    public func joinRoom(roomCode: String) {
+        
+    }
+    
+    public func fetchActiveRoom(userId: String) async throws -> Room? {
+        let snapShot = try await roomCollection
+            .whereField("ownerID", isEqualTo: userId)
+            .whereField("inUsed", isEqualTo: true)
+            .getDocuments()
+        
+        var room : Room? = nil
+        if !snapShot.isEmpty{
+            for doc in snapShot.documents {
+                room = try doc.data(as: Room.self)
+                break
+            }
+        }
+        
+        return room
+    }
+    
+    public func fetchRooms(userId: String) async throws -> [Room] {
+        let snapShot = try await roomCollection
+            .whereField("ownerID", isEqualTo: userId)
+            .getDocuments()
+        
+        var rooms : [Room] = []
+        if !snapShot.isEmpty{
+            for doc in snapShot.documents {
+                let room = try doc.data(as: Room.self)
+                rooms.append(room)
+            }
+        }
+        
+        return rooms
+    }
 }

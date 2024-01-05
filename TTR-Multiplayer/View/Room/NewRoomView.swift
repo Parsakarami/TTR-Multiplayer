@@ -23,6 +23,7 @@ struct NewRoomView: View {
                 }
                 
                 TextField("Access Code", text: $viewModel.roomCode )
+                    .autocorrectionDisabled()
                     .padding()
                     .monospacedDigit()
                     .cornerRadius(6)
