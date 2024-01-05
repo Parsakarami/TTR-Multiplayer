@@ -42,6 +42,10 @@ class PlayerService {
         }
     }
     
+    func initialize() {
+        
+    }
+    
     public var isSignedIn : Bool {
         return currentUser != nil
     }

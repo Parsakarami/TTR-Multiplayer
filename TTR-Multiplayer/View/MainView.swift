@@ -24,7 +24,7 @@ struct MainView: View {
             } else {
                 NavigationView{
                     ZStack (alignment: Alignment(horizontal: .center, vertical: .top)) {
-                        SideMenu(isShowMenu: $showMenu, player:$viewModel.player, sideBarWidth: sideBarWidth).zIndex(2)
+                        SideMenu(isShowMenu: $showMenu, player:$viewModel.player, currentRoom: $viewModel.currentRoom, sideBarWidth: sideBarWidth).zIndex(2)
                         //Main TabBar
                         VStack {
                             TabView{
@@ -40,6 +40,15 @@ struct MainView: View {
                                             .frame(width: 50,height: 50)
                                             .aspectRatio(contentMode: .fill)
                                             .clipShape(.circle)
+                                    }
+                                    
+                                    if let room = viewModel.currentRoom {
+                                        Text(room.roomCode).foregroundColor(.red)
+                                        
+                                        TTRButton(action: {
+                                            viewModel.closeCurrentRoom()
+                                        }, text: "End the room", icon: "xmark", bgColor: .red, fgColor: .white)
+                                        .frame(width: 200, height: 50, alignment: .center)
                                     }
                                 }
                                 .tabItem {
@@ -67,6 +76,9 @@ struct MainView: View {
                                     }
                                 }
                         }.zIndex(2)
+                    }
+                    .onAppear{
+                        showMenu = false
                     }.ignoresSafeArea(.all)
                 }.onChange(of: showMenu) { newValue in
                     if showMenu && offset == 0 {

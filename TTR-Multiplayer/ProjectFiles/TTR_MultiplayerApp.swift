@@ -12,6 +12,10 @@ import FirebaseCore
 struct TTR_MultiplayerApp: App {
     init(){
         FirebaseApp.configure()
+        
+        //Init services
+        PlayerService.instance.initialize()
+        RoomService.instance.initialize()
     }
     
     var body: some Scene {
