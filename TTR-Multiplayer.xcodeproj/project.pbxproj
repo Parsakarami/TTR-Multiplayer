@@ -21,6 +21,7 @@
 		422A7EE42B4865020063F2C2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */; };
 		422A7EE62B486DCC0063F2C2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 422A7EE52B486DCC0063F2C2 /* FirebaseStorage */; };
 		422A7EE82B4889D80063F2C2 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */; };
+		422A7EEA2B4894E60063F2C2 /* PhotoPickerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */; };
 		425707E52B478195003932E4 /* GradientStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E42B478195003932E4 /* GradientStack.swift */; };
 		425707E82B47929E003932E4 /* JoinRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E72B47929E003932E4 /* JoinRoomViewModel.swift */; };
 		425707EA2B4792E2003932E4 /* JoinRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E92B4792E2003932E4 /* JoinRoomView.swift */; };
@@ -64,6 +65,7 @@
 		422A7EE12B485E100063F2C2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
+		422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerPreview.swift; sourceTree = "<group>"; };
 		425707E42B478195003932E4 /* GradientStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientStack.swift; sourceTree = "<group>"; };
 		425707E72B47929E003932E4 /* JoinRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoomViewModel.swift; sourceTree = "<group>"; };
 		425707E92B4792E2003932E4 /* JoinRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoomView.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			children = (
 				425707E42B478195003932E4 /* GradientStack.swift */,
 				422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */,
+				422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				422A7EE42B4865020063F2C2 /* ProfileViewModel.swift in Sources */,
 				425B77BD2B44691200F30BAF /* RegisterView.swift in Sources */,
 				421661982B473D0F00F47CE2 /* Notification.swift in Sources */,
+				422A7EEA2B4894E60063F2C2 /* PhotoPickerPreview.swift in Sources */,
 				425B77BB2B44614800F30BAF /* TTRButton.swift in Sources */,
 				4215F60F2B45CE77007AD086 /* Room.swift in Sources */,
 				425B77B62B44556400F30BAF /* LoginView.swift in Sources */,

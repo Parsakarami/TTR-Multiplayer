@@ -14,7 +14,6 @@ struct RegisterView: View {
     @StateObject var viewModel = RegisterViewModel()
     @State private var isInitialized = false
     @State private var isKeyboardOpened = false
-    @State private var isImagePickerPresented = false
     var body: some View {
         ZStack {
             VStack(alignment: .center){
@@ -44,28 +43,10 @@ struct RegisterView: View {
                             .padding()
                     }
                     
-                    if let profile = viewModel.selectedImage {
-                        HStack {
-                            Spacer()
-                            VStack {
-                                Image(uiImage: profile)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fill)
-                                    .clipShape(.circle)
-                                    .padding(10)
-                                    .frame(width: 125, height: 125)
-                            }
-                            Spacer()
-                        }
-                    } else {
-                        Button("Pick Photos") {
-                            isImagePickerPresented.toggle()
-                        }
-                        .padding()
-                        .sheet(isPresented: $isImagePickerPresented) {
-                            PhotoPicker(selectedImage: $viewModel.selectedImage)
-                        }
+                    HStack {
+                        Spacer()
+                        PhotoPickerPreview(selectedImage: $viewModel.selectedImage)
+                        Spacer()
                     }
                     
                     TextField("Full Name", text: $viewModel.fullName )
@@ -84,12 +65,17 @@ struct RegisterView: View {
                         .padding()
                         .cornerRadius(6)
                     
-                    TTRButton(action: { viewModel.register() }, text: "Sign up", icon: "pencil", bgColor: viewModel.isSuccessful ? .gray : .green)
+                    TTRButton(action: { viewModel.register() },
+                              text: "Sign up", icon: "pencil",
+                              bgColor: viewModel.isSuccessful ? .gray : .green)
                         .disabled(viewModel.isSuccessful)
                         .frame(height: 50)
                         .padding(5)
                     
-                    TTRButton(action: { dismiss() }, text: "Close", icon: "xmark", bgColor: .red)
+                    TTRButton(action: { dismiss() },
+                              text: "Close",
+                              icon: "xmark",
+                              bgColor: .red)
                         .frame(height: 50)
                         .padding(5)
                 }
