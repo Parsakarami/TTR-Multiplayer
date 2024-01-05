@@ -17,6 +17,7 @@
 		421661982B473D0F00F47CE2 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661972B473D0F00F47CE2 /* Notification.swift */; };
 		4216619A2B4746AD00F47CE2 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661992B4746AD00F47CE2 /* Enums.swift */; };
 		4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4229F9032B44E528008B04BB /* AnimatedHeader.swift */; };
+		425707E52B478195003932E4 /* GradientStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E42B478195003932E4 /* GradientStack.swift */; };
 		425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B32B4454F100F30BAF /* MainViewModel.swift */; };
 		425B77B62B44556400F30BAF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B52B44556300F30BAF /* LoginView.swift */; };
 		425B77B82B44557100F30BAF /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77B72B44557100F30BAF /* LoginViewModel.swift */; };
@@ -54,6 +55,7 @@
 		421661972B473D0F00F47CE2 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		421661992B4746AD00F47CE2 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		4229F9032B44E528008B04BB /* AnimatedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHeader.swift; sourceTree = "<group>"; };
+		425707E42B478195003932E4 /* GradientStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientStack.swift; sourceTree = "<group>"; };
 		425B77B32B4454F100F30BAF /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		425B77B52B44556300F30BAF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		425B77B72B44557100F30BAF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -117,12 +119,20 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		4229F9022B44E519008B04BB /* Other */ = {
+		4229F9022B44E519008B04BB /* TTR */ = {
 			isa = PBXGroup;
 			children = (
 				4229F9032B44E528008B04BB /* AnimatedHeader.swift */,
 			);
-			path = Other;
+			path = TTR;
+			sourceTree = "<group>";
+		};
+		425707E62B4781A8003932E4 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				425707E42B478195003932E4 /* GradientStack.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 		425B77B92B44612200F30BAF /* Button */ = {
@@ -226,7 +236,8 @@
 		42DB26D82B4388360051C31A /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				4229F9022B44E519008B04BB /* Other */,
+				425707E62B4781A8003932E4 /* General */,
+				4229F9022B44E519008B04BB /* TTR */,
 				425B77C02B448F0A00F30BAF /* NavigationBar */,
 				425B77B92B44612200F30BAF /* Button */,
 				42DB26DE2B439A780051C31A /* SideMenu */,
@@ -366,6 +377,7 @@
 				425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */,
 				421661962B472D7200F47CE2 /* PlayerService.swift in Sources */,
 				4215F6122B45D242007AD086 /* NewRoomView.swift in Sources */,
+				425707E52B478195003932E4 /* GradientStack.swift in Sources */,
 				425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */,
 				4216619A2B4746AD00F47CE2 /* Enums.swift in Sources */,
 				4215F6142B45F361007AD086 /* SideMenuItemButton.swift in Sources */,

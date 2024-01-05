@@ -59,7 +59,7 @@ struct MainView: View {
                         .zIndex(1)
                         .overlay{
                             Rectangle()
-                                .fill(Color.primary.opacity(Double((offset / sideBarWidth) / 5)))
+                                .fill(Color.primary.opacity(Double((offset / sideBarWidth) / 10)))
                                 .ignoresSafeArea(.container,edges: .vertical)
                                 .onTapGesture{
                                     withAnimation(.snappy){
