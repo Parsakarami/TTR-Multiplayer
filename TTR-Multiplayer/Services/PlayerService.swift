@@ -93,7 +93,7 @@ class PlayerService {
         }
     }
     
-    public func signUp(fullName: String, email: String, password: String, completion: @escaping (Result<Bool,Error>) -> Void) {
+    public func signUp(fullName: String, email: String, password: String, profileImage: String?, completion: @escaping (Result<Bool,Error>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             guard error == nil else {
                 return completion(.failure(error!))

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 import Combine
 
 struct RegisterView: View {
@@ -13,17 +14,18 @@ struct RegisterView: View {
     @StateObject var viewModel = RegisterViewModel()
     @State private var isInitialized = false
     @State private var isKeyboardOpened = false
+    @State private var isImagePickerPresented = false
     var body: some View {
         ZStack {
             VStack(alignment: .center){
                 Spacer()
                 if !isKeyboardOpened {
                     AnimatedHeader()
-                    .opacity(isKeyboardOpened ? 0 : 1)
-                    .scaleEffect(isKeyboardOpened ? 0 : 1)
-                    .animation(.snappy(duration: 0.2), value: isKeyboardOpened)
-                    .frame(width: 150,height: 150)
-                    .padding(.top,20)
+                        .opacity(isKeyboardOpened ? 0 : 1)
+                        .scaleEffect(isKeyboardOpened ? 0 : 1)
+                        .animation(.snappy(duration: 0.2), value: isKeyboardOpened)
+                        .frame(width: 150,height: 150)
+                        .padding(.top,20)
                     VStack (spacing:0){
                         Text("Don't have an account?")
                             .font(.title2)
@@ -34,40 +36,63 @@ struct RegisterView: View {
                     .offset(y:-10)
                 }
                 Spacer()
-                        Form {
-                            
-                            if viewModel.message != "" {
-                                Text(viewModel.message)
-                                    .foregroundColor(viewModel.isSuccessful ? .green : .red)
-                                    .padding()
+                Form {
+                    
+                    if viewModel.message != "" {
+                        Text(viewModel.message)
+                            .foregroundColor(viewModel.isSuccessful ? .green : .red)
+                            .padding()
+                    }
+                    
+                    if let profile = viewModel.selectedImage {
+                        HStack {
+                            Spacer()
+                            VStack {
+                                Image(uiImage: profile)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .aspectRatio(contentMode: .fill)
+                                    .clipShape(.circle)
+                                    .padding(10)
+                                    .frame(width: 125, height: 125)
                             }
-                            
-                            TextField("Full Name", text: $viewModel.fullName )
-                                .autocorrectionDisabled()
-                                .padding()
-                                .cornerRadius(6)
-                            
-                            TextField("Email", text: $viewModel.email )
-                                .textInputAutocapitalization(.none)
-                                .autocorrectionDisabled()
-                                .padding()
-                                .cornerRadius(6)
-                            
-                            SecureField("Password", text: $viewModel.password)
-                                .autocorrectionDisabled()
-                                .padding()
-                                .cornerRadius(6)
-                            
-                            TTRButton(action: { viewModel.register() }, text: "Sign up", icon: "pencil", bgColor: viewModel.isSuccessful ? .gray : .green)
-                                .disabled(viewModel.isSuccessful)
-                                .frame(height: 50)
-                                .padding(5)
-                            
-                            TTRButton(action: { dismiss() }, text: "Close", icon: "xmark", bgColor: .red)
-                                .frame(height: 50)
-                                .padding(5)
+                            Spacer()
                         }
-                        .cornerRadius(8)
+                    } else {
+                        Button("Pick Photos") {
+                            isImagePickerPresented.toggle()
+                        }
+                        .padding()
+                        .sheet(isPresented: $isImagePickerPresented) {
+                            PhotoPicker(selectedImage: $viewModel.selectedImage)
+                        }
+                    }
+                    
+                    TextField("Full Name", text: $viewModel.fullName )
+                        .autocorrectionDisabled()
+                        .padding()
+                        .cornerRadius(6)
+                    
+                    TextField("Email", text: $viewModel.email )
+                        .textInputAutocapitalization(.none)
+                        .autocorrectionDisabled()
+                        .padding()
+                        .cornerRadius(6)
+                    
+                    SecureField("Password", text: $viewModel.password)
+                        .autocorrectionDisabled()
+                        .padding()
+                        .cornerRadius(6)
+                    
+                    TTRButton(action: { viewModel.register() }, text: "Sign up", icon: "pencil", bgColor: viewModel.isSuccessful ? .gray : .green)
+                        .disabled(viewModel.isSuccessful)
+                        .frame(height: 50)
+                        .padding(5)
+                    
+                    TTRButton(action: { dismiss() }, text: "Close", icon: "xmark", bgColor: .red)
+                        .frame(height: 50)
+                        .padding(5)
+                }
                 Spacer()
                 Spacer()
             }

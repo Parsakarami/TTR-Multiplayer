@@ -17,6 +17,7 @@ class RegisterViewModel : ObservableObject {
     @Published var message : String = ""
     @Published var isSuccessful : Bool = false
     @Published var dismissTheRegisterSheet : Bool = false
+    @Published var selectedImage : UIImage? = nil
     private let emailRegex = #"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$"#
     
     func register()
@@ -25,7 +26,7 @@ class RegisterViewModel : ObservableObject {
             return
         }
         
-        PlayerService.instance.signUp(fullName: fullName, email: email, password: password) { [weak self] result in
+        PlayerService.instance.signUp(fullName: fullName, email: email, password: password, profileImage: nil) { [weak self] result in
             do {
                 let value = try result.get()
                 if value {

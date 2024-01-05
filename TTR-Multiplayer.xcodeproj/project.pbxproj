@@ -20,6 +20,7 @@
 		422A7EE22B485E100063F2C2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE12B485E100063F2C2 /* ProfileView.swift */; };
 		422A7EE42B4865020063F2C2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */; };
 		422A7EE62B486DCC0063F2C2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 422A7EE52B486DCC0063F2C2 /* FirebaseStorage */; };
+		422A7EE82B4889D80063F2C2 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */; };
 		425707E52B478195003932E4 /* GradientStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E42B478195003932E4 /* GradientStack.swift */; };
 		425707E82B47929E003932E4 /* JoinRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E72B47929E003932E4 /* JoinRoomViewModel.swift */; };
 		425707EA2B4792E2003932E4 /* JoinRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E92B4792E2003932E4 /* JoinRoomView.swift */; };
@@ -62,6 +63,7 @@
 		4229F9032B44E528008B04BB /* AnimatedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHeader.swift; sourceTree = "<group>"; };
 		422A7EE12B485E100063F2C2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		425707E42B478195003932E4 /* GradientStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientStack.swift; sourceTree = "<group>"; };
 		425707E72B47929E003932E4 /* JoinRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoomViewModel.swift; sourceTree = "<group>"; };
 		425707E92B4792E2003932E4 /* JoinRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoomView.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				425707E42B478195003932E4 /* GradientStack.swift */,
+				422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				425B77BB2B44614800F30BAF /* TTRButton.swift in Sources */,
 				4215F60F2B45CE77007AD086 /* Room.swift in Sources */,
 				425B77B62B44556400F30BAF /* LoginView.swift in Sources */,
+				422A7EE82B4889D80063F2C2 /* PhotoPicker.swift in Sources */,
 				421661942B47218700F47CE2 /* RoomService.swift in Sources */,
 				425707EA2B4792E2003932E4 /* JoinRoomView.swift in Sources */,
 				4215F60D2B45CD7A007AD086 /* NewRoomViewModel.swift in Sources */,
@@ -458,7 +462,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -515,7 +519,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
