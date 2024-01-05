@@ -93,7 +93,7 @@ class PlayerService {
         }
     }
     
-    public func signUp(fullName: String, email: String, password: String, profileImage: String?, completion: @escaping (Result<Bool,Error>) -> Void) {
+    public func signUp(fullName: String, email: String, password: String, profilePhoto: Data?, completion: @escaping (Result<Bool,Error>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             guard error == nil else {
                 return completion(.failure(error!))
@@ -104,7 +104,7 @@ class PlayerService {
                 return completion(.failure(error))
             }
             
-            self.insertPlayer(id: id, fullName: fullName, email: email)
+            self.insertPlayer(id: id, fullName: fullName, email: email,profilePhoto: profilePhoto)
             completion(.success(true))
         }
     }
@@ -133,7 +133,7 @@ class PlayerService {
             }
     }
     
-    private func insertPlayer(id: String, fullName: String, email: String){
+    private func insertPlayer(id: String, fullName: String, email: String, profilePhoto: Data?){
         let newPlayer = Player(id: id,
                             fullName: fullName,
                             email: email,
@@ -143,6 +143,15 @@ class PlayerService {
         db.collection("players")
             .document(id)
             .setData(newPlayer.asDictionary())
+        
+        if let photo = profilePhoto {
+            uploadPlayerProfilePhoto(userid: id, photoData: photo)
+        }
+    }
+    
+    private func uploadPlayerProfilePhoto(userid: String, photoData: Data) {
+        let photoName = "\(userid).png"
+        storageReference.child(photoName).putData(photoData)
     }
     
     private func updatePlayer(player: Player){

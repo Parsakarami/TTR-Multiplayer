@@ -26,7 +26,12 @@ class RegisterViewModel : ObservableObject {
             return
         }
         
-        PlayerService.instance.signUp(fullName: fullName, email: email, password: password, profileImage: nil) { [weak self] result in
+        var imageData : Data? = nil
+        if let image = selectedImage {
+            imageData = image.pngData()
+        }
+        
+        PlayerService.instance.signUp(fullName: fullName, email: email, password: password, profilePhoto: imageData) { [weak self] result in
             do {
                 let value = try result.get()
                 if value {
