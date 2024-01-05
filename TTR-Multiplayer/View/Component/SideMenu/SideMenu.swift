@@ -12,17 +12,21 @@ struct SideMenu: View {
     @Binding var isShowMenu : Bool
     @Binding var player : Player?
     @Binding var currentRoom : Room?
+    @Binding var profilePhoto : String
     @State var sideBarWidth : CGFloat
-    
     var body: some View {
             VStack (alignment: .leading){
                 HStack (alignment:.top){
                     VStack(alignment: .leading){
-                        Image("User")
-                            .resizable()
-                            .frame(width: 70,height: 70)
-                            .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-                            .clipShape(.circle)
+                        AsyncImage(url: URL(string: profilePhoto)) { image in
+                            image.resizable()
+                                .frame(width: 70,height: 70)
+                                .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                                .clipShape(.circle)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        
                         Text(player?.fullName ?? "")
                             .font(.system(size: 22,weight: .semibold, design: .default))
                             .foregroundColor(.white)
@@ -48,7 +52,7 @@ struct SideMenu: View {
                             SideMenuItemLink(text: "Join a room", icon: "point.3.connected.trianglepath.dotted", destination: getView(name: "join-room"))
                         }
                         SideMenuItemButton(text: "History", icon: "chart.bar.doc.horizontal", action: {})
-                        SideMenuItemButton(text: "Settings", icon: "gear", action: {})
+                        SideMenuItemLink(text: "Profile", icon: "gear", destination: getView(name: "profile"))
                         Spacer()
                     }
                     .frame(minHeight: 300)
@@ -97,6 +101,8 @@ struct SideMenu: View {
             return AnyView(NewRoomView())
         case "join-room":
             return AnyView(JoinRoomView())
+        case "profile":
+            return AnyView(ProfileView())
         default:
             return AnyView(MainView())
         }
@@ -104,5 +110,9 @@ struct SideMenu: View {
 }
 
 #Preview {
-    SideMenu(isShowMenu: .constant(true), player:.constant(nil), currentRoom: .constant(nil), sideBarWidth: UIScreen.main.bounds.width - 120)
+    SideMenu(isShowMenu: .constant(true),
+             player:.constant(nil),
+             currentRoom: .constant(nil),
+             profilePhoto: .constant(""),
+             sideBarWidth: UIScreen.main.bounds.width - 120)
 }

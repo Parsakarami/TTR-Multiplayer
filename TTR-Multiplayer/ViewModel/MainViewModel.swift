@@ -13,6 +13,7 @@ class MainViewModel : ObservableObject {
     @Published var player : Player? = nil
     @Published var isAuthorized : Bool = false
     @Published var currentRoom : Room? = nil
+    @Published var profilePhoto : String = ""
     private var handler: AuthStateDidChangeListenerHandle?
     
     init() {
@@ -33,6 +34,7 @@ class MainViewModel : ObservableObject {
             if status == .authorized {
                 self?.player = PlayerService.instance.player
                 self?.isAuthorized = true
+                self?.profilePhoto = PlayerService.instance.playerProfile
             } else {
                 self?.player = nil
                 self?.isAuthorized = false

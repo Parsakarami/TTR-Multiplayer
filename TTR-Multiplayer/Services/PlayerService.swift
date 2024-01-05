@@ -8,18 +8,23 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 
 class PlayerService {
     static var instance = PlayerService()
     private var playerCollection : CollectionReference
+    private var storageReference : StorageReference
     private var currentUser : User?
     private var handler : AuthStateDidChangeListenerHandle?
-    var player : Player?
+    public private(set) var player : Player?
+    public private(set) var playerProfile : String = ""
     
     init() {
+        let storage = Storage.storage().reference()
         let db = Firestore.firestore()
         playerCollection = db.collection("players")
         currentUser = Auth.auth().currentUser
+        self.storageReference = storage.child("images/profiles/")
         
         self.handler = Auth.auth().addStateDidChangeListener{ [weak self] _, user in
             DispatchQueue.main.async {
@@ -29,11 +34,30 @@ class PlayerService {
                         do {
                             self?.player = try result.get()
                             self?.currentUser = user
-                            NotificationCenter.default.post(name: .playerAuthStatusChanged, object: authStatus.authorized)
+                            
+                            let imageName = "\(self?.player?.id ?? "user").png"
+                            
+                            //download the user profile
+                            self?.storageReference.child(imageName).downloadURL{ url, error in
+                                // if couldn't, download the default file
+                                guard let url = url, error == nil else {
+                                    self?.storageReference.child("user.png").downloadURL{ defaultUrl, error in
+                                        guard let defaultUrl = defaultUrl, error == nil else {
+                                            self?.sendNotification(status: .authorized)
+                                            return
+                                        }
+                                        self?.playerProfile = defaultUrl.absoluteString
+                                        self?.sendNotification(status: .authorized)
+                                    }
+                                    return
+                                }
+                                self?.playerProfile = url.absoluteString
+                                self?.sendNotification(status: .authorized)
+                            }
                         } catch {
                             self?.player = nil
                             self?.currentUser = nil
-                            NotificationCenter.default.post(name: .playerAuthStatusChanged, object: authStatus.notAuthorized)
+                            self?.sendNotification(status: .notAuthorized)
                             print(error)
                         }
                     }
@@ -80,7 +104,7 @@ class PlayerService {
                 return completion(.failure(error))
             }
             
-            self.insertPlayerIntoDatabase(id: id, fullName: fullName, email: email)
+            self.insertPlayer(id: id, fullName: fullName, email: email)
             completion(.success(true))
         }
     }
@@ -109,7 +133,7 @@ class PlayerService {
             }
     }
     
-    private func insertPlayerIntoDatabase(id: String, fullName: String, email: String){
+    private func insertPlayer(id: String, fullName: String, email: String){
         let newPlayer = Player(id: id,
                             fullName: fullName,
                             email: email,
@@ -119,6 +143,14 @@ class PlayerService {
         db.collection("players")
             .document(id)
             .setData(newPlayer.asDictionary())
+    }
+    
+    private func updatePlayer(player: Player){
+        
+    }
+    
+    private func sendNotification(status: authStatus) {
+        NotificationCenter.default.post(name: .playerAuthStatusChanged, object: status)
     }
     
 }

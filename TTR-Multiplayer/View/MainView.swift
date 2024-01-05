@@ -24,7 +24,7 @@ struct MainView: View {
             } else {
                 NavigationView{
                     ZStack (alignment: Alignment(horizontal: .center, vertical: .top)) {
-                        SideMenu(isShowMenu: $showMenu, player:$viewModel.player, currentRoom: $viewModel.currentRoom, sideBarWidth: sideBarWidth).zIndex(2)
+                        SideMenu(isShowMenu: $showMenu, player:$viewModel.player, currentRoom: $viewModel.currentRoom, profilePhoto: $viewModel.profilePhoto, sideBarWidth: sideBarWidth).zIndex(2)
                         //Main TabBar
                         VStack {
                             TabView{
@@ -35,11 +35,16 @@ struct MainView: View {
                                             showMenu.toggle()
                                         }
                                     }){
-                                        Image("User")
-                                            .resizable()
-                                            .frame(width: 50,height: 50)
-                                            .aspectRatio(contentMode: .fill)
-                                            .clipShape(.circle)
+                                        
+                                        AsyncImage(url: URL(string: viewModel.profilePhoto)) { image in
+                                            image
+                                                .resizable()
+                                                .frame(width: 50,height: 50)
+                                                .aspectRatio(contentMode: .fill)
+                                                .clipShape(.circle)
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
                                     }
                                     
                                     if let room = viewModel.currentRoom {
