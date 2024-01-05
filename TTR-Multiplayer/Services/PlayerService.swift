@@ -23,13 +23,27 @@ class PlayerService {
         
         self.handler = Auth.auth().addStateDidChangeListener{ [weak self] _, user in
             DispatchQueue.main.async {
-                self?.currentUser = user
                 let uid = user?.uid ?? ""
                 if !uid.trimmingCharacters(in: .whitespaces).isEmpty {
-                    self?.fetchPlayer(id: uid)
+                    self?.fetchPlayer(id: uid) { result in
+                        do {
+                            self?.player = try result.get()
+                            self?.currentUser = user
+                            NotificationCenter.default.post(name: .playerAuthStatusChanged, object: authStatus.authorized)
+                        } catch {
+                            self?.player = nil
+                            self?.currentUser = nil
+                            NotificationCenter.default.post(name: .playerAuthStatusChanged, object: authStatus.notAuthorized)
+                            print(error)
+                        }
+                    }
                 }
             }
         }
+    }
+    
+    public var isSignedIn : Bool {
+        return currentUser != nil
     }
     
     public func signIn(email: String, password: String, completion: @escaping (Result<Bool,Error>) -> Void) {
@@ -43,7 +57,7 @@ class PlayerService {
             }
             
             guard (result?.user.uid) != nil else {
-                let error = NSError(domain: "TicketToRide", code: 0, userInfo: [NSLocalizedDescriptionKey: "Email or password is incorrect."])
+                let error = NSError(domain: "TicketToRide.SignIn", code: 0, userInfo: [NSLocalizedDescriptionKey: "Email or password is incorrect."])
                 return completion(.failure(error))
             }
             
@@ -53,12 +67,12 @@ class PlayerService {
     
     public func signUp(fullName: String, email: String, password: String, completion: @escaping (Result<Bool,Error>) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
-            if let error = error {
-                completion(.failure(error))
+            guard error == nil else {
+                return completion(.failure(error!))
             }
             
             guard let id = result?.user.uid else {
-                let error = NSError(domain: "TicketToRide", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to sign up."])
+                let error = NSError(domain: "TicketToRide.SignUp", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to sign up."])
                 return completion(.failure(error))
             }
             
@@ -75,28 +89,22 @@ class PlayerService {
         }
     }
     
-    public var isSignedIn : Bool {
-        return currentUser != nil
-    }
-    
     public func joinRoom(roomCode: String) {
         
     }
     
-    private func fetchPlayer(id:String) {
-        let db = Firestore.firestore()
-        db.collection("players")
-            .document(id)
-            .getDocument { [weak self] (querySnapshot, error) in
-                if let error = error {
-                    print("Error getting document: \(error)")
-                } else {
-                    do {
-                        self?.player = try querySnapshot?.data(as: Player.self)
-                        NotificationCenter.default.post(name: .playerAuthStatusChanged, object: authStatus.authorized)
-                    } catch {
-                        print("Cannot fetch date from database")
-                    }
+    private func fetchPlayer(id:String, completion: @escaping (Result<Player,Error>) -> Void) {
+        playerCollection.document(id).getDocument { (querySnapshot, error) in
+                guard error == nil else {
+                    return completion(.failure(error!))
+                }
+            
+                do {
+                    let player = try querySnapshot?.data(as: Player.self)
+                    completion(.success(player!))
+                } catch {
+                    let error = NSError(domain: "TicketToRide.FetchPlayer", code: 0, userInfo: [NSLocalizedDescriptionKey: "Cannot fetch data from database."])
+                    completion(.failure(error))
                 }
             }
     }

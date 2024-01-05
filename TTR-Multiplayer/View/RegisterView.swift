@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 struct RegisterView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = RegisterViewModel()
     @State private var isInitialized = false
     @State private var isKeyboardOpened = false
-    
     var body: some View {
         ZStack {
             VStack(alignment: .center){
@@ -36,25 +36,30 @@ struct RegisterView: View {
                 Spacer()
                         Form {
                             
-                            if viewModel.errorMessage != "" {
-                                Text(viewModel.errorMessage)
-                                    .foregroundColor(.red)
+                            if viewModel.message != "" {
+                                Text(viewModel.message)
+                                    .foregroundColor(viewModel.isSuccessful ? .green : .red)
                                     .padding()
                             }
                             
                             TextField("Full Name", text: $viewModel.fullName )
+                                .autocorrectionDisabled()
                                 .padding()
                                 .cornerRadius(6)
                             
                             TextField("Email", text: $viewModel.email )
+                                .textInputAutocapitalization(.none)
+                                .autocorrectionDisabled()
                                 .padding()
                                 .cornerRadius(6)
                             
                             SecureField("Password", text: $viewModel.password)
+                                .autocorrectionDisabled()
                                 .padding()
                                 .cornerRadius(6)
                             
-                            TTRButton(action: { viewModel.register() }, text: "Sign up", icon: "pencil", bgColor: .green)
+                            TTRButton(action: { viewModel.register() }, text: "Sign up", icon: "pencil", bgColor: viewModel.isSuccessful ? .gray : .green)
+                                .disabled(viewModel.isSuccessful)
                                 .frame(height: 50)
                                 .padding(5)
                             

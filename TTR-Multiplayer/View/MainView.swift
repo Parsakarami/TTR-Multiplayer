@@ -62,7 +62,7 @@ struct MainView: View {
                                 .fill(Color.primary.opacity(Double((offset / sideBarWidth) / 5)))
                                 .ignoresSafeArea(.container,edges: .vertical)
                                 .onTapGesture{
-                                    withAnimation(.snappy(duration: 0.3)){
+                                    withAnimation(.snappy){
                                         showMenu.toggle()
                                     }
                                 }
