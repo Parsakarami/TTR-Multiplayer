@@ -36,10 +36,13 @@ struct LoginView: View {
                             }
                             
                             TextField("Email", text: $viewModel.email )
+                                .textInputAutocapitalization(.none)
+                                .autocorrectionDisabled()
                                 .padding()
                                 .cornerRadius(6)
                             
                             SecureField("Password", text: $viewModel.password)
+                                .autocorrectionDisabled()
                                 .padding()
                                 .cornerRadius(6)
                             

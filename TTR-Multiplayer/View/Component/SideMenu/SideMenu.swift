@@ -69,7 +69,7 @@ struct SideMenu: View {
     }
     
     private func closeMenu() {
-        withAnimation(.smooth(duration: 0.3)){
+        withAnimation(.snappy){
             isShowMenu = false
         }
     }

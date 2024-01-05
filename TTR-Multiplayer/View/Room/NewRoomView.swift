@@ -51,7 +51,7 @@ struct NewRoomView: View {
         }
         .onChange(of: viewModel.isSuccessful) { value in
             if value {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     if presentationMode.wrappedValue.isPresented {
                         presentationMode.wrappedValue.dismiss()
                     }
