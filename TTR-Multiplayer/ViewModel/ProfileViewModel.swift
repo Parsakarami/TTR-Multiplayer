@@ -20,8 +20,19 @@ class ProfileViewModel : ObservableObject {
             return
         }
         
+        let profileURL = PlayerService.instance.playerProfilePhoto
         self.player = currentPlayer
-        self.profilePhoto = PlayerService.instance.playerProfilePhoto
+        guard !profileURL.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return
+        }
+        
+        self.profilePhoto = profileURL
+        self.loadImageFromURL(url: URL(string: profileURL)!) { [weak self] result in
+            guard let image = result else {
+                return
+            }
+            self?.selectedImage = image
+        }
     }
     
     func updateProfile() {
@@ -53,7 +64,13 @@ class ProfileViewModel : ObservableObject {
         }
     }
     
-    func uploadProfile() {
-        
+    private func loadImageFromURL(url: URL, completion: @escaping (UIImage?) -> Void) {
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let data = data, let image = UIImage(data: data) {
+                completion(image)
+            } else {
+                completion(nil)
+            }
+        }.resume()
     }
 }
