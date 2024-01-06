@@ -7,9 +7,10 @@
 
 import Foundation
 
-enum authStatus {
+enum playerStatus {
     case authorized
     case notAuthorized
+    case profileUpdated
 }
 
 enum roomStatus {

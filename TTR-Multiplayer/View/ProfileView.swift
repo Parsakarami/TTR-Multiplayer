@@ -15,26 +15,19 @@ struct ProfileView: View {
                 .font(.system(size: 22,weight: .bold, design: .default))
             
             Form {
+                if viewModel.message != "" {
+                    Text(viewModel.message)
+                        .foregroundColor(viewModel.isSuccessful ? .green : .red)
+                        .padding()
+                }
+                
                 HStack {
                     Spacer()
-                Button(action: {
-                    viewModel.uploadProfile()
-                }){
-                    VStack {
-                        AsyncImage(url: URL(string: viewModel.profilePhoto)) { image in
-                            image.resizable()
-                                .scaledToFit()
-                                .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-                                .clipShape(.circle)
-                                .padding(10)
-                                
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        .padding(5)
-                        .frame(width: 125, height: 125)
+                    Button(action: {
+                        viewModel.uploadProfile()
+                    }){
+                        PhotoPickerPreview(selectedImage: $viewModel.selectedImage)
                     }
-                }
                     Spacer()
                 }
                 
@@ -43,7 +36,7 @@ struct ProfileView: View {
                         .font(.system(size: 15,weight:.medium,design: .default))
                         .foregroundColor(.gray)
                         .frame(maxWidth: 80,alignment: .leading)
-                        
+                    
                     Text(viewModel.player?.fullName ?? "")
                         .font(.system(size: 16,weight: .semibold,design: .default))
                         .frame(maxWidth: 190,alignment: .leading)
@@ -59,10 +52,10 @@ struct ProfileView: View {
                         .frame(maxWidth: 190,alignment: .leading)
                 }.padding()
                 
-                
                 TTRButton(action: {
                     viewModel.updateProfile()
-                }, text: "Update profile", icon: "pencil", bgColor: .green)
+                }, text: "Update profile", icon: "pencil", bgColor: viewModel.isSuccessful ? .gray : .green)
+                .disabled(viewModel.isSuccessful)
                 .frame(height: 50)
                 .padding()
             }

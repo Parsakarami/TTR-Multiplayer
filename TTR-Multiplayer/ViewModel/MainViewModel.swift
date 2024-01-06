@@ -30,16 +30,18 @@ class MainViewModel : ObservableObject {
             forName: .playerAuthStatusChanged,
             object: nil,
             queue: .main) { [weak self] notification in
-            let status = notification.object as? authStatus
-            if status == .authorized {
-                self?.player = PlayerService.instance.player
-                self?.isAuthorized = true
-                self?.profilePhoto = PlayerService.instance.playerProfilePhoto
-            } else {
-                self?.player = nil
-                self?.isAuthorized = false
+                let status = notification.object as? playerStatus
+                if status == .authorized {
+                    self?.player = PlayerService.instance.player
+                    self?.isAuthorized = true
+                    self?.profilePhoto = PlayerService.instance.playerProfilePhoto
+                } else if status == .profileUpdated {
+                    self?.profilePhoto = PlayerService.instance.playerProfilePhoto
+                } else {
+                    self?.player = nil
+                    self?.isAuthorized = false
+                }
             }
-        }
         
     }
     
@@ -48,13 +50,13 @@ class MainViewModel : ObservableObject {
             forName: .roomStatusChanged,
             object: nil,
             queue: .main) { [weak self] notification in
-            let status = notification.object as? roomStatus
-            if status == .fetchedCurrentRoom || status == .created {
-                self?.currentRoom = RoomService.instance.currentRoom
-            } else if status == .closed {
-                self?.currentRoom = nil
+                let status = notification.object as? roomStatus
+                if status == .fetchedCurrentRoom || status == .created {
+                    self?.currentRoom = RoomService.instance.currentRoom
+                } else if status == .closed {
+                    self?.currentRoom = nil
+                }
             }
-        }
         
     }
 }

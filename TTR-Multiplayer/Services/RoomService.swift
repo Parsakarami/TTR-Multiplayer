@@ -19,7 +19,7 @@ class RoomService {
         NotificationCenter.default.addObserver(forName: .playerAuthStatusChanged,
                                                object: nil,
                                                queue: .main) { [self] notification in
-            let status = notification.object as? authStatus
+            let status = notification.object as? playerStatus
             if status == .authorized {
                 let pid = PlayerService.instance.player?.id ?? ""
                 guard pid != "" else {

@@ -43,7 +43,7 @@ class PlayerService {
                                 guard let url = url, error == nil else {
                                     self?.storageReference.child("user.png").downloadURL{ defaultUrl, error in
                                         guard let defaultUrl = defaultUrl, error == nil else {
-                                            self?.sendNotification(status: .authorized)
+                                            self?.sendNotification(status: playerStatus.authorized )
                                             return
                                         }
                                         self?.playerProfilePhoto = defaultUrl.absoluteString
@@ -110,7 +110,7 @@ class PlayerService {
                 switch insertResult {
                 case .success(_):
                     completion(.success(true))
-                    self?.sendNotification(status: authStatus.authorized)
+                    self?.sendNotification(status: playerStatus.authorized)
                     return
                 case .failure(let insertError):
                     completion(.failure(insertError))
@@ -123,7 +123,7 @@ class PlayerService {
     public func signOut(){
         if isSignedIn {
             try? Auth.auth().signOut()
-            NotificationCenter.default.post(name: .playerAuthStatusChanged, object: authStatus.notAuthorized)
+            NotificationCenter.default.post(name: .playerAuthStatusChanged, object: playerStatus.notAuthorized)
             player = nil
         }
     }
@@ -172,6 +172,7 @@ class PlayerService {
                     switch r {
                     case .success(_):
                         completion(.success(true))
+                        self?.sendNotification(status: playerStatus.profileUpdated)
                         return
                     case .failure(let taskError):
                         completion(.failure(taskError))
@@ -181,7 +182,7 @@ class PlayerService {
             }
     }
     
-    private func uploadPlayerProfilePhoto(userid: String, photoData: Data, completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func uploadPlayerProfilePhoto(userid: String, photoData: Data, completion: @escaping (Result<Bool, Error>) -> Void) {
         let photoName = "\(userid).png"
         storageReference.child(photoName).putData(photoData){ [weak self] _,error in
             guard error == nil else {
@@ -203,11 +204,7 @@ class PlayerService {
         }
     }
     
-    private func updatePlayer(player: Player){
-        
-    }
-    
-    private func sendNotification(status: authStatus) {
+    private func sendNotification(status: playerStatus) {
         NotificationCenter.default.post(name: .playerAuthStatusChanged, object: status)
     }
     
