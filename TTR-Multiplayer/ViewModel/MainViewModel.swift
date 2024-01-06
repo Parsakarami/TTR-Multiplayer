@@ -34,7 +34,7 @@ class MainViewModel : ObservableObject {
             if status == .authorized {
                 self?.player = PlayerService.instance.player
                 self?.isAuthorized = true
-                self?.profilePhoto = PlayerService.instance.playerProfile
+                self?.profilePhoto = PlayerService.instance.playerProfilePhoto
             } else {
                 self?.player = nil
                 self?.isAuthorized = false

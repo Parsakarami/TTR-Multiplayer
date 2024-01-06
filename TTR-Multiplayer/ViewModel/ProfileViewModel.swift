@@ -16,7 +16,7 @@ class ProfileViewModel : ObservableObject {
         }
         
         self.player = currentPlayer
-        self.profilePhoto = PlayerService.instance.playerProfile
+        self.profilePhoto = PlayerService.instance.playerProfilePhoto
     }
     
     func updateProfile() {

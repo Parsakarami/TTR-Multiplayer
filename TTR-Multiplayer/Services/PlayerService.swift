@@ -17,7 +17,7 @@ class PlayerService {
     private var currentUser : User?
     private var handler : AuthStateDidChangeListenerHandle?
     public private(set) var player : Player?
-    public private(set) var playerProfile : String = ""
+    public private(set) var playerProfilePhoto : String = ""
     
     init() {
         let storage = Storage.storage().reference()
@@ -46,12 +46,12 @@ class PlayerService {
                                             self?.sendNotification(status: .authorized)
                                             return
                                         }
-                                        self?.playerProfile = defaultUrl.absoluteString
+                                        self?.playerProfilePhoto = defaultUrl.absoluteString
                                         self?.sendNotification(status: .authorized)
                                     }
                                     return
                                 }
-                                self?.playerProfile = url.absoluteString
+                                self?.playerProfilePhoto = url.absoluteString
                                 self?.sendNotification(status: .authorized)
                             }
                         } catch {
@@ -94,18 +94,29 @@ class PlayerService {
     }
     
     public func signUp(fullName: String, email: String, password: String, profilePhoto: Data?, completion: @escaping (Result<Bool,Error>) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
             guard error == nil else {
-                return completion(.failure(error!))
+                completion(.failure(error!))
+                return
             }
             
             guard let id = result?.user.uid else {
                 let error = NSError(domain: "TicketToRide.SignUp", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to sign up."])
-                return completion(.failure(error))
+                completion(.failure(error))
+                return
             }
             
-            self.insertPlayer(id: id, fullName: fullName, email: email,profilePhoto: profilePhoto)
-            completion(.success(true))
+            self?.insertPlayer(id: id, fullName: fullName, email: email, profilePhoto: profilePhoto) { insertResult in
+                switch insertResult {
+                case .success(_):
+                    completion(.success(true))
+                    self?.sendNotification(status: authStatus.authorized)
+                    return
+                case .failure(let insertError):
+                    completion(.failure(insertError))
+                    return
+                }
+            }
         }
     }
     
@@ -119,39 +130,77 @@ class PlayerService {
     
     private func fetchPlayer(id:String, completion: @escaping (Result<Player,Error>) -> Void) {
         playerCollection.document(id).getDocument { (querySnapshot, error) in
-                guard error == nil else {
-                    return completion(.failure(error!))
-                }
-            
-                do {
-                    let player = try querySnapshot?.data(as: Player.self)
-                    completion(.success(player!))
-                } catch {
-                    let error = NSError(domain: "TicketToRide.FetchPlayer", code: 0, userInfo: [NSLocalizedDescriptionKey: "Cannot fetch data from database."])
-                    completion(.failure(error))
-                }
+            guard error == nil else {
+                return completion(.failure(error!))
             }
+            
+            do {
+                let player = try querySnapshot?.data(as: Player.self)
+                completion(.success(player!))
+            } catch {
+                let error = NSError(domain: "TicketToRide.FetchPlayer", code: 0, userInfo: [NSLocalizedDescriptionKey: "Cannot fetch data from database."])
+                completion(.failure(error))
+            }
+        }
     }
     
-    private func insertPlayer(id: String, fullName: String, email: String, profilePhoto: Data?){
+    private func insertPlayer(id: String, fullName: String, email: String, profilePhoto: Data?, completion: @escaping (Result<Bool,Error>) -> Void) {
         let newPlayer = Player(id: id,
-                            fullName: fullName,
-                            email: email,
-                            joinedDate: Date().timeIntervalSince1970)
+                               fullName: fullName,
+                               email: email,
+                               joinedDate: Date().timeIntervalSince1970)
         
         let db = Firestore.firestore()
         db.collection("players")
             .document(id)
-            .setData(newPlayer.asDictionary())
-        
-        if let photo = profilePhoto {
-            uploadPlayerProfilePhoto(userid: id, photoData: photo)
-        }
+            .setData(newPlayer.asDictionary()) { [weak self] error in
+                
+                guard error == nil else {
+                    let error = NSError(domain: "TicketToRide.InsertPlayer", code: 0, userInfo: [NSLocalizedDescriptionKey: "Cannot insert player data to the database."])
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let data = profilePhoto else {
+                    completion(.success(true))
+                    return
+                }
+                
+                //Successfully added
+                //Try uploding user photo
+                self?.uploadPlayerProfilePhoto(userid: id, photoData: data) { r in
+                    switch r {
+                    case .success(_):
+                        completion(.success(true))
+                        return
+                    case .failure(let taskError):
+                        completion(.failure(taskError))
+                        return
+                    }
+                }
+            }
     }
     
-    private func uploadPlayerProfilePhoto(userid: String, photoData: Data) {
+    private func uploadPlayerProfilePhoto(userid: String, photoData: Data, completion: @escaping (Result<Bool, Error>) -> Void) {
         let photoName = "\(userid).png"
-        storageReference.child(photoName).putData(photoData)
+        storageReference.child(photoName).putData(photoData){ [weak self] _,error in
+            guard error == nil else {
+                let nsError = NSError(domain: "TicketToRide.UploadPlayerProfilePhoto", code: 0, userInfo: [NSLocalizedDescriptionKey: "Cannot upload player photo to the database."])
+                completion(.failure(nsError))
+                return
+            }
+            
+            self?.storageReference.child(photoName).downloadURL{ [weak self] result, downloadError in
+                guard let result = result, downloadError == nil else {
+                    let error = NSError(domain: "TicketToRide.UploadPlayerProfilePhoto", code: 0, userInfo: [NSLocalizedDescriptionKey: "Cannot download back the player photo from the database."])
+                    completion(.failure(error))
+                    return
+                }
+                
+                self?.playerProfilePhoto = result.absoluteString
+                completion(.success(true))
+            }
+        }
     }
     
     private func updatePlayer(player: Player){
