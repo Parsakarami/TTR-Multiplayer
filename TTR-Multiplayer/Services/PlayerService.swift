@@ -184,14 +184,14 @@ class PlayerService {
     
     public func uploadPlayerProfilePhoto(userid: String, photoData: Data, completion: @escaping (Result<Bool, Error>) -> Void) {
         StorageService.instance.uploadProfilePhoto(uid: userid, data: photoData) { [weak self] result in
-            
             switch result {
             case .success(let url):
                 guard let photoAddress = url else {
-                    completion(.success(true))
+                    completion(.success(false))
                     return
                 }
                 self?.playerProfilePhoto = photoAddress.absoluteString
+                self?.sendNotification(status: .profileUpdated)
                 completion(.success(true))
                 break
             case .failure(let error):

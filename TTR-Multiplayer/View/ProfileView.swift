@@ -15,10 +15,10 @@ struct ProfileView: View {
                 .font(.system(size: 22,weight: .bold, design: .default))
             
             Form {
-                if viewModel.message != "" {
-                    Text(viewModel.message)
-                        .foregroundColor(viewModel.isSuccessful ? .green : .red)
-                        .padding()
+                if viewModel.message != "" && viewModel.isUpdating == false {
+                        Text(viewModel.message)
+                            .foregroundColor(viewModel.isSuccessful ? .green : .red)
+                            .padding()
                 }
                 
                 HStack {
@@ -52,12 +52,22 @@ struct ProfileView: View {
                         .frame(maxWidth: 190,alignment: .leading)
                 }.padding()
                 
-                TTRButton(action: {
-                    viewModel.updateProfile()
-                }, text: "Update profile", icon: "pencil", bgColor: viewModel.isSuccessful ? .gray : .green)
-                .disabled(viewModel.isSuccessful)
-                .frame(height: 50)
-                .padding()
+                HStack (alignment: .center) {
+                    Spacer()
+                    if viewModel.isUpdating {
+                        ProgressView()
+                            .frame(height: 50)
+                            .padding()
+                    } else {
+                        TTRButton(action: {
+                            viewModel.updateProfile()
+                        }, text: "Update profile", icon: "pencil", bgColor: .green)
+                        .disabled(viewModel.isUpdating)
+                        .frame(height: 50)
+                        .padding()
+                    }
+                    Spacer()
+                }
             }
         }
         .navigationTitle("")

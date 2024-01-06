@@ -10,9 +10,9 @@ import UIKit
 
 class ProfileViewModel : ObservableObject {
     @Published var player : Player? = nil
-    @Published var profilePhoto : String = ""
     @Published var message : String = ""
     @Published var isSuccessful : Bool = false
+    @Published var isUpdating : Bool = false
     @Published var selectedImage : UIImage? = nil
     
     init() {
@@ -20,34 +20,32 @@ class ProfileViewModel : ObservableObject {
             return
         }
         
-        let profileURL = PlayerService.instance.playerProfilePhoto
         self.player = currentPlayer
+        
+        let profileURL = PlayerService.instance.playerProfilePhoto
         guard !profileURL.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
         }
-        
-        self.profilePhoto = profileURL
-        self.loadImageFromURL(url: URL(string: profileURL)!) { [weak self] result in
-            guard let image = result else {
-                return
-            }
-            self?.selectedImage = image
-        }
+        reloadProfilePhoto(url: profileURL)
     }
     
     func updateProfile() {
+        isUpdating = true
         guard let player = player else {
             message = "Failed to update profile"
+            isUpdating = false
             return
         }
         
         guard let selectedImage = selectedImage else {
             message = "Photo not selected!"
+            isUpdating = false
             return
         }
         
         guard let data = selectedImage.pngData() else {
             message = "Photo is invalid."
+            isUpdating = false
             return
         }
         
@@ -56,7 +54,8 @@ class ProfileViewModel : ObservableObject {
             case .success(_):
                 self?.isSuccessful = true
                 self?.message = "Successful"
-                
+                self?.reloadProfilePhoto(url: PlayerService.instance.playerProfilePhoto)
+                self?.isUpdating = false
                 break
             case .failure(_):
                 break
@@ -72,5 +71,22 @@ class ProfileViewModel : ObservableObject {
                 completion(nil)
             }
         }.resume()
+    }
+    
+    private func reloadProfilePhoto(url: String) {
+        guard !url.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return
+        }
+        
+        guard let photoURL = URL(string: url) else {
+            return
+        }
+        
+        self.loadImageFromURL(url: photoURL) { [weak self] result in
+            guard let image = result else {
+                return
+            }
+            self?.selectedImage = image
+        }
     }
 }
