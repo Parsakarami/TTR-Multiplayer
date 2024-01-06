@@ -59,13 +59,6 @@ struct MainView: View {
                                 .tabItem {
                                     Label("Board",systemImage: "gamecontroller.fill")
                                 }
-                                
-                                VStack(alignment: .center, spacing: 20){
-                                    
-                                }
-                                .tabItem {
-                                    Label("Profile",systemImage: "gear")
-                                }
                             }
                             .padding()
                             Spacer()
