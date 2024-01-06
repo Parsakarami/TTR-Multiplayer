@@ -18,26 +18,17 @@ struct PhotoPickerPreview: View {
         VStack{
             if let image = selectedImage {
                 VStack {
-                    Button(action: {
-                        isImagePickerPresented.toggle()
-                    }){
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
                             .aspectRatio(contentMode: .fill)
                             .clipShape(.circle)
                             .frame(width: previewWidth, height: previewHeight)
-                            .overlay{
-                                Image("add.photo.white")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .padding(25)
-                                    .frame(width: previewWidth, height: previewWidth)
-                                    .overlay{
-                                        Circle().fill(Color.indigo.opacity(0.5))
-                                    }
-                                    .opacity(0.5)
-                            }
+                    Button(action: {
+                        isImagePickerPresented.toggle()
+                    }){
+                        Label("Replace",systemImage: "photo.badge.plus.fill")
+                            .padding(5)
                     }
                 }
                 .padding(5)
