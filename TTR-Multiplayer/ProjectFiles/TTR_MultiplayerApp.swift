@@ -14,8 +14,10 @@ struct TTR_MultiplayerApp: App {
         FirebaseApp.configure()
         
         //Init services
+        StorageService.instance.initialize()
         PlayerService.instance.initialize()
         RoomService.instance.initialize()
+        
     }
     
     var body: some Scene {

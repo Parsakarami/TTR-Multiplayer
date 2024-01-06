@@ -183,23 +183,20 @@ class PlayerService {
     }
     
     public func uploadPlayerProfilePhoto(userid: String, photoData: Data, completion: @escaping (Result<Bool, Error>) -> Void) {
-        let photoName = "\(userid).png"
-        storageReference.child(photoName).putData(photoData){ [weak self] _,error in
-            guard error == nil else {
-                let nsError = NSError(domain: "TicketToRide.UploadPlayerProfilePhoto", code: 0, userInfo: [NSLocalizedDescriptionKey: "Cannot upload player photo to the database."])
-                completion(.failure(nsError))
-                return
-            }
+        StorageService.instance.uploadProfilePhoto(uid: userid, data: photoData) { [weak self] result in
             
-            self?.storageReference.child(photoName).downloadURL{ [weak self] result, downloadError in
-                guard let result = result, downloadError == nil else {
-                    let error = NSError(domain: "TicketToRide.UploadPlayerProfilePhoto", code: 0, userInfo: [NSLocalizedDescriptionKey: "Cannot download back the player photo from the database."])
-                    completion(.failure(error))
+            switch result {
+            case .success(let url):
+                guard let photoAddress = url else {
+                    completion(.success(true))
                     return
                 }
-                
-                self?.playerProfilePhoto = result.absoluteString
+                self?.playerProfilePhoto = photoAddress.absoluteString
                 completion(.success(true))
+                break
+            case .failure(let error):
+                completion(.failure(error))
+                return
             }
         }
     }

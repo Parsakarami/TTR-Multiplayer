@@ -22,6 +22,7 @@
 		422A7EE62B486DCC0063F2C2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 422A7EE52B486DCC0063F2C2 /* FirebaseStorage */; };
 		422A7EE82B4889D80063F2C2 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */; };
 		422A7EEA2B4894E60063F2C2 /* PhotoPickerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */; };
+		4249E0E92B49C3B10086B8F4 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4249E0E82B49C3B10086B8F4 /* StorageService.swift */; };
 		425707E52B478195003932E4 /* GradientStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E42B478195003932E4 /* GradientStack.swift */; };
 		425707E82B47929E003932E4 /* JoinRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E72B47929E003932E4 /* JoinRoomViewModel.swift */; };
 		425707EA2B4792E2003932E4 /* JoinRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E92B4792E2003932E4 /* JoinRoomView.swift */; };
@@ -66,6 +67,7 @@
 		422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerPreview.swift; sourceTree = "<group>"; };
+		4249E0E82B49C3B10086B8F4 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		425707E42B478195003932E4 /* GradientStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientStack.swift; sourceTree = "<group>"; };
 		425707E72B47929E003932E4 /* JoinRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoomViewModel.swift; sourceTree = "<group>"; };
 		425707E92B4792E2003932E4 /* JoinRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoomView.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			children = (
 				421661932B47218700F47CE2 /* RoomService.swift */,
 				421661952B472D7200F47CE2 /* PlayerService.swift */,
+				4249E0E82B49C3B10086B8F4 /* StorageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				425B77B82B44557100F30BAF /* LoginViewModel.swift in Sources */,
 				42F085992B44FDD300F171EE /* JsonEncoder.swift in Sources */,
 				422A7EE22B485E100063F2C2 /* ProfileView.swift in Sources */,
+				4249E0E92B49C3B10086B8F4 /* StorageService.swift in Sources */,
 				42DB26DD2B43968F0051C31A /* ViewExtensions.swift in Sources */,
 				42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */,
 				425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */,
