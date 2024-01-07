@@ -8,18 +8,14 @@
 import SwiftUI
 
 struct Card: Identifiable {
-    var id: Int
-    var image: String
-    var offset: CGFloat
-    var title: String
+    var id : Int // card index
+    var image : String
+    var offset : CGFloat
+    var title : String
 }
 
 struct CardView: View {
-    
-    @State var cards = [Card(id: 0, image: "User", offset: 0, title: "User 1"),
-                        Card(id: 1, image: "User", offset: 0, title: "User 2"),
-                        Card(id: 2, image: "User", offset: 0, title: "User 3")]
-    
+    @State var cards : [Card]
     @State var scrolled = 0
     var body: some View {
         ZStack {
@@ -61,7 +57,7 @@ struct CardView: View {
                 }).onEnded({ value in
                     withAnimation{
                         if value.translation.width < 0 {
-                            if -value.translation.width > 180 && card.id != cards.last!.id {
+                            if -value.translation.width > 120 && card.id != cards.last!.id {
                                 cards[card.id].offset = -(calcwidth() + 60)
                                 scrolled += 1
                             } else {
@@ -70,7 +66,7 @@ struct CardView: View {
                         } else {
                             //Restore cards
                             if card.id > 0 {
-                                if value.translation.width > 180 {
+                                if value.translation.width > 120 {
                                     cards[card.id-1].offset = 0
                                     scrolled -= 1
                                 } else {
@@ -95,5 +91,8 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView()
+    
+    CardView(cards: [Card(id: 0, image: "User", offset: 0, title: "User 1"),
+                     Card(id: 1, image: "User", offset: 0, title: "User 2"),
+                     Card(id: 2, image: "User", offset: 0, title: "User 3")])
 }

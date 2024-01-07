@@ -13,6 +13,10 @@ struct MainView: View {
     @State var offset : CGFloat = 0
     @State var lastOffset : CGFloat = 0
     @State private var isLoaded : Bool = false
+    private var cards : [Card] = [Card(id: 0, image: "User", offset: 0, title: "User 1"),
+                                  Card(id: 1, image: "User", offset: 0, title: "User 1"),
+                                  Card(id: 2, image: "User", offset: 0, title: "User 1"),
+                                  Card(id: 3, image: "User", offset: 0, title: "User 1")]
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
         
@@ -47,7 +51,7 @@ struct MainView: View {
                                     }
                                     
                                     Spacer()
-                                    CardView()
+                                    CardView(cards:self.cards)
                                     Spacer()
                                     
                                     if let room = viewModel.currentRoom {
