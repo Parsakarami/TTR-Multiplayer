@@ -24,10 +24,11 @@ struct PhotoPickerPreview: View {
                             .aspectRatio(contentMode: .fill)
                             .clipShape(.circle)
                             .frame(width: previewWidth, height: previewHeight)
+                    
                     Button(action: {
                         isImagePickerPresented.toggle()
                     }){
-                        Label("Replace",systemImage: "photo.badge.plus.fill")
+                        Label("Replace",systemImage: "paperclip")
                             .padding(5)
                     }
                 }

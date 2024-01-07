@@ -23,11 +23,7 @@ struct ProfileView: View {
                 
                 HStack {
                     Spacer()
-                    Button(action: {
-                        viewModel.updateProfile()
-                    }){
-                        PhotoPickerPreview(selectedImage: $viewModel.selectedImage)
-                    }
+                    PhotoPickerPreview(selectedImage: $viewModel.selectedImage)
                     Spacer()
                 }
                 
