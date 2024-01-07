@@ -16,6 +16,9 @@
 		421661962B472D7200F47CE2 /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661952B472D7200F47CE2 /* PlayerService.swift */; };
 		421661982B473D0F00F47CE2 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661972B473D0F00F47CE2 /* Notification.swift */; };
 		4216619A2B4746AD00F47CE2 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661992B4746AD00F47CE2 /* Enums.swift */; };
+		422994AD2B4B27D200F1F112 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 422994AC2B4B27D200F1F112 /* FirebaseMessaging */; };
+		422994AF2B4B285100F1F112 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422994AE2B4B285100F1F112 /* Destination.swift */; };
+		422994B12B4B47A300F1F112 /* DestinationPickerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422994B02B4B47A300F1F112 /* DestinationPickerCardView.swift */; };
 		4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4229F9032B44E528008B04BB /* AnimatedHeader.swift */; };
 		422A7EE22B485E100063F2C2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE12B485E100063F2C2 /* ProfileView.swift */; };
 		422A7EE42B4865020063F2C2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */; };
@@ -64,6 +67,8 @@
 		421661952B472D7200F47CE2 /* PlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerService.swift; sourceTree = "<group>"; };
 		421661972B473D0F00F47CE2 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		421661992B4746AD00F47CE2 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		422994AE2B4B285100F1F112 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
+		422994B02B4B47A300F1F112 /* DestinationPickerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPickerCardView.swift; sourceTree = "<group>"; };
 		4229F9032B44E528008B04BB /* AnimatedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHeader.swift; sourceTree = "<group>"; };
 		422A7EE12B485E100063F2C2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -100,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				422994AD2B4B27D200F1F112 /* FirebaseMessaging in Frameworks */,
 				42FA97EF2B44B48D00B89772 /* FirebaseAnalyticsSwift in Frameworks */,
 				42F085932B44FB1300F171EE /* FirebaseAuth in Frameworks */,
 				42FA97EB2B44B48D00B89772 /* FirebaseAnalytics in Frameworks */,
@@ -157,6 +163,7 @@
 				422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */,
 				422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */,
 				4249E0EA2B4A1F700086B8F4 /* CardView.swift */,
+				422994B02B4B47A300F1F112 /* DestinationPickerCardView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -255,6 +262,7 @@
 			children = (
 				42F085942B44FC9700F171EE /* Player.swift */,
 				4215F60E2B45CE77007AD086 /* Room.swift */,
+				422994AE2B4B285100F1F112 /* Destination.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -335,6 +343,7 @@
 				42F085922B44FB1300F171EE /* FirebaseAuth */,
 				42F085962B44FD6100F171EE /* FirebaseFirestore */,
 				422A7EE52B486DCC0063F2C2 /* FirebaseStorage */,
+				422994AC2B4B27D200F1F112 /* FirebaseMessaging */,
 			);
 			productName = "TTR-Multiplayer";
 			productReference = 42DB268A2B430DE20051C31A /* TTR-Multiplayer.app */;
@@ -421,6 +430,8 @@
 				42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */,
 				425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */,
 				425707E82B47929E003932E4 /* JoinRoomViewModel.swift in Sources */,
+				422994B12B4B47A300F1F112 /* DestinationPickerCardView.swift in Sources */,
+				422994AF2B4B285100F1F112 /* Destination.swift in Sources */,
 				421661962B472D7200F47CE2 /* PlayerService.swift in Sources */,
 				4215F6122B45D242007AD086 /* NewRoomView.swift in Sources */,
 				425707E52B478195003932E4 /* GradientStack.swift in Sources */,
@@ -646,6 +657,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		422994AC2B4B27D200F1F112 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42FA97E92B44B48D00B89772 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		422A7EE52B486DCC0063F2C2 /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 42FA97E92B44B48D00B89772 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

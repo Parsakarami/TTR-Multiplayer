@@ -13,10 +13,7 @@ struct MainView: View {
     @State var offset : CGFloat = 0
     @State var lastOffset : CGFloat = 0
     @State private var isLoaded : Bool = false
-    private var cards : [Card] = [Card(id: 0, image: "User", offset: 0, title: "User 1"),
-                                  Card(id: 1, image: "User", offset: 0, title: "User 1"),
-                                  Card(id: 2, image: "User", offset: 0, title: "User 1"),
-                                  Card(id: 3, image: "User", offset: 0, title: "User 1")]
+    private var tickets : [DestinationCardItem] = [DestinationCardItem(id: 0, origin: "Los Angeles", destination: "New York", point: 21),DestinationCardItem(id: 1, origin: "Toronto", destination: "Denver", point: 18),DestinationCardItem(id: 2, origin: "Chicago", destination: "Las Vegas", point: 14),DestinationCardItem(id: 3, origin: "San Francisco", destination: "Atlanta", point: 17)]
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
         
@@ -51,7 +48,7 @@ struct MainView: View {
                                     }
                                     
                                     Spacer()
-                                    CardView(cards:self.cards)
+                                    DestinationPickerCardView(cards: self.tickets)
                                     Spacer()
                                     
                                     if let room = viewModel.currentRoom {
