@@ -35,17 +35,20 @@ struct MainView: View {
                                             showMenu.toggle()
                                         }
                                     }){
-                                        
-                                        AsyncImage(url: URL(string: viewModel.profilePhoto)) { image in
-                                            image
-                                                .resizable()
-                                                .frame(width: 50,height: 50)
-                                                .aspectRatio(contentMode: .fill)
-                                                .clipShape(.circle)
-                                        } placeholder: {
-                                            ProgressView()
-                                        }
+                                            AsyncImage(url: URL(string: viewModel.profilePhoto)) { image in
+                                                image
+                                                    .resizable()
+                                                    .frame(width: 50,height: 50)
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .clipShape(.circle)
+                                            } placeholder: {
+                                                ProgressView()
+                                            }
                                     }
+                                    
+                                    Spacer()
+                                    CardView()
+                                    Spacer()
                                     
                                     if let room = viewModel.currentRoom {
                                         Text(room.roomCode).foregroundColor(.red)

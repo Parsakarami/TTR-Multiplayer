@@ -23,6 +23,7 @@
 		422A7EE82B4889D80063F2C2 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */; };
 		422A7EEA2B4894E60063F2C2 /* PhotoPickerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */; };
 		4249E0E92B49C3B10086B8F4 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4249E0E82B49C3B10086B8F4 /* StorageService.swift */; };
+		4249E0EB2B4A1F700086B8F4 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4249E0EA2B4A1F700086B8F4 /* CardView.swift */; };
 		425707E52B478195003932E4 /* GradientStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E42B478195003932E4 /* GradientStack.swift */; };
 		425707E82B47929E003932E4 /* JoinRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E72B47929E003932E4 /* JoinRoomViewModel.swift */; };
 		425707EA2B4792E2003932E4 /* JoinRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E92B4792E2003932E4 /* JoinRoomView.swift */; };
@@ -68,6 +69,7 @@
 		422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerPreview.swift; sourceTree = "<group>"; };
 		4249E0E82B49C3B10086B8F4 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		4249E0EA2B4A1F700086B8F4 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		425707E42B478195003932E4 /* GradientStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientStack.swift; sourceTree = "<group>"; };
 		425707E72B47929E003932E4 /* JoinRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoomViewModel.swift; sourceTree = "<group>"; };
 		425707E92B4792E2003932E4 /* JoinRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinRoomView.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				425707E42B478195003932E4 /* GradientStack.swift */,
 				422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */,
 				422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */,
+				4249E0EA2B4A1F700086B8F4 /* CardView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				425707E52B478195003932E4 /* GradientStack.swift in Sources */,
 				425B77B42B4454F100F30BAF /* MainViewModel.swift in Sources */,
 				4216619A2B4746AD00F47CE2 /* Enums.swift in Sources */,
+				4249E0EB2B4A1F700086B8F4 /* CardView.swift in Sources */,
 				4215F6142B45F361007AD086 /* SideMenuItemButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
