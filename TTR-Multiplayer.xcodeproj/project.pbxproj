@@ -34,6 +34,7 @@
 		425B77BD2B44691200F30BAF /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77BC2B44691200F30BAF /* RegisterView.swift */; };
 		425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */; };
 		425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */; };
+		42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ACCE772B4A650800C059DC /* DestinationCard.swift */; };
 		42AF08302B44D634002EB696 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AF082F2B44D634002EB696 /* GoogleService-Info.plist */; };
 		42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */; };
 		42DB26902B430DE20051C31A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268F2B430DE20051C31A /* MainView.swift */; };
@@ -80,6 +81,7 @@
 		425B77BC2B44691200F30BAF /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackButton.swift; sourceTree = "<group>"; };
+		42ACCE772B4A650800C059DC /* DestinationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCard.swift; sourceTree = "<group>"; };
 		42AF082F2B44D634002EB696 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42DB268A2B430DE20051C31A /* TTR-Multiplayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TTR-Multiplayer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTR_MultiplayerApp.swift; sourceTree = "<group>"; };
@@ -175,6 +177,14 @@
 			path = NavigationBar;
 			sourceTree = "<group>";
 		};
+		42ACCE762B4A64ED00C059DC /* GameElement */ = {
+			isa = PBXGroup;
+			children = (
+				42ACCE772B4A650800C059DC /* DestinationCard.swift */,
+			);
+			path = GameElement;
+			sourceTree = "<group>";
+		};
 		42DB26812B430DE20051C31A = {
 			isa = PBXGroup;
 			children = (
@@ -262,6 +272,7 @@
 		42DB26D82B4388360051C31A /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				42ACCE762B4A64ED00C059DC /* GameElement */,
 				425707E62B4781A8003932E4 /* General */,
 				4229F9022B44E519008B04BB /* TTR */,
 				425B77C02B448F0A00F30BAF /* NavigationBar */,
@@ -397,6 +408,7 @@
 				425707EA2B4792E2003932E4 /* JoinRoomView.swift in Sources */,
 				4215F60D2B45CD7A007AD086 /* NewRoomViewModel.swift in Sources */,
 				425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */,
+				42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */,
 				42DB26E02B439A930051C31A /* SideMenuItemLink.swift in Sources */,
 				42F085952B44FC9700F171EE /* Player.swift in Sources */,
 				4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */,
