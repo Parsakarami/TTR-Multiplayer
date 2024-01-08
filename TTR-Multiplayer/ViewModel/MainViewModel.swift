@@ -67,6 +67,7 @@ class MainViewModel : ObservableObject {
                 let status = notification.object as? roomStatus
                 if status == .fetchedCurrentRoom || status == .created {
                     self?.currentRoom = RoomService.instance.currentRoom
+                    self?.reloadProfilePhoto()
                 } else if status == .closed {
                     self?.currentRoom = nil
                 } else if status == .playerJoined {
