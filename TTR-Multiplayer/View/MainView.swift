@@ -93,6 +93,18 @@ struct MainView: View {
                         lastOffset = 0
                     }
                 }
+                .gesture(DragGesture().onChanged({value in
+                }).onEnded({value in
+                    let width = value.translation.width
+                    let startX = value.startLocation.x
+                    withAnimation(.snappy(duration: 0.25)) {
+                        if width > 150 && startX < 200 {
+                            showMenu = true
+                        } else if -(width) > 200 {
+                            showMenu = false
+                        }
+                    }
+                }))
             }
         }
     }

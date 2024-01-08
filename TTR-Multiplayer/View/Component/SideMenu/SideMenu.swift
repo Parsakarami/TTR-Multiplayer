@@ -84,7 +84,16 @@ struct SideMenu: View {
                    height: getScreenSize().height,
                    alignment: .leading)
             .offset(x: isShowMenu ? 0 : -getScreenSize().width)
-            //test
+            .gesture(DragGesture().onChanged({value in
+                
+            }).onEnded({value in
+                let width = value.translation.width
+                withAnimation(.snappy(duration: 0.25)) {
+                    if -(width) > 120 {
+                        isShowMenu = false
+                    }
+                }
+            }))
     }
     
     private func closeMenu() {
