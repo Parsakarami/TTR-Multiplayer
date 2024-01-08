@@ -14,15 +14,29 @@ class MainViewModel : ObservableObject {
     @Published var isAuthorized : Bool = false
     @Published var currentRoom : Room? = nil
     @Published var profilePhoto : String = ""
+    @Published var showDestinationPicker : Bool = false
+    @Published var roomPlayersPhotos : [String] = []
     private var handler: AuthStateDidChangeListenerHandle?
-    
     init() {
         subscribeToAuthChange()
         subscribeToRoomChange()
     }
     
+    func pickDestinationTickets() {
+        //Add to timeline
+        showDestinationPicker = true
+    }
+    
     func closeCurrentRoom() {
         RoomService.instance.closeCurrentRoom()
+    }
+    
+    func quitRoom() {
+        guard let player = player else {
+            return
+        }
+        
+        RoomService.instance.quitRoom(id: player.id)
     }
     
     private func subscribeToAuthChange(){
@@ -55,8 +69,27 @@ class MainViewModel : ObservableObject {
                     self?.currentRoom = RoomService.instance.currentRoom
                 } else if status == .closed {
                     self?.currentRoom = nil
+                } else if status == .playerJoined {
+                    self?.currentRoom = RoomService.instance.currentRoom
+                } else if status == .changed {
+                    self?.currentRoom = RoomService.instance.currentRoom
+                    self?.reloadProfilePhoto()
+                } else if status == .quited {
+                    self?.currentRoom = nil
                 }
             }
         
+    }
+    
+    private func reloadProfilePhoto() {
+        roomPlayersPhotos.removeAll(keepingCapacity: false)
+        currentRoom?.playersIDs.forEach { id in
+            Task(priority: .medium) { [weak self] in
+                let photoURL = try await StorageService.instance.getProfilePhotoURL(uid: id)
+                if self?.roomPlayersPhotos.contains(photoURL) == false {
+                    self?.roomPlayersPhotos.append(photoURL)
+                }
+            }
+        }
     }
 }

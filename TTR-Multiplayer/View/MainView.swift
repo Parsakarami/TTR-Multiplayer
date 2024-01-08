@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestoreSwift
 
 struct MainView: View {
     @StateObject var viewModel = MainViewModel()
@@ -13,10 +14,11 @@ struct MainView: View {
     @State var offset : CGFloat = 0
     @State var lastOffset : CGFloat = 0
     @State private var isLoaded : Bool = false
+    
     private var tickets : [DestinationCardItem] = [DestinationCardItem(id: 0, origin: "Los Angeles", destination: "New York", point: 21),DestinationCardItem(id: 1, origin: "Toronto", destination: "Denver", point: 18),DestinationCardItem(id: 2, origin: "Chicago", destination: "Las Vegas", point: 14),DestinationCardItem(id: 3, origin: "San Francisco", destination: "Atlanta", point: 17)]
+    
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
-        
         if !isLoaded {
             SplashScreen(isLoaded: $isLoaded)
         } else {
@@ -29,35 +31,56 @@ struct MainView: View {
                         //Main TabBar
                         VStack {
                             TabView{
-                                
                                 VStack(alignment: .center, spacing: 20){
-                                    Button(action: {
-                                        withAnimation(.smooth(duration: 0.3)){
-                                            showMenu.toggle()
-                                        }
-                                    }){
-                                            AsyncImage(url: URL(string: viewModel.profilePhoto)) { image in
-                                                image
-                                                    .resizable()
-                                                    .frame(width: 50,height: 50)
-                                                    .aspectRatio(contentMode: .fill)
-                                                    .clipShape(.circle)
-                                            } placeholder: {
-                                                ProgressView()
+                                    HStack (alignment: .center, spacing: 10) {
+                                        if viewModel.currentRoom != nil {
+                                            Spacer()
+                                            ForEach (viewModel.roomPlayersPhotos, id: \.self) { photoAddress in
+                                                VStack{
+                                                    AsyncImage(url: URL(string: photoAddress)) { image in
+                                                        image
+                                                            .resizable()
+                                                            .frame(width: 60,height: 60)
+                                                            .aspectRatio(contentMode: .fill)
+                                                            .clipShape(.circle)
+                                                            .padding(5)
+                                                    } placeholder: {
+                                                        ProgressView()
+                                                    }
+                                                    
+                                                    Text("Player Name")
+                                                        .font(.system(size: 10))
+                                                }
                                             }
-                                    }
+                                            Spacer()
+                                        }
+                                    }.frame(maxWidth:.infinity,maxHeight:150)
                                     
                                     Spacer()
-                                    DestinationPickerCardView(cards: self.tickets)
-                                    Spacer()
-                                    
                                     if let room = viewModel.currentRoom {
-                                        Text(room.roomCode).foregroundColor(.red)
+                                        Text("Room \(room.roomCode)").foregroundColor(.red)
                                         
                                         TTRButton(action: {
-                                            viewModel.closeCurrentRoom()
-                                        }, text: "End the room", icon: "xmark", bgColor: .red, fgColor: .white)
+                                            viewModel.pickDestinationTickets()
+                                        }, text: "Pick Destinations", icon: "lanyardcard.fill", bgColor: .blue, fgColor: .white)
                                         .frame(width: 200, height: 50, alignment: .center)
+                                        
+                                        if let player = viewModel.player {
+                                            if room.ownerID == player.id {
+                                                TTRButton(action: {
+                                                    viewModel.closeCurrentRoom()
+                                                }, text: "End the room", icon: "xmark", bgColor: .red, fgColor: .white)
+                                                .frame(width: 200, height: 50, alignment: .center)
+                                            } else {
+                                                TTRButton(action: {
+                                                    viewModel.quitRoom()
+                                                }, text: "Quit", icon: "xmark", bgColor: .red, fgColor: .white)
+                                                .frame(width: 200, height: 50, alignment: .center)
+                                            }
+                                        }
+                                        Spacer()
+                                        TimelineView()
+                                        Spacer()
                                     }
                                 }
                                 .tabItem {
@@ -82,7 +105,8 @@ struct MainView: View {
                     .onAppear{
                         showMenu = false
                     }.ignoresSafeArea(.all)
-                }.onChange(of: showMenu) { newValue in
+                }
+                .onChange(of: showMenu) { newValue in
                     if showMenu && offset == 0 {
                         offset = sideBarWidth
                         lastOffset = offset
@@ -105,6 +129,10 @@ struct MainView: View {
                         }
                     }
                 }))
+                .sheet(isPresented: $viewModel.showDestinationPicker){
+                    DestinationPickerCardView(cards: self.tickets)
+                        .interactiveDismissDisabled()
+                }
             }
         }
     }

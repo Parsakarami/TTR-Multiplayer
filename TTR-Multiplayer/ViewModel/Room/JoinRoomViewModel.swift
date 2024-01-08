@@ -11,18 +11,32 @@ class JoinRoomViewModel : ObservableObject {
     @Published var roomAccessCode : String = ""
     @Published var message : String = ""
     @Published var isSuccessful : Bool = false
+    @Published var isJoining : Bool = false
     init() {
         
     }
     
-    func joinRoom(){
+    func joinRoom() async throws -> Void{
         guard canJoin() else {
             return
         }
+        
+        isJoining = true
+            isSuccessful = try await RoomService.instance.joinRoom(roomCode: roomAccessCode)
+            if isSuccessful {
+                message = "Successful"
+            } else {
+                message = "Cannot join to the room."
+            }
+            isJoining = false
     }
     
     func canJoin() -> Bool {
-        message = "Access code is incorrect."
-        return false
+        guard !roomAccessCode.trimmingCharacters(in: .whitespaces).isEmpty else {
+            message = "Access cannot be empty."
+            return false
+        }
+        
+        return true
     }
 }

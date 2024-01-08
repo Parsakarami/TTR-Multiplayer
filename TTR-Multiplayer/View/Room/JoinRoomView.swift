@@ -18,7 +18,7 @@ struct JoinRoomView: View {
             Form {
                 if viewModel.message != "" {
                     Text(viewModel.message)
-                        .foregroundColor(.red)
+                        .foregroundColor(viewModel.isSuccessful ? .green : .red)
                         .padding()
                 }
                 
@@ -28,12 +28,27 @@ struct JoinRoomView: View {
                     .monospacedDigit()
                     .cornerRadius(6)
                 
-                TTRButton(action: {
-                        viewModel.joinRoom()
-                }, text: "Join", icon: "link", bgColor: viewModel.isSuccessful ? .gray : .blue)
-                    .disabled(viewModel.isSuccessful)
-                    .frame(height: 50)
-                    .padding()
+                HStack{
+                    Spacer()
+                    if !viewModel.isJoining {
+                        TTRButton(action: {
+                            Task(priority: .high){
+                                do {
+                                    try await viewModel.joinRoom()
+                                }catch {
+                                    print(error)
+                                }
+                            }
+                        }, text: "Join", icon: "link", bgColor: viewModel.isSuccessful ? .gray : .blue)
+                        .disabled(viewModel.isSuccessful)
+                        .frame(height: 50)
+                        .padding([.top,.bottom],10)
+                    } else {
+                        ProgressView()
+                            .padding()
+                    }
+                    Spacer()
+                }
             }
         }
         .onChange(of: viewModel.isSuccessful) { value in

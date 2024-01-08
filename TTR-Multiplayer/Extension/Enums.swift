@@ -17,6 +17,8 @@ enum roomStatus {
     case created
     case playerJoined
     case playerLeft
+    case quited
+    case changed
     case closed
     case deleted
     case fetchedCurrentRoom

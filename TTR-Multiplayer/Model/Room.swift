@@ -15,4 +15,5 @@ struct Room : Codable {
     let inUsed : Bool
     let winner : String?
     let createdDateTime : TimeInterval
+    var playersIDs : [String]
 }

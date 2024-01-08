@@ -37,8 +37,11 @@
 		425B77BD2B44691200F30BAF /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77BC2B44691200F30BAF /* RegisterView.swift */; };
 		425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */; };
 		425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */; };
+		4273E7202B4B9DA0005DFF41 /* RoomTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */; };
+		4273E7222B4B9FC6005DFF41 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273E7212B4B9FC6005DFF41 /* TimelineView.swift */; };
 		42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ACCE772B4A650800C059DC /* DestinationCard.swift */; };
 		42AF08302B44D634002EB696 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AF082F2B44D634002EB696 /* GoogleService-Info.plist */; };
+		42B9CB832B4BB69B00B20554 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 42B9CB822B4BB69B00B20554 /* FirebaseFirestoreSwift */; };
 		42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */; };
 		42DB26902B430DE20051C31A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268F2B430DE20051C31A /* MainView.swift */; };
 		42DB26922B430DE20051C31A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42DB26912B430DE20051C31A /* Assets.xcassets */; };
@@ -86,6 +89,8 @@
 		425B77BC2B44691200F30BAF /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackButton.swift; sourceTree = "<group>"; };
+		4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomTimeline.swift; sourceTree = "<group>"; };
+		4273E7212B4B9FC6005DFF41 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		42ACCE772B4A650800C059DC /* DestinationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCard.swift; sourceTree = "<group>"; };
 		42AF082F2B44D634002EB696 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42DB268A2B430DE20051C31A /* TTR-Multiplayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TTR-Multiplayer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +115,7 @@
 				42F085932B44FB1300F171EE /* FirebaseAuth in Frameworks */,
 				42FA97EB2B44B48D00B89772 /* FirebaseAnalytics in Frameworks */,
 				42FA97ED2B44B48D00B89772 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				42B9CB832B4BB69B00B20554 /* FirebaseFirestoreSwift in Frameworks */,
 				42FA97F32B44B48D00B89772 /* FirebaseAppCheck in Frameworks */,
 				422A7EE62B486DCC0063F2C2 /* FirebaseStorage in Frameworks */,
 				42FA97F12B44B48D00B89772 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -188,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				42ACCE772B4A650800C059DC /* DestinationCard.swift */,
+				4273E7212B4B9FC6005DFF41 /* TimelineView.swift */,
 			);
 			path = GameElement;
 			sourceTree = "<group>";
@@ -263,6 +270,7 @@
 				42F085942B44FC9700F171EE /* Player.swift */,
 				4215F60E2B45CE77007AD086 /* Room.swift */,
 				422994AE2B4B285100F1F112 /* Destination.swift */,
+				4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -344,6 +352,7 @@
 				42F085962B44FD6100F171EE /* FirebaseFirestore */,
 				422A7EE52B486DCC0063F2C2 /* FirebaseStorage */,
 				422994AC2B4B27D200F1F112 /* FirebaseMessaging */,
+				42B9CB822B4BB69B00B20554 /* FirebaseFirestoreSwift */,
 			);
 			productName = "TTR-Multiplayer";
 			productReference = 42DB268A2B430DE20051C31A /* TTR-Multiplayer.app */;
@@ -416,6 +425,7 @@
 				421661942B47218700F47CE2 /* RoomService.swift in Sources */,
 				425707EA2B4792E2003932E4 /* JoinRoomView.swift in Sources */,
 				4215F60D2B45CD7A007AD086 /* NewRoomViewModel.swift in Sources */,
+				4273E7222B4B9FC6005DFF41 /* TimelineView.swift in Sources */,
 				425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */,
 				42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */,
 				42DB26E02B439A930051C31A /* SideMenuItemLink.swift in Sources */,
@@ -429,6 +439,7 @@
 				42DB26DD2B43968F0051C31A /* ViewExtensions.swift in Sources */,
 				42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */,
 				425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */,
+				4273E7202B4B9DA0005DFF41 /* RoomTimeline.swift in Sources */,
 				425707E82B47929E003932E4 /* JoinRoomViewModel.swift in Sources */,
 				422994B12B4B47A300F1F112 /* DestinationPickerCardView.swift in Sources */,
 				422994AF2B4B285100F1F112 /* Destination.swift in Sources */,
@@ -666,6 +677,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 42FA97E92B44B48D00B89772 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		42B9CB822B4BB69B00B20554 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42FA97E92B44B48D00B89772 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
 		};
 		42F085922B44FB1300F171EE /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
