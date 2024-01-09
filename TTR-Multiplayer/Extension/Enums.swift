@@ -24,3 +24,10 @@ enum roomStatus {
     case fetchedCurrentRoom
 }
 
+enum roomTimelineEventType : String {
+    case started
+    case playerJoined
+    case playerPickedCard
+    case finished
+}
+

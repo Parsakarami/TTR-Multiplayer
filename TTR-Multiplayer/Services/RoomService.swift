@@ -103,7 +103,7 @@ class RoomService {
             do {
                 try await roomCollection.document(room.id)
                     .setData(room.asDictionary())
-                currentRoom = room
+                
                 listenToRoomDataChange(id:room.id)
                 NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.created)
                 return true
@@ -140,7 +140,15 @@ class RoomService {
                     if isNewPlayer {
                         newPlayerIDs.append(player.id)
                         newCapacity -= 1
-                        try await roomCollection.document(result.id).updateData(["capacity": newCapacity, "playersIDs":newPlayerIDs])
+                        try await roomCollection.document(result.id).updateData(["capacity": newCapacity,
+                                                                                 "playersIDs":newPlayerIDs])
+                        
+                        //Add timeline event
+                        let newEvent = RoomTimeline(id: UUID().uuidString,
+                                                    creatorID: player.id,
+                                                    datetime: Date().timeIntervalSince1970,
+                                                    eventType: roomTimelineEventType.playerJoined.rawValue)
+                        //try await roomCollection.document(result.id).updateData(["timeLine":newTimeline])
                     }
                     currentRoom = result
                     listenToRoomDataChange(id:result.id)

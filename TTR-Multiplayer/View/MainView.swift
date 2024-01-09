@@ -17,6 +17,8 @@ struct MainView: View {
     
     private var tickets : [DestinationCardItem] = [DestinationCardItem(id: 0, origin: "Los Angeles", destination: "New York", point: 21),DestinationCardItem(id: 1, origin: "Toronto", destination: "Denver", point: 18),DestinationCardItem(id: 2, origin: "Chicago", destination: "Las Vegas", point: 14),DestinationCardItem(id: 3, origin: "San Francisco", destination: "Atlanta", point: 17)]
     
+    //@FirestoreQuery(
+       // collectionPath: "/rooms/1/timeline",predicates: []) var timeLineQuery : [RoomTimeline]
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
         if !isLoaded {
@@ -79,7 +81,11 @@ struct MainView: View {
                                             }
                                         }
                                         Spacer()
-                                        TimelineView()
+//                                        ScrollView {
+//                                            List(timeLineQuery) { item in
+//                                                TimelineView()
+//                                            }
+//                                        }
                                         Spacer()
                                     }
                                 }
@@ -106,6 +112,9 @@ struct MainView: View {
                         showMenu = false
                     }.ignoresSafeArea(.all)
                 }
+                .onAppear{
+                   
+                }
                 .onChange(of: showMenu) { newValue in
                     if showMenu && offset == 0 {
                         offset = sideBarWidth
@@ -116,6 +125,12 @@ struct MainView: View {
                         offset = 0
                         lastOffset = 0
                     }
+                    
+                    guard let room = viewModel.currentRoom else {
+                        return
+                    }
+                    
+                    //$timeLineQuery.path = "rooms/\(room.id)/timeline"
                 }
                 .gesture(DragGesture().onChanged({value in
                 }).onEnded({value in

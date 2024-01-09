@@ -33,10 +33,10 @@ struct NewRoomView: View {
                             Text("^[\(Int(viewModel.roomCapacity)) Player](inflect: true)")
                     }
                         .foregroundColor(.gray)
+                    
                     Slider(value: $viewModel.roomCapacity,
                            in: 1...5, step: 1, minimumValueLabel: Text("1"), maximumValueLabel: Text("5")) {
-                        Text("Parsa")
-                    }
+                    }.padding()
                 }
                 .padding(5)
                 
