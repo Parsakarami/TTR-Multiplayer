@@ -11,11 +11,13 @@ import FirebaseFirestore
 class RoomService {
     static var instance = RoomService()
     private var roomCollection : CollectionReference
+    private var timelineCollection : CollectionReference
     public private(set) var currentRoom : Room?
     
     init() {
         let db = Firestore.firestore()
         roomCollection = db.collection("rooms")
+        timelineCollection = db.collection("timelines")
         NotificationCenter.default.addObserver(forName: .playerAuthStatusChanged,
                                                object: nil,
                                                queue: .main) { [self] notification in
@@ -104,6 +106,14 @@ class RoomService {
                 try await roomCollection.document(room.id)
                     .setData(room.asDictionary())
                 
+                let newEvent = RoomTimeline(id: UUID().uuidString,
+                                            roomID: room.id,
+                                            creatorID: player.id,
+                                            datetime: Date().timeIntervalSince1970,
+                                            eventType: roomTimelineEventType.started.rawValue)
+                
+                try await addEventToRoomTimeline(timeline: newEvent)
+                
                 listenToRoomDataChange(id:room.id)
                 NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.created)
                 return true
@@ -145,9 +155,12 @@ class RoomService {
                         
                         //Add timeline event
                         let newEvent = RoomTimeline(id: UUID().uuidString,
+                                                    roomID: result.id,
                                                     creatorID: player.id,
                                                     datetime: Date().timeIntervalSince1970,
                                                     eventType: roomTimelineEventType.playerJoined.rawValue)
+                        
+                        try await addEventToRoomTimeline(timeline: newEvent)
                         //try await roomCollection.document(result.id).updateData(["timeLine":newTimeline])
                     }
                     currentRoom = result
@@ -220,6 +233,16 @@ class RoomService {
             } catch {
                 print(error)
             }
+        }
+    }
+    
+    private func addEventToRoomTimeline(timeline: RoomTimeline) async throws -> Void {
+        
+        do {
+            try await timelineCollection.document(timeline.id).setData(timeline.asDictionary())
+        }
+        catch {
+            print(error)
         }
     }
 }

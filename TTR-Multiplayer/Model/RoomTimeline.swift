@@ -9,6 +9,7 @@ import Foundation
 
 struct RoomTimeline : Identifiable, Codable {
     let id : String
+    let roomID : String
     let creatorID : String
     let datetime : TimeInterval
     let eventType : String

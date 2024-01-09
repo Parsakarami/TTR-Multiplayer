@@ -16,10 +16,13 @@ class MainViewModel : ObservableObject {
     @Published var profilePhoto : String = ""
     @Published var showDestinationPicker : Bool = false
     @Published var roomPlayersPhotos : [String] = []
+    @Published var timeLine : [RoomTimeline] = []
+    
     private var handler: AuthStateDidChangeListenerHandle?
     init() {
         subscribeToAuthChange()
         subscribeToRoomChange()
+        subscribeToRoomTimeline()
     }
     
     func pickDestinationTickets() {
@@ -79,7 +82,28 @@ class MainViewModel : ObservableObject {
                     self?.currentRoom = nil
                 }
             }
-        
+    }
+    
+    private func subscribeToRoomTimeline(){
+//        NotificationCenter.default.addObserver(
+//            forName: .roomStatusChanged,
+//            object: nil,
+//            queue: .main) { [weak self] notification in
+//                let status = notification.object as? roomStatus
+//                if status == .fetchedCurrentRoom || status == .created {
+//                    self?.currentRoom = RoomService.instance.currentRoom
+//                    self?.reloadProfilePhoto()
+//                } else if status == .closed {
+//                    self?.currentRoom = nil
+//                } else if status == .playerJoined {
+//                    self?.currentRoom = RoomService.instance.currentRoom
+//                } else if status == .changed {
+//                    self?.currentRoom = RoomService.instance.currentRoom
+//                    self?.reloadProfilePhoto()
+//                } else if status == .quited {
+//                    self?.currentRoom = nil
+//                }
+//            }
     }
     
     private func reloadProfilePhoto() {
