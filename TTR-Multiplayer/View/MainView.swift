@@ -80,6 +80,11 @@ struct MainView: View {
                                         Spacer()
                                         
                                         VStack{
+                                            ScrollView{
+                                                ForEach (viewModel.timeline) { item in
+                                                    Text("\(item.eventType)")
+                                                }
+                                            }
                                         }
                                         .padding(5)
                                         .frame(width:getScreenSize().width,height:200,alignment:.center)

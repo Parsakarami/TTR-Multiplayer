@@ -16,13 +16,17 @@ class MainViewModel : ObservableObject {
     @Published var profilePhoto : String = ""
     @Published var showDestinationPicker : Bool = false
     @Published var roomPlayersPhotos : [String] = []
-    @Published var timeLine : [RoomTimeline] = []
+    @Published var timeline : [RoomTimeline] = []
     
     private var handler: AuthStateDidChangeListenerHandle?
     init() {
         subscribeToAuthChange()
         subscribeToRoomChange()
         subscribeToRoomTimeline()
+    }
+    
+    deinit{
+        let x = 10
     }
     
     func pickDestinationTickets() {
@@ -73,6 +77,7 @@ class MainViewModel : ObservableObject {
                     self?.reloadProfilePhoto()
                 } else if status == .closed {
                     self?.currentRoom = nil
+                    //self?.timeline.removeAll()
                 } else if status == .playerJoined {
                     self?.currentRoom = RoomService.instance.currentRoom
                 } else if status == .changed {
@@ -80,30 +85,24 @@ class MainViewModel : ObservableObject {
                     self?.reloadProfilePhoto()
                 } else if status == .quited {
                     self?.currentRoom = nil
+                    //self?.timeline.removeAll()
                 }
             }
     }
     
     private func subscribeToRoomTimeline(){
-//        NotificationCenter.default.addObserver(
-//            forName: .roomStatusChanged,
-//            object: nil,
-//            queue: .main) { [weak self] notification in
-//                let status = notification.object as? roomStatus
-//                if status == .fetchedCurrentRoom || status == .created {
-//                    self?.currentRoom = RoomService.instance.currentRoom
-//                    self?.reloadProfilePhoto()
-//                } else if status == .closed {
-//                    self?.currentRoom = nil
-//                } else if status == .playerJoined {
-//                    self?.currentRoom = RoomService.instance.currentRoom
-//                } else if status == .changed {
-//                    self?.currentRoom = RoomService.instance.currentRoom
-//                    self?.reloadProfilePhoto()
-//                } else if status == .quited {
-//                    self?.currentRoom = nil
-//                }
-//            }
+        NotificationCenter.default.addObserver(
+            forName: .roomTimelineAdded,
+            object: nil,
+            queue: .main) { [weak self] arg in
+                guard let newEvent = arg.object as? RoomTimeline else {
+                    return
+                }
+                
+                if ((self?.timeline.contains { $0.id == newEvent.id}) != nil) {
+                    self?.timeline.append(newEvent)
+                }
+            }
     }
     
     private func reloadProfilePhoto() {

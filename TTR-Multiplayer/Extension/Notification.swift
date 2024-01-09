@@ -13,4 +13,6 @@ extension Notification.Name {
     
     //Room
     static let roomStatusChanged = Notification.Name("roomStatusChanged")
+    
+    static let roomTimelineAdded = Notification.Name("roomTimelineAdded")
 }
