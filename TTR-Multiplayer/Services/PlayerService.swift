@@ -18,6 +18,8 @@ class PlayerService {
     private var handler : AuthStateDidChangeListenerHandle?
     public private(set) var player : Player?
     public private(set) var playerProfilePhoto : String = ""
+    public private(set) var playersCache : [String:PlayerModel] = [:]
+    
     
     init() {
         let storage = Storage.storage().reference()
@@ -144,6 +146,22 @@ class PlayerService {
         }
     }
     
+    private func fetchPlayerAsync(id:String) async throws -> Player? {
+        var result : Player? = nil
+        do {
+            let snapShot = try await playerCollection.document(id).getDocument()
+            
+            guard snapShot.exists else {
+                return result
+            }
+            
+            result = try snapShot.data(as: Player.self)
+        } catch {
+            print(error)
+        }
+        return result
+    }
+    
     private func insertPlayer(id: String, fullName: String, email: String, profilePhoto: Data?, completion: @escaping (Result<Bool,Error>) -> Void) {
         let newPlayer = Player(id: id,
                                fullName: fullName,
@@ -198,6 +216,22 @@ class PlayerService {
                 completion(.failure(error))
                 return
             }
+        }
+    }
+    
+    public func addPlayerToCache(id: String) async -> Void {
+        if !playersCache.keys.contains(id) {
+            //fetch from db
+            var fetchResult = try? await fetchPlayerAsync(id: id)
+            guard let player = fetchResult else {
+                return
+            }
+            //get from storage service
+            guard let photoAddressURL = try? await StorageService.instance.getProfilePhotoURL(uid: id) else {
+                return
+            }
+            let playerModel = PlayerModel(id: id, player: player, photoURL: photoAddressURL)
+            playersCache[id] = playerModel
         }
     }
     

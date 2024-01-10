@@ -15,7 +15,7 @@ class MainViewModel : ObservableObject {
     @Published var currentRoom : Room? = nil
     @Published var profilePhoto : String = ""
     @Published var showDestinationPicker : Bool = false
-    @Published var roomPlayersPhotos : [String:String] = [:]
+    @Published var playerCache : [String:PlayerModel] = [:]
     @Published var timeline : [RoomTimeline] = []
     
     private var handler: AuthStateDidChangeListenerHandle?
@@ -80,16 +80,15 @@ class MainViewModel : ObservableObject {
                 let status = notification.object as? roomStatus
                 if status == .fetchedCurrentRoom || status == .created {
                     self?.currentRoom = RoomService.instance.currentRoom
-                    self?.reloadProfilePhoto()
+                    self?.updatePlayerCache()
                 } else if status == .closed {
                     self?.currentRoom = nil
                     self?.timeline.removeAll()
                 } else if status == .playerJoined {
-                    self?.currentRoom = RoomService.instance.currentRoom
-                    self?.reloadProfilePhoto()
+                    self?.updatePlayerCache()
                 } else if status == .changed {
                     self?.currentRoom = RoomService.instance.currentRoom
-                    self?.reloadProfilePhoto()
+                    self?.updatePlayerCache()
                 } else if status == .quited {
                     self?.currentRoom = nil
                     self?.timeline.removeAll()
@@ -112,21 +111,20 @@ class MainViewModel : ObservableObject {
             }
     }
     
-    private func reloadProfilePhoto() {
-        roomPlayersPhotos.removeAll(keepingCapacity: false)
-        currentRoom?.playersIDs.forEach { id in
-            Task(priority: .medium) { [weak self] in
-                guard let vm = self else {
-                    return
-                }
-                
-                guard !vm.roomPlayersPhotos.keys.contains(id) else {
-                    return
-                }
-                
-                let photoURL = try await StorageService.instance.getProfilePhotoURL(uid: id)
-                vm.roomPlayersPhotos[id] = photoURL
+    private func updatePlayerCache() {
+        guard let room = RoomService.instance.currentRoom else {
+            return
+        }
+        
+        currentRoom = room
+        Task(priority: .medium) {
+            for playerId in room.playersIDs {
+                await PlayerService.instance.addPlayerToCache(id: playerId)
             }
+        }
+        //Update internal player cache from service
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+            self.playerCache = PlayerService.instance.playersCache
         }
     }
 }

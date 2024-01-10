@@ -34,9 +34,9 @@ struct MainView: View {
                                     HStack (alignment: .center, spacing: 10) {
                                         if viewModel.currentRoom != nil {
                                             Spacer()
-                                            ForEach (viewModel.roomPlayersPhotos.sorted(by: <), id: \.key) { key, value in
+                                            ForEach(viewModel.playerCache.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
                                                 VStack{
-                                                    AsyncImage(url: URL(string: value)) { image in
+                                                    AsyncImage(url: URL(string: value.photoURL)) { image in
                                                         image
                                                             .resizable()
                                                             .frame(width: 60,height: 60)
@@ -47,7 +47,7 @@ struct MainView: View {
                                                         ProgressView()
                                                     }
                                                     
-                                                    Text("Player Name")
+                                                    Text(value.player.fullName)
                                                         .font(.system(size: 10))
                                                 }
                                             }
@@ -93,10 +93,10 @@ struct MainView: View {
                                             ScrollView {
                                                 ForEach (viewModel.timeline) { item in
                                                     HStack {
-                                                        if viewModel.roomPlayersPhotos.keys.contains(item.creatorID) {
-                                                            let photoURL = viewModel.roomPlayersPhotos[item.creatorID]!
+                                                        if viewModel.playerCache.keys.contains(item.creatorID) {
+                                                            let playerModel = viewModel.playerCache[item.creatorID]!
                                                             
-                                                            AsyncImage(url: URL(string: photoURL)) { image in
+                                                            AsyncImage(url: URL(string: playerModel.photoURL)) { image in
                                                                 image
                                                                     .resizable()
                                                                     .frame(width: 25,height: 25)

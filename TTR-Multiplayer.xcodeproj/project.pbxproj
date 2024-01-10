@@ -39,6 +39,7 @@
 		425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */; };
 		4273E7202B4B9DA0005DFF41 /* RoomTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */; };
 		4273E7222B4B9FC6005DFF41 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273E7212B4B9FC6005DFF41 /* TimelineView.swift */; };
+		42A642202B4F24D900D1CA0D /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */; };
 		42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ACCE772B4A650800C059DC /* DestinationCard.swift */; };
 		42AF08302B44D634002EB696 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AF082F2B44D634002EB696 /* GoogleService-Info.plist */; };
 		42B9CB832B4BB69B00B20554 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 42B9CB822B4BB69B00B20554 /* FirebaseFirestoreSwift */; };
@@ -91,6 +92,7 @@
 		425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackButton.swift; sourceTree = "<group>"; };
 		4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomTimeline.swift; sourceTree = "<group>"; };
 		4273E7212B4B9FC6005DFF41 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		42ACCE772B4A650800C059DC /* DestinationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCard.swift; sourceTree = "<group>"; };
 		42AF082F2B44D634002EB696 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42DB268A2B430DE20051C31A /* TTR-Multiplayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TTR-Multiplayer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -271,6 +273,7 @@
 				4215F60E2B45CE77007AD086 /* Room.swift */,
 				422994AE2B4B285100F1F112 /* Destination.swift */,
 				4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */,
+				42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				4215F6162B460E50007AD086 /* SplashScreen.swift in Sources */,
 				42DB26DA2B4390500051C31A /* SideMenu.swift in Sources */,
 				422A7EE42B4865020063F2C2 /* ProfileViewModel.swift in Sources */,
+				42A642202B4F24D900D1CA0D /* PlayerModel.swift in Sources */,
 				425B77BD2B44691200F30BAF /* RegisterView.swift in Sources */,
 				421661982B473D0F00F47CE2 /* Notification.swift in Sources */,
 				422A7EEA2B4894E60063F2C2 /* PhotoPickerPreview.swift in Sources */,
