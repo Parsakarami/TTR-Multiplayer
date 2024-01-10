@@ -60,28 +60,6 @@ class RoomService {
         return !snapShots.isEmpty
     }
     
-    public func closeCurrentRoom(completion: ((Result<Bool,Error>) -> Void)? = nil) {
-        guard let room = currentRoom else {
-            return
-        }
-        
-        closeRoom(id:room.id) { [weak self] result in
-            do {
-                let wasSuccessful = try result.get()
-                if wasSuccessful {
-                    self?.currentRoom = nil
-                    self?.currentTimeline.removeAll()
-                    completion?(.success(true))
-                } else {
-                    let error = NSError(domain: "RoomService.closeCurrentRoom", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to close the room."])
-                    completion?(.failure(error))
-                }
-            } catch {
-                completion?(.failure(error))
-            }
-        }
-    }
-    
     public func quitRoom(player: Player) {
         guard let room = currentRoom else {
             return
@@ -95,6 +73,8 @@ class RoomService {
             }
             self?.currentRoom = nil
             self?.currentTimeline.removeAll()
+            self?.disposeRoomListener()
+            self?.disposeTimelineListener()
             NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.quited)
         }
         
@@ -108,17 +88,18 @@ class RoomService {
             
             try await self.addEventToRoomTimeline(timeline: newEvent)
         }
-        
     }
     
-    private func closeRoom(id: String, completion: @escaping (Result<Bool,Error>) -> Void) {
+    public func closeRoom(id: String, completion: @escaping (Result<Bool,Error>) -> Void) {
         roomCollection.document(id).updateData([
             "inUsed" : false
-        ]) { error in
+        ]) { [weak self] error in
             if let error = error {
                 completion(.failure(error))
             }
             completion(.success(true))
+            self?.disposeRoomListener()
+            self?.disposeTimelineListener()
             NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.closed)
         }
     }

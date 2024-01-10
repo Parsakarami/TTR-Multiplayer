@@ -35,7 +35,13 @@ class MainViewModel : ObservableObject {
     }
     
     func closeCurrentRoom() {
-        RoomService.instance.closeCurrentRoom()
+        guard let room = currentRoom else {
+            return
+        }
+        
+        RoomService.instance.closeRoom(id: room.id) { [weak self] result in
+            self?.currentRoom = nil
+        }
     }
     
     func quitRoom() {
