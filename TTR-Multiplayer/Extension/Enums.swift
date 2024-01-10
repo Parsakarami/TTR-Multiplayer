@@ -27,8 +27,10 @@ enum roomStatus {
 enum roomTimelineEventType : String {
     case started
     case playerJoined
+    case playerPickedDestiantion
     case playerQuit
     case playerPickedCard
+    case closed
     case finished
 }
 

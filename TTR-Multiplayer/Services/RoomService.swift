@@ -86,7 +86,7 @@ class RoomService {
                                         eventType: roomTimelineEventType.playerQuit.rawValue,
                                         description: "\(player.fullName) left the game.")
             
-            try await self.addEventToRoomTimeline(timeline: newEvent)
+            try await self.addEventToRoomTimelineAsync(timeline: newEvent)
         }
     }
     
@@ -97,10 +97,26 @@ class RoomService {
             if let error = error {
                 completion(.failure(error))
             }
-            completion(.success(true))
             self?.disposeRoomListener()
             self?.disposeTimelineListener()
+            
+            
+            guard let player = PlayerService.instance.player else {
+                completion(.success(true))
+                return
+            }
+            
+            let newEvent = RoomTimeline(id: UUID().uuidString,
+                                        roomID: id,
+                                        creatorID: player.id,
+                                        datetime: Date().timeIntervalSince1970,
+                                        eventType: roomTimelineEventType.closed.rawValue,
+                                        description: "\(player.fullName) closed the room.")
+            
+            self?.addEventToRoomTimeline(timeline: newEvent)
+            
             NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.closed)
+            completion(.success(true))
         }
     }
     
@@ -120,7 +136,7 @@ class RoomService {
                                             datetime: Date().timeIntervalSince1970,
                                             eventType: roomTimelineEventType.started.rawValue,
                                             description: "The game has started.")
-                try await addEventToRoomTimeline(timeline: newEvent)
+                try await addEventToRoomTimelineAsync(timeline: newEvent)
                 
                 NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.created)
                 return true
@@ -177,7 +193,7 @@ class RoomService {
                                                     eventType: roomTimelineEventType.playerJoined.rawValue,
                                                     description: "\(player.fullName) has joined to the game.")
                         
-                        try await addEventToRoomTimeline(timeline: newEvent)
+                        try await addEventToRoomTimelineAsync(timeline: newEvent)
                     }
                     currentRoom = room
                     listenToRoomTimelineDataChange(id: room.id)
@@ -197,7 +213,7 @@ class RoomService {
         }
         
         let snapShot = try await roomCollection
-            //.whereField("ownerID", isEqualTo: pid)
+        //.whereField("ownerID", isEqualTo: pid)
             .whereField("playersIDs", arrayContainsAny: [pid])
             .whereField("inUsed", isEqualTo: true)
             .getDocuments()
@@ -313,13 +329,19 @@ class RoomService {
         }
     }
     
-    private func addEventToRoomTimeline(timeline: RoomTimeline) async throws -> Void {
+    private func addEventToRoomTimelineAsync(timeline: RoomTimeline) async throws -> Void {
         
         do {
             try await timelineCollection.document(timeline.id).setData(timeline.asDictionary())
         }
         catch {
             print(error)
+        }
+    }
+    
+    private func addEventToRoomTimeline(timeline: RoomTimeline) {
+        timelineCollection.document(timeline.id).setData(timeline.asDictionary()) { result in
+            
         }
     }
     
