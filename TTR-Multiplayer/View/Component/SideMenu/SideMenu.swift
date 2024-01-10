@@ -33,13 +33,6 @@ struct SideMenu: View {
                             .padding(.top,10)
                     }
                     Spacer()
-                    Button(action: {
-                        closeMenu()
-                    }, label: {
-                        Label("", systemImage: "chevron.right")
-                            .foregroundColor(.white)
-                    })
-                    .padding()
                 }
                 .frame(width: sideBarWidth, height:200,alignment: .bottomLeading)
                 //.background(.gray)
