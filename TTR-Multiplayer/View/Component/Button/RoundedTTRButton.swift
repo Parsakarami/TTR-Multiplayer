@@ -18,13 +18,14 @@ struct RoundedTTRButton: View {
                 VStack{
                     Image(systemName: icon)
                         .resizable()
-                        .padding()
+                        .padding(15)
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 60)
+                        .frame(width: 55)
+                        .padding(2)
                 }
                 .tint(.white)
                 .background(bgColor)
-                .frame(width: 80,height: 60)
+                .frame(width: 55,height: 55)
                 .aspectRatio(contentMode: .fit)
                 .clipShape(.circle)
                 Text(title)

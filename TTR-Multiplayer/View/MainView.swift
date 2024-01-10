@@ -70,11 +70,11 @@ struct MainView: View {
                                                 if room.ownerID == player.id {
                                                     RoundedTTRButton(action: {
                                                         viewModel.closeCurrentRoom()
-                                                    }, title: "End", icon: "flag.checkered", bgColor: .red)
+                                                    }, title: "End", icon: "flag.fill", bgColor: .red)
                                                 } else {
                                                     RoundedTTRButton(action: {
                                                         viewModel.quitRoom()
-                                                    }, title: "Quit", icon: "arrowshape.backward.fill", bgColor: .red)
+                                                    }, title: "Quit", icon: "arrowshape.turn.up.left.fill", bgColor: .red)
                                                 }
                                             }
                                             Spacer()
