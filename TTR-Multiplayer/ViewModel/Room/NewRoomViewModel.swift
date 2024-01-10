@@ -15,6 +15,7 @@ class NewRoomViewModel : ObservableObject {
     @Published var roomCreator : String = ""
     @Published var errorMessage : String = ""
     @Published var isSuccessful : Bool = false
+    @Published var isAdding : Bool = false
     private var roomCollection : CollectionReference
     private var userID : String
     init() {
@@ -24,6 +25,12 @@ class NewRoomViewModel : ObservableObject {
     }
     
     func addNewRoom() async {
+        guard isAdding == false else {
+            return
+        }
+        
+        isAdding = true
+        
         guard validate() else {
             return
         }
@@ -47,6 +54,7 @@ class NewRoomViewModel : ObservableObject {
         }catch {
             errorMessage = error.localizedDescription
         }
+        isAdding = false
     }
     
     private func validate() -> Bool {

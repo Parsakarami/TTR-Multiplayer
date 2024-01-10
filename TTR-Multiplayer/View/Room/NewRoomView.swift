@@ -40,16 +40,25 @@ struct NewRoomView: View {
                 }
                 .padding(5)
                 
-                TTRButton(action: {
-                    if (!viewModel.isSuccessful) {
-                        Task {
-                            await viewModel.addNewRoom()
-                        }
+                HStack {
+                    Spacer()
+                    if !viewModel.isAdding {
+                        TTRButton(action: {
+                            if (!viewModel.isSuccessful) {
+                                Task {
+                                    await viewModel.addNewRoom()
+                                }
+                            }
+                        }, text: "Add", icon: "plus", bgColor: viewModel.isSuccessful ? .gray : .green)
+                        .disabled(viewModel.isSuccessful)
+                    } else {
+                        ProgressView()
+                            .padding()
                     }
-                }, text: "Add", icon: "plus", bgColor: viewModel.isSuccessful ? .gray : .green)
-                    .disabled(viewModel.isSuccessful)
-                    .frame(height: 50)
-                    .padding()
+                    Spacer()
+                }
+                .frame(height: 50)
+                .padding()
             }
         }
         .onChange(of: viewModel.isSuccessful) { value in
