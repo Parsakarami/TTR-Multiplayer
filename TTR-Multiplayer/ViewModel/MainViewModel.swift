@@ -77,15 +77,16 @@ class MainViewModel : ObservableObject {
                     self?.reloadProfilePhoto()
                 } else if status == .closed {
                     self?.currentRoom = nil
-                    //self?.timeline.removeAll()
+                    self?.timeline.removeAll()
                 } else if status == .playerJoined {
                     self?.currentRoom = RoomService.instance.currentRoom
+                    self?.reloadProfilePhoto()
                 } else if status == .changed {
                     self?.currentRoom = RoomService.instance.currentRoom
                     self?.reloadProfilePhoto()
                 } else if status == .quited {
                     self?.currentRoom = nil
-                    //self?.timeline.removeAll()
+                    self?.timeline.removeAll()
                 }
             }
     }

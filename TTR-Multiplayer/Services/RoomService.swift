@@ -32,10 +32,14 @@ class RoomService {
                 }
                 
                 Task(priority:.high) {
-                    self.currentRoom = try await fetchActiveRoom(pid: pid)
-                    if self.currentRoom != nil {
-                        NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.fetchedCurrentRoom)
+                    let result = try await fetchActiveRoom(pid: pid)
+                    guard let room = result else {
+                        return
                     }
+                    self.currentRoom = room
+                    self.listenToRoomDataChange(id:room.id)
+                    self.listenToRoomTimelineDataChange(id: room.id)
+                    NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.fetchedCurrentRoom)
                 }
             }
         }
@@ -90,7 +94,7 @@ class RoomService {
             self?.currentRoom = nil
             NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.quited)
         }
-         
+        
         Task {
             let newEvent = RoomTimeline(id: UUID().uuidString,
                                         roomID: room.id,
@@ -122,6 +126,8 @@ class RoomService {
                 try await roomCollection.document(room.id)
                     .setData(room.asDictionary())
                 currentRoom = room
+                listenToRoomDataChange(id:room.id)
+                listenToRoomTimelineDataChange(id: room.id)
                 
                 let newEvent = RoomTimeline(id: UUID().uuidString,
                                             roomID: room.id,
@@ -130,8 +136,6 @@ class RoomService {
                                             eventType: roomTimelineEventType.started.rawValue)
                 try await addEventToRoomTimeline(timeline: newEvent)
                 
-                listenToRoomDataChange(id:room.id)
-                listenToRoomTimelineDataChange(id: room.id)
                 NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.created)
                 return true
             } catch {
@@ -160,6 +164,10 @@ class RoomService {
                 
                 if room.ownerID != player.id && room.capacity > 0 {
                     
+                    
+                    listenToRoomDataChange(id:room.id)
+                    listenToRoomTimelineDataChange(id: room.id)
+                    
                     //Update room players and capacity
                     var newPlayerIDs: [String] = room.playersIDs
                     var newCapacity = room.capacity
@@ -168,7 +176,7 @@ class RoomService {
                         newPlayerIDs.append(player.id)
                         newCapacity -= 1
                         try await roomCollection.document(room.id).updateData(["capacity": newCapacity,
-                                                                                 "playersIDs":newPlayerIDs])
+                                                                               "playersIDs":newPlayerIDs])
                         
                         //Add timeline event
                         let newEvent = RoomTimeline(id: UUID().uuidString,
@@ -180,8 +188,6 @@ class RoomService {
                         try await addEventToRoomTimeline(timeline: newEvent)
                     }
                     currentRoom = room
-                    listenToRoomDataChange(id:room.id)
-                    listenToRoomTimelineDataChange(id: room.id)
                     NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.playerJoined)
                     return true
                 }
@@ -260,28 +266,29 @@ class RoomService {
             return
         }
         
-        disposeRoomListener()
+        disposeTimelineListener()
         
         timelineListener = timelineCollection
             .whereField("roomID", isEqualTo: id)
             .order(by: "datetime", descending: false)
             .addSnapshotListener {snapshot, error in
-                    if let error = error {
-                        print("Error getting documents: \(error.localizedDescription)")
-                    } else {
-                        do {
-                            let fullTimeline: [RoomTimeline] = try snapshot?.documents.compactMap {
-                                try $0.data(as: RoomTimeline.self)
-                            } ?? []
-                            
-                            if fullTimeline.count > 0 {
-                                NotificationCenter.default.post(name: .roomTimelineAdded, object: fullTimeline[0])
-                            }
-                        } catch {
-                            print("Error decoding documents: \(error.localizedDescription)")
+                if let error = error {
+                    print("Error getting documents: \(error.localizedDescription)")
+                } else {
+                    do {
+                        let fullTimeline: [RoomTimeline] = try snapshot?.documents.compactMap {
+                            try $0.data(as: RoomTimeline.self)
+                        } ?? []
+                        
+                        if fullTimeline.count > 0 {
+                            let event = fullTimeline.last!
+                            NotificationCenter.default.post(name: .roomTimelineAdded, object:event)
                         }
+                    } catch {
+                        print("Error decoding documents: \(error.localizedDescription)")
                     }
                 }
+            }
     }
     
     private func disposeRoomListener() {
