@@ -13,6 +13,7 @@ class RoomService {
     private var roomCollection : CollectionReference
     private var timelineCollection : CollectionReference
     public private(set) var currentRoom : Room?
+    public private(set) var currentTimeline : [RoomTimeline] = []
     private var roomListener : ListenerRegistration? = nil
     private var timelineListener : ListenerRegistration? = nil
     
@@ -69,6 +70,7 @@ class RoomService {
                 let wasSuccessful = try result.get()
                 if wasSuccessful {
                     self?.currentRoom = nil
+                    self?.currentTimeline.removeAll()
                     completion?(.success(true))
                 } else {
                     let error = NSError(domain: "RoomService.closeCurrentRoom", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to close the room."])
@@ -80,27 +82,29 @@ class RoomService {
         }
     }
     
-    public func quitRoom(id: String) {
+    public func quitRoom(player: Player) {
         guard let room = currentRoom else {
             return
         }
         
         var currentPlayersIDs = room.playersIDs
-        currentPlayersIDs.removeAll{ $0 == id}
+        currentPlayersIDs.removeAll{ $0 == player.id}
         roomCollection.document(room.id).updateData(["playersIDs" : currentPlayersIDs, "capacity": room.capacity + 1]) { [weak self] error in
             guard error == nil else {
                 return
             }
             self?.currentRoom = nil
+            self?.currentTimeline.removeAll()
             NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.quited)
         }
         
         Task {
             let newEvent = RoomTimeline(id: UUID().uuidString,
                                         roomID: room.id,
-                                        creatorID: id,
+                                        creatorID: player.id,
                                         datetime: Date().timeIntervalSince1970,
-                                        eventType: roomTimelineEventType.playerQuit.rawValue)
+                                        eventType: roomTimelineEventType.playerQuit.rawValue,
+                                        description: "\(player.fullName) left the game.")
             
             try await self.addEventToRoomTimeline(timeline: newEvent)
         }
@@ -133,7 +137,8 @@ class RoomService {
                                             roomID: room.id,
                                             creatorID: player.id,
                                             datetime: Date().timeIntervalSince1970,
-                                            eventType: roomTimelineEventType.started.rawValue)
+                                            eventType: roomTimelineEventType.started.rawValue,
+                                            description: "The game has started.")
                 try await addEventToRoomTimeline(timeline: newEvent)
                 
                 NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.created)
@@ -183,7 +188,8 @@ class RoomService {
                                                     roomID: room.id,
                                                     creatorID: player.id,
                                                     datetime: Date().timeIntervalSince1970,
-                                                    eventType: roomTimelineEventType.playerJoined.rawValue)
+                                                    eventType: roomTimelineEventType.playerJoined.rawValue,
+                                                    description: "\(player.fullName) has joined to the game.")
                         
                         try await addEventToRoomTimeline(timeline: newEvent)
                     }
@@ -280,8 +286,18 @@ class RoomService {
                             try $0.data(as: RoomTimeline.self)
                         } ?? []
                         
+                        //Add all timeline to the currentTimeLine
+                        if self.currentTimeline.count == 0 {
+                            self.currentTimeline = fullTimeline
+                        }
+                        
                         if fullTimeline.count > 0 {
                             let event = fullTimeline.last!
+                            
+                            if !self.currentTimeline.contains(where: { $0.id == event.id}) {
+                                self.currentTimeline.append(event)
+                            }
+                            
                             NotificationCenter.default.post(name: .roomTimelineAdded, object:event)
                         }
                     } catch {

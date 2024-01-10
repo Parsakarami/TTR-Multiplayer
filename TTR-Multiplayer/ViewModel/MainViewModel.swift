@@ -15,7 +15,7 @@ class MainViewModel : ObservableObject {
     @Published var currentRoom : Room? = nil
     @Published var profilePhoto : String = ""
     @Published var showDestinationPicker : Bool = false
-    @Published var roomPlayersPhotos : [String] = []
+    @Published var roomPlayersPhotos : [String:String] = [:]
     @Published var timeline : [RoomTimeline] = []
     
     private var handler: AuthStateDidChangeListenerHandle?
@@ -43,7 +43,7 @@ class MainViewModel : ObservableObject {
             return
         }
         
-        RoomService.instance.quitRoom(id: player.id)
+        RoomService.instance.quitRoom(player: player)
     }
     
     private func subscribeToAuthChange(){
@@ -110,10 +110,16 @@ class MainViewModel : ObservableObject {
         roomPlayersPhotos.removeAll(keepingCapacity: false)
         currentRoom?.playersIDs.forEach { id in
             Task(priority: .medium) { [weak self] in
-                let photoURL = try await StorageService.instance.getProfilePhotoURL(uid: id)
-                if self?.roomPlayersPhotos.contains(photoURL) == false {
-                    self?.roomPlayersPhotos.append(photoURL)
+                guard let vm = self else {
+                    return
                 }
+                
+                guard !vm.roomPlayersPhotos.keys.contains(id) else {
+                    return
+                }
+                
+                let photoURL = try await StorageService.instance.getProfilePhotoURL(uid: id)
+                vm.roomPlayersPhotos[id] = photoURL
             }
         }
     }

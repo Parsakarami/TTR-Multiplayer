@@ -13,4 +13,5 @@ struct RoomTimeline : Identifiable, Codable {
     let creatorID : String
     let datetime : TimeInterval
     let eventType : String
+    let description : String
 }

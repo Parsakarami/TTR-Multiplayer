@@ -34,9 +34,9 @@ struct MainView: View {
                                     HStack (alignment: .center, spacing: 10) {
                                         if viewModel.currentRoom != nil {
                                             Spacer()
-                                            ForEach (viewModel.roomPlayersPhotos, id: \.self) { photoAddress in
+                                            ForEach (viewModel.roomPlayersPhotos.sorted(by: <), id: \.key) { key, value in
                                                 VStack{
-                                                    AsyncImage(url: URL(string: photoAddress)) { image in
+                                                    AsyncImage(url: URL(string: value)) { image in
                                                         image
                                                             .resizable()
                                                             .frame(width: 60,height: 60)
@@ -80,18 +80,65 @@ struct MainView: View {
                                         Spacer()
                                         
                                         VStack{
+                                            HStack{
+                                                Image(systemName: "calendar.day.timeline.left")
+                                                    .font(.system(.title3))
+                                                Text("Timeline")
+                                                    .multilineTextAlignment(.leading)
+                                                    .font(.system(.title3))
+                                            }
+                                            .padding(.leading,10)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            Divider()
                                             ScrollView {
                                                 ForEach (viewModel.timeline) { item in
-                                                    Text("\(item.eventType)")
-                                                        .padding(4)
-                                                        .frame(width:getScreenSize().width - 50,alignment:.leading)
+                                                    HStack {
+                                                        if viewModel.roomPlayersPhotos.keys.contains(item.creatorID) {
+                                                            let photoURL = viewModel.roomPlayersPhotos[item.creatorID]!
+                                                            
+                                                            AsyncImage(url: URL(string: photoURL)) { image in
+                                                                image
+                                                                    .resizable()
+                                                                    .frame(width: 25,height: 25)
+                                                                    .clipShape(.circle)
+                                                            } placeholder: {
+                                                                ProgressView()
+                                                            }
+                                                            .padding([.leading,.trailing],3)
+                                                            .frame(width: 25,height: 25)
+                                                                
+                                                            
+                                                        } else {
+                                                            Image("User")
+                                                                .resizable()
+                                                                .frame(width: 25,height: 25)
+                                                                .aspectRatio(contentMode: .fill)
+                                                                .clipShape(.circle)
+                                                                .padding([.leading,.trailing],3)
+                                                        }
+                                                        
+                                                        let time = getTimeSring(interval: item.datetime)
+                                                        
+                                                        Text("\(time)")
+                                                            .frame(width: 60 , alignment:.leading)
+                                                            .padding(.leading,10)
+                                                            .font(.system(size: 12,weight:.regular,design:.rounded))
+                                                            .multilineTextAlignment(.leading)
+                                                            .foregroundColor(.gray)
+                                                        
+                                                        Text("\(item.description)")
+                                                            .frame(width:getScreenSize().width - 120, alignment:.leading)
+                                                            .font(.system(size: 12,weight:.semibold))
+                                                            .multilineTextAlignment(.leading)
+                                                        Spacer()
+                                                    }
                                                 }
                                             }
                                             .padding()
                                             .frame(width:getScreenSize().width,alignment:.leading)
                                         }
                                         .padding(5)
-                                        .frame(width:getScreenSize().width,height:200,alignment:.leading)
+                                        .frame(width:getScreenSize().width,height:300,alignment:.leading)
                                         .padding(5)
                                         Spacer()
                                     }
@@ -148,6 +195,13 @@ struct MainView: View {
                 }
             }
         }
+    }
+    
+    private func getTimeSring(interval: TimeInterval) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        let currentDate = Date(timeIntervalSince1970: interval)
+        return dateFormatter.string(from: currentDate)
     }
 }
 
