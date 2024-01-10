@@ -211,7 +211,8 @@ class RoomService {
         }
         
         let snapShot = try await roomCollection
-            .whereField("ownerID", isEqualTo: pid)
+            //.whereField("ownerID", isEqualTo: pid)
+            .whereField("playersIDs", arrayContainsAny: [pid])
             .whereField("inUsed", isEqualTo: true)
             .getDocuments()
         
