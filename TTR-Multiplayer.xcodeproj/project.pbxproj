@@ -40,6 +40,7 @@
 		4273E7202B4B9DA0005DFF41 /* RoomTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */; };
 		4273E7222B4B9FC6005DFF41 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273E7212B4B9FC6005DFF41 /* TimelineView.swift */; };
 		42A642202B4F24D900D1CA0D /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */; };
+		42A642222B4F3CD300D1CA0D /* RoundedTTRButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A642212B4F3CD300D1CA0D /* RoundedTTRButton.swift */; };
 		42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ACCE772B4A650800C059DC /* DestinationCard.swift */; };
 		42AF08302B44D634002EB696 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AF082F2B44D634002EB696 /* GoogleService-Info.plist */; };
 		42B9CB832B4BB69B00B20554 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 42B9CB822B4BB69B00B20554 /* FirebaseFirestoreSwift */; };
@@ -93,6 +94,7 @@
 		4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomTimeline.swift; sourceTree = "<group>"; };
 		4273E7212B4B9FC6005DFF41 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
+		42A642212B4F3CD300D1CA0D /* RoundedTTRButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTTRButton.swift; sourceTree = "<group>"; };
 		42ACCE772B4A650800C059DC /* DestinationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCard.swift; sourceTree = "<group>"; };
 		42AF082F2B44D634002EB696 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42DB268A2B430DE20051C31A /* TTR-Multiplayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TTR-Multiplayer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				425B77BA2B44614800F30BAF /* TTRButton.swift */,
+				42A642212B4F3CD300D1CA0D /* RoundedTTRButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				4215F60F2B45CE77007AD086 /* Room.swift in Sources */,
 				425B77B62B44556400F30BAF /* LoginView.swift in Sources */,
 				422A7EE82B4889D80063F2C2 /* PhotoPicker.swift in Sources */,
+				42A642222B4F3CD300D1CA0D /* RoundedTTRButton.swift in Sources */,
 				421661942B47218700F47CE2 /* RoomService.swift in Sources */,
 				425707EA2B4792E2003932E4 /* JoinRoomView.swift in Sources */,
 				4215F60D2B45CD7A007AD086 /* NewRoomViewModel.swift in Sources */,

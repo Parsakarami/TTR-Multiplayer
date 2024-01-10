@@ -1,0 +1,44 @@
+//
+//  RoundedButton.swift
+//  TTR-Multiplayer
+//
+//  Created by Parsa Karami on 2024-01-10.
+//
+
+import SwiftUI
+
+struct RoundedTTRButton: View {
+    @State var action : () -> Void
+    @State var title : String
+    @State var icon : String
+    @State var bgColor : Color = .blue
+    var body: some View {
+        Button(action: {action()}) {
+            VStack{
+                VStack{
+                    Image(systemName: icon)
+                        .resizable()
+                        .padding()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60)
+                }
+                .tint(.white)
+                .background(bgColor)
+                .frame(width: 80,height: 60)
+                .aspectRatio(contentMode: .fit)
+                .clipShape(.circle)
+                Text(title)
+                    .foregroundColor(.blue)
+                    .font(.system(size: 12,weight:.bold))
+                    .multilineTextAlignment(.center)
+                    .padding([.top,.bottom],4)
+            }
+            .padding()
+        }
+        .frame(maxWidth:80)
+    }
+}
+
+#Preview {
+    RoundedTTRButton(action: {},title: "",icon: "")
+}

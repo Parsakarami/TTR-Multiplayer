@@ -56,26 +56,28 @@ struct MainView: View {
                                     }.frame(maxWidth:.infinity,maxHeight:150)
                                     
                                     Spacer()
+                                    
                                     if let room = viewModel.currentRoom {
+                                       
                                         Text("Room \(room.roomCode)").foregroundColor(.red)
-                                        
-                                        TTRButton(action: {
-                                            viewModel.pickDestinationTickets()
-                                        }, text: "Pick Destinations", icon: "lanyardcard.fill", bgColor: .blue, fgColor: .white)
-                                        .frame(width: 200, height: 50, alignment: .center)
-                                        
-                                        if let player = viewModel.player {
-                                            if room.ownerID == player.id {
-                                                TTRButton(action: {
-                                                    viewModel.closeCurrentRoom()
-                                                }, text: "End the room", icon: "xmark", bgColor: .red, fgColor: .white)
-                                                .frame(width: 200, height: 50, alignment: .center)
-                                            } else {
-                                                TTRButton(action: {
-                                                    viewModel.quitRoom()
-                                                }, text: "Quit", icon: "xmark", bgColor: .red, fgColor: .white)
-                                                .frame(width: 200, height: 50, alignment: .center)
+                                        HStack {
+                                            Spacer()
+                                            RoundedTTRButton(action: {
+                                                viewModel.pickDestinationTickets()
+                                            }, title: "Tickets", icon: "lanyardcard.fill", bgColor: .blue)
+                                            
+                                            if let player = viewModel.player {
+                                                if room.ownerID == player.id {
+                                                    RoundedTTRButton(action: {
+                                                        viewModel.closeCurrentRoom()
+                                                    }, title: "End", icon: "flag.checkered", bgColor: .red)
+                                                } else {
+                                                    RoundedTTRButton(action: {
+                                                        viewModel.quitRoom()
+                                                    }, title: "Quit", icon: "arrowshape.backward.fill", bgColor: .red)
+                                                }
                                             }
+                                            Spacer()
                                         }
                                         Spacer()
                                         
@@ -99,7 +101,7 @@ struct MainView: View {
                                                             AsyncImage(url: URL(string: playerModel.photoURL)) { image in
                                                                 image
                                                                     .resizable()
-                                                                    .frame(width: 25,height: 25)
+                                                                    .aspectRatio(contentMode: .fill)
                                                                     .clipShape(.circle)
                                                             } placeholder: {
                                                                 ProgressView()
@@ -111,10 +113,10 @@ struct MainView: View {
                                                         } else {
                                                             Image("User")
                                                                 .resizable()
-                                                                .frame(width: 25,height: 25)
                                                                 .aspectRatio(contentMode: .fill)
                                                                 .clipShape(.circle)
                                                                 .padding([.leading,.trailing],3)
+                                                                .frame(width: 25,height: 25)
                                                         }
                                                         
                                                         let time = getTimeSring(interval: item.datetime)
