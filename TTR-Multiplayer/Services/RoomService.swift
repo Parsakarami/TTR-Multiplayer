@@ -157,6 +157,7 @@ class RoomService {
         }
         
         let snapShot = try await roomCollection
+            .whereField("roomCode", isEqualTo: roomCode)
             .whereField("inUsed", isEqualTo: true)
             .getDocuments()
         
@@ -167,11 +168,15 @@ class RoomService {
                     break
                 }
                 
-                if room.ownerID != player.id && room.capacity > 0 {
+                let canJoin = room.ownerID != player.id && room.capacity > 0
+                if canJoin {
                     
+                    let fullTimeline = try await fetchFullTimeline(roomId: room.id)
+                    for event in fullTimeline {
+                        NotificationCenter.default.post(name: .roomTimelineAdded, object:event)
+                    }
                     
                     listenToRoomDataChange(id:room.id)
-                    listenToRoomTimelineDataChange(id: room.id)
                     
                     //Update room players and capacity
                     var newPlayerIDs: [String] = room.playersIDs
@@ -194,7 +199,7 @@ class RoomService {
                         try await addEventToRoomTimeline(timeline: newEvent)
                     }
                     currentRoom = room
-                    NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.playerJoined)
+                    listenToRoomTimelineDataChange(id: room.id)
                     return true
                 }
                 break
@@ -219,6 +224,11 @@ class RoomService {
         if !snapShot.isEmpty{
             for doc in snapShot.documents {
                 room = try doc.data(as: Room.self)
+                
+                let fullTimeline = try await fetchFullTimeline(roomId: room!.id)
+                for event in fullTimeline {
+                    NotificationCenter.default.post(name: .roomTimelineAdded, object:event)
+                }
                 break
             }
         }
@@ -330,5 +340,31 @@ class RoomService {
         catch {
             print(error)
         }
+    }
+    
+    private func fetchFullTimeline(roomId: String) async throws -> [RoomTimeline] {
+        var fullTimeline : [RoomTimeline] = []
+        guard !roomId.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return fullTimeline
+        }
+        
+        do {
+            let snapShot = try await timelineCollection
+                .whereField("roomID", isEqualTo: roomId)
+                .order(by: "datetime", descending: false)
+                .getDocuments()
+            
+            guard !snapShot.isEmpty else {
+                return fullTimeline
+            }
+            
+            fullTimeline = try snapShot.documents.map { doc in
+                try doc.data(as: RoomTimeline.self)
+            }
+            
+        } catch {
+            print(error)
+        }
+        return fullTimeline
     }
 }
