@@ -13,8 +13,8 @@ struct MainView: View {
     @State var offset : CGFloat = 0
     @State var lastOffset : CGFloat = 0
     @State private var isLoaded : Bool = false
-    
-//    private var tickets : [DestinationCardItem] = [DestinationCardItem(id: 0, origin: "Los Angeles", destination: "New York", point: 21),DestinationCardItem(id: 1, origin: "Toronto", destination: "Denver", point: 18),DestinationCardItem(id: 2, origin: "Chicago", destination: "Las Vegas", point: 14),DestinationCardItem(id: 3, origin: "San Francisco", destination: "Atlanta", point: 17)]
+    @State var showMyDestinations : Bool = false
+    @State var showConfirmationDialoge : Bool = false
     
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
@@ -31,8 +31,16 @@ struct MainView: View {
                         VStack {
                             TabView{
                                 VStack(alignment: .center, spacing: 20){
+                                    if viewModel.currentRoom != nil {
+                                        Text("Room \(viewModel.currentRoom!.roomCode)")
+                                        .font(.system(.title2))
+                                        .foregroundColor(.black)
+                                        .frame(width: 200, height: 30, alignment: .center)
+                                        .background(.green)
+                                        .clipShape(.capsule)
+                                        
                                     HStack (alignment: .center, spacing: 10) {
-                                        if viewModel.currentRoom != nil {
+                                       
                                             Spacer()
                                             //ForEach(viewModel.playerCache.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
                                             ForEach(viewModel.currentRoom!.playersIDs, id: \.self) { id in
@@ -50,35 +58,52 @@ struct MainView: View {
                                                         }
                                                         
                                                         Text(value.player.fullName)
-                                                            .font(.system(size: 10))
+                                                            .font(.system(.subheadline))
                                                     }
                                                 }
                                             }
                                             Spacer()
-                                        }
-                                    }.frame(maxWidth:.infinity,maxHeight:150)
-                                    
-                                    Spacer()
+                                        }.frame(maxWidth:.infinity,maxHeight:100)
+                                    }
                                     
                                     if let room = viewModel.currentRoom {
-                                       
-                                        Text("Room \(room.roomCode)").foregroundColor(.red)
+                                        Divider()
                                         HStack {
                                             Spacer()
                                             RoundedTTRButton(action: {
                                                 viewModel.pickDestinationTickets()
-                                            }, title: "Tickets", icon: "lanyardcard.fill", bgColor: room.inUsed ?  .blue : .gray)
+                                            }, title: "Pick", icon: "rectangle.stack.badge.plus", bgColor: room.inUsed ?  .blue : .gray)
                                             .disabled(!room.inUsed)
+                                            
+                                            RoundedTTRButton(action: {
+                                                showMyDestinations = true
+                                            }, title: "Mine", icon: "square.stack.3d.up.fill", bgColor: .indigo, fgColor: .indigo)
                                             
                                             if let player = viewModel.player {
                                                 if room.ownerID == player.id {
-                                                    RoundedTTRButton(action: {
-                                                        viewModel.closeCurrentRoom()
-                                                    }, title: "End", icon: "flag.fill", bgColor: .red)
+                                                    RoundedTTRButton(action: {showConfirmationDialoge = true},
+                                                                     title: "End",
+                                                                     icon: "flag.fill",
+                                                                     bgColor: .red,
+                                                                     fgColor: .red)
+                                                    .alert("Are you sure?", isPresented: $showConfirmationDialoge) {
+                                                        Button("Yes", role:.destructive) {
+                                                            viewModel.closeCurrentRoom()
+                                                            showConfirmationDialoge = false
+                                                        }
+                                                    }
                                                 } else {
-                                                    RoundedTTRButton(action: {
-                                                        viewModel.quitRoom()
-                                                    }, title: "Quit", icon: "arrowshape.turn.up.left.fill", bgColor: .red)
+                                                    RoundedTTRButton(action: {showConfirmationDialoge = true},
+                                                                     title: "Quit",
+                                                                     icon: "arrowshape.turn.up.left.fill",
+                                                                     bgColor: .red,
+                                                                     fgColor: .red)
+                                                    .alert("Are you sure?", isPresented: $showConfirmationDialoge) {
+                                                        Button("Yes", role:.destructive) {
+                                                            viewModel.quitRoom()
+                                                            showConfirmationDialoge = false
+                                                        }
+                                                    }
                                                 }
                                             }
                                             Spacer()
@@ -144,7 +169,7 @@ struct MainView: View {
                                             .frame(width:getScreenSize().width,alignment:.leading)
                                         }
                                         .padding(5)
-                                        .frame(width:getScreenSize().width,height:300,alignment:.leading)
+                                        .frame(width:getScreenSize().width,height:320,alignment:.leading)
                                         .padding(5)
                                         Spacer()
                                     }
@@ -198,6 +223,9 @@ struct MainView: View {
                 .sheet(isPresented: $viewModel.showDestinationPicker){
                     DestinationPickerView(cards: viewModel.playerThreeTickets, sheetDismisser: $viewModel.showDestinationPicker)
                         .interactiveDismissDisabled()
+                }
+                .sheet(isPresented: $showMyDestinations) {
+                    //View
                 }
             }
         }

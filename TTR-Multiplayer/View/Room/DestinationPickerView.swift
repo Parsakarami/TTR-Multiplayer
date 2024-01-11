@@ -90,6 +90,7 @@ struct DestinationPickerView: View {
             .frame(height: UIScreen.main.bounds.height / 1.8)
             .padding(.horizontal,25)
             .padding(.top,15)
+            .padding(.leading,10)
             
             Spacer()
             HStack {
@@ -105,9 +106,21 @@ struct DestinationPickerView: View {
                             }
                         }, title: "Select", icon: "checkmark", bgColor: .blue, fgColor: .blue)
                     } else {
-                        RoundedTTRButton(action: {
-                        }, title: "Locked!", icon: "lock.fill", bgColor: .gray , fgColor: .gray)
-                        .disabled(true)
+                        
+                        if viewModel.tickets.isEmpty {
+                            RoundedTTRButton(action: { showTheSheet = false },
+                                             title: "back",
+                                             icon: "arrow.backward",
+                                             bgColor: .blue,
+                                             fgColor: .blue)
+                        } else {
+                            RoundedTTRButton(action: {},
+                                             title: "",
+                                             icon: "lock.fill",
+                                             bgColor: .gray,
+                                             fgColor: .gray)
+                            .disabled(true)
+                        }
                     }
                 } else {
                     ProgressView()
