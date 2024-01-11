@@ -15,7 +15,8 @@ struct MainView: View {
     @State private var isLoaded : Bool = false
     @State var showMyDestinations : Bool = false
     @State var showConfirmationDialoge : Bool = false
-    
+    @State var showPickTicketDialoge : Bool = false
+    @State var showTimeline : Bool = true
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
         if !isLoaded {
@@ -33,14 +34,15 @@ struct MainView: View {
                                 VStack(alignment: .center, spacing: 20){
                                     if viewModel.currentRoom != nil {
                                         Text("Room \(viewModel.currentRoom!.roomCode)")
-                                        .font(.system(.title2))
-                                        .foregroundColor(.black)
-                                        .frame(width: 200, height: 30, alignment: .center)
-                                        .background(.green)
-                                        .clipShape(.capsule)
+                                            .font(.system(.headline))
+                                            .foregroundColor(.black)
+                                            .frame(height: 30, alignment: .center)
+                                            .padding([.leading,.trailing],40)
+                                            .background(.green)
+                                            .clipShape(.capsule)
                                         
-                                    HStack (alignment: .center, spacing: 10) {
-                                       
+                                        HStack (alignment: .center, spacing: 10) {
+                                            
                                             Spacer()
                                             //ForEach(viewModel.playerCache.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
                                             ForEach(viewModel.currentRoom!.playersIDs, id: \.self) { id in
@@ -67,13 +69,25 @@ struct MainView: View {
                                     }
                                     
                                     if let room = viewModel.currentRoom {
-                                        Divider()
                                         HStack {
                                             Spacer()
+                                            RoundedTTRButton(action: { showPickTicketDialoge = true },
+                                                             title: "Pick",
+                                                             icon: "rectangle.stack.badge.plus",
+                                                             bgColor: room.inUsed ?  .blue : .gray,
+                                                             fgColor: room.inUsed ? .blue : .gray)
+                                            .alert("You must pick at least a card from the given cards. Do you want to continue?", isPresented: $showPickTicketDialoge) {
+                                                Button("Yes", role:.destructive) {
+                                                    viewModel.pickDestinationTickets()
+                                                    showPickTicketDialoge = false
+                                                }
+                                            }
+                                            
                                             RoundedTTRButton(action: {
-                                                viewModel.pickDestinationTickets()
-                                            }, title: "Pick", icon: "rectangle.stack.badge.plus", bgColor: room.inUsed ?  .blue : .gray)
-                                            .disabled(!room.inUsed)
+                                                withAnimation(.snappy){
+                                                    showTimeline.toggle()
+                                                }
+                                            }, title: "Events", icon: "clock.arrow.circlepath", bgColor: .indigo, fgColor: .indigo)
                                             
                                             RoundedTTRButton(action: {
                                                 showMyDestinations = true
@@ -111,62 +125,65 @@ struct MainView: View {
                                         Spacer()
                                         
                                         VStack{
-                                            HStack{
-                                                Image(systemName: "calendar.day.timeline.left")
-                                                    .font(.system(.title3))
-                                                Text("Timeline")
-                                                    .multilineTextAlignment(.leading)
-                                                    .font(.system(.title3))
-                                            }
-                                            .padding(.leading,10)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            Divider()
-                                            ScrollView {
-                                                ForEach (viewModel.timeline.reversed()) { item in
-                                                    HStack {
-                                                        if viewModel.playerCache.keys.contains(item.creatorID) {
-                                                            let playerModel = viewModel.playerCache[item.creatorID]!
-                                                            
-                                                            AsyncImage(url: URL(string: playerModel.photoURL)) { image in
-                                                                image
+                                            if showTimeline {
+                                                Divider()
+                                                HStack{
+                                                    Image(systemName: "calendar.day.timeline.left")
+                                                        .font(.system(.title3))
+                                                    Text("Timeline")
+                                                        .multilineTextAlignment(.leading)
+                                                        .font(.system(.title3))
+                                                }
+                                                .padding(.leading,10)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                Divider()
+                                                ScrollView {
+                                                    ForEach (viewModel.timeline.reversed()) { item in
+                                                        HStack {
+                                                            if viewModel.playerCache.keys.contains(item.creatorID) {
+                                                                let playerModel = viewModel.playerCache[item.creatorID]!
+                                                                
+                                                                AsyncImage(url: URL(string: playerModel.photoURL)) { image in
+                                                                    image
+                                                                        .resizable()
+                                                                        .aspectRatio(contentMode: .fill)
+                                                                        .clipShape(.circle)
+                                                                } placeholder: {
+                                                                    ProgressView()
+                                                                }
+                                                                .padding([.leading,.trailing],3)
+                                                                .frame(width: 25,height: 25)
+                                                                
+                                                                
+                                                            } else {
+                                                                Image("User")
                                                                     .resizable()
                                                                     .aspectRatio(contentMode: .fill)
                                                                     .clipShape(.circle)
-                                                            } placeholder: {
-                                                                ProgressView()
+                                                                    .padding([.leading,.trailing],3)
+                                                                    .frame(width: 25,height: 25)
                                                             }
-                                                            .padding([.leading,.trailing],3)
-                                                            .frame(width: 25,height: 25)
-                                                                
                                                             
-                                                        } else {
-                                                            Image("User")
-                                                                .resizable()
-                                                                .aspectRatio(contentMode: .fill)
-                                                                .clipShape(.circle)
-                                                                .padding([.leading,.trailing],3)
-                                                                .frame(width: 25,height: 25)
+                                                            let time = getTimeSring(interval: item.datetime)
+                                                            
+                                                            Text("\(time)")
+                                                                .frame(width: 60 , alignment:.leading)
+                                                                .padding(.leading,10)
+                                                                .font(.system(size: 12,weight:.regular,design:.rounded))
+                                                                .multilineTextAlignment(.leading)
+                                                                .foregroundColor(.gray)
+                                                            
+                                                            Text("\(item.description)")
+                                                                .frame(width:getScreenSize().width - 120, alignment:.leading)
+                                                                .font(.system(size: 12,weight:.semibold))
+                                                                .multilineTextAlignment(.leading)
+                                                            Spacer()
                                                         }
-                                                        
-                                                        let time = getTimeSring(interval: item.datetime)
-                                                        
-                                                        Text("\(time)")
-                                                            .frame(width: 60 , alignment:.leading)
-                                                            .padding(.leading,10)
-                                                            .font(.system(size: 12,weight:.regular,design:.rounded))
-                                                            .multilineTextAlignment(.leading)
-                                                            .foregroundColor(.gray)
-                                                        
-                                                        Text("\(item.description)")
-                                                            .frame(width:getScreenSize().width - 120, alignment:.leading)
-                                                            .font(.system(size: 12,weight:.semibold))
-                                                            .multilineTextAlignment(.leading)
-                                                        Spacer()
                                                     }
                                                 }
+                                                .padding()
+                                                .frame(width:getScreenSize().width,alignment:.leading)
                                             }
-                                            .padding()
-                                            .frame(width:getScreenSize().width,alignment:.leading)
                                         }
                                         .padding(5)
                                         .frame(width:getScreenSize().width,height:320,alignment:.leading)
@@ -225,7 +242,7 @@ struct MainView: View {
                         .interactiveDismissDisabled()
                 }
                 .sheet(isPresented: $showMyDestinations) {
-                    //View
+                    CurrentDestinationsView(playerCurrentTickets: RoomService.instance.playerCurrentTickets)
                 }
             }
         }

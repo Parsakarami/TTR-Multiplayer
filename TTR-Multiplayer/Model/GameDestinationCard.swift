@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GameDestinationCard : Codable {
+struct GameDestinationCard : Identifiable, Codable {
     
     init(destination : Destination) {
         id = UUID().uuidString

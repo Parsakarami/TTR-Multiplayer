@@ -18,7 +18,7 @@ class RoomService {
     private var roomListener : ListenerRegistration? = nil
     private var timelineListener : ListenerRegistration? = nil
     private var allTickets : [Destination] = []
-    private var playerCurrentTickets : [GameDestinationCard] = []
+    public private(set) var playerCurrentTickets : [GameDestinationCard] = []
     
     init() {
         let db = Firestore.firestore()
@@ -42,6 +42,10 @@ class RoomService {
                         return
                     }
                     self.currentRoom = room
+                    
+                    //fetch tickets
+                    playerCurrentTickets = try await getPlayerDestinationCards(roomId: room.id, playerId: pid)
+                    
                     self.listenToRoomDataChange(id:room.id)
                     self.listenToRoomTimelineDataChange(id: room.id)
                     NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.fetchedCurrentRoom)
@@ -436,6 +440,30 @@ class RoomService {
                 "isSelected" : isSelcted as Any,
                 "userID" : pid as Any
             ])
+    }
+    
+    private func getPlayerDestinationCards(roomId: String, playerId : String) async throws -> [GameDestinationCard] {
+        var playerCards : [GameDestinationCard] = []
+    
+        guard roomId.trimmingCharacters(in: .whitespaces) != "" else {
+            return playerCards
+        }
+        
+        let snapShot = try await roomCollection
+            .document(roomId)
+            .collection("tickets")
+            .whereField("userID", isEqualTo: playerId)
+            .whereField("isSelected", isEqualTo: true)
+            .getDocuments()
+            
+        if !snapShot.isEmpty{
+            for doc in snapShot.documents {
+                let ticket = try doc.data(as: GameDestinationCard.self)
+                playerCards.append(ticket)
+            }
+        }
+        
+        return playerCards
     }
     
     //Listeners
