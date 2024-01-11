@@ -12,16 +12,19 @@ class RoomService {
     static var instance = RoomService()
     private var roomCollection : CollectionReference
     private var timelineCollection : CollectionReference
+    private var ticketCollection : CollectionReference
     public private(set) var currentRoom : Room?
     public private(set) var currentTimeline : [RoomTimeline] = []
     private var roomListener : ListenerRegistration? = nil
     private var timelineListener : ListenerRegistration? = nil
+    private var allTickets : [Destination] = []
+    private var roomTikcets : [GameDestinationCard] = []
     
     init() {
         let db = Firestore.firestore()
         roomCollection = db.collection("rooms")
         timelineCollection = db.collection("timelines")
-        
+        ticketCollection = db.collection("tickets")
         NotificationCenter.default.addObserver(forName: .playerAuthStatusChanged,
                                                object: nil,
                                                queue: .main) { [self] notification in
@@ -33,6 +36,7 @@ class RoomService {
                 }
                 
                 Task(priority:.high) {
+                    try await populateTickets()
                     let result = try await fetchActiveRoom(pid: pid)
                     guard let room = result else {
                         return
@@ -126,6 +130,13 @@ class RoomService {
             do {
                 try await roomCollection.document(room.id)
                     .setData(room.asDictionary())
+                
+                // fill all of the destination card to the collection
+                for ticket in allTickets {
+                    try await roomCollection.document(room.id)
+                        .collection("tickets").document(ticket.id).setData(ticket.asDictionary())
+                }
+                
                 currentRoom = room
                 listenToRoomDataChange(id:room.id)
                 listenToRoomTimelineDataChange(id: room.id)
@@ -146,6 +157,18 @@ class RoomService {
         } else {
             return false
         }
+    }
+    
+    public func pickThreeTickets() {
+        // fetch latest ticket from the room
+        
+        // choose three cards
+        
+        // return to the tickets
+    }
+    
+    public func pickTickets(uid: String, ticketIds: [String]) {
+        // update tickets
     }
     
     public func joinRoom(roomCode: String) async throws -> Bool {
@@ -226,11 +249,30 @@ class RoomService {
                 for event in fullTimeline {
                     NotificationCenter.default.post(name: .roomTimelineAdded, object:event)
                 }
+                
                 break
             }
         }
         
         return room
+    }
+    
+    private func populateTickets() async throws -> Void {
+        guard allTickets.count == 0 else {
+            return
+        }
+        
+        let snapShot = try await ticketCollection.getDocuments()
+        
+        guard !snapShot.isEmpty else {
+            return
+        }
+        
+        self.allTickets = try snapShot.documents.map { doc in
+            try doc.data(as: Destination.self)
+        }
+        
+        return
     }
     
     public func fetchRooms(pid: String) async throws -> [Room] {
@@ -340,9 +382,7 @@ class RoomService {
     }
     
     private func addEventToRoomTimeline(timeline: RoomTimeline) {
-        timelineCollection.document(timeline.id).setData(timeline.asDictionary()) { result in
-            
-        }
+        timelineCollection.document(timeline.id).setData(timeline.asDictionary())
     }
     
     private func fetchFullTimeline(roomId: String) async throws -> [RoomTimeline] {
