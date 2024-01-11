@@ -29,7 +29,7 @@ class DestinationPickerViewModel : ObservableObject {
     }
     
     func finilizeSelection() async throws -> Bool {
-        let isAtLeastOneSelected = tickets.filter({ $0.isSelected == true }).count > 0
+        isAtLeastOneSelected = tickets.filter({ $0.isSelected == true }).count > 0
         guard isAtLeastOneSelected else {
             return false
         }

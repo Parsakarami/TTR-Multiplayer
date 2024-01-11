@@ -280,12 +280,13 @@ class RoomService {
         }
         
         let player = playerModel.player
+        let eventDescription = "\(player.fullName) picked \(selectionNumber) destination card\(selectionNumber == 1 ? "." : "s.")"
         let newEvent = RoomTimeline(id: UUID().uuidString,
                                     roomID: roomID,
                                     creatorID: player.id,
                                     datetime: Date().timeIntervalSince1970,
                                     eventType: roomTimelineEventType.playerPickedTickets.rawValue,
-                                    description: "\(player.fullName) picked \(selectionNumber) destination cards.")
+                                    description: eventDescription)
         try await addEventToRoomTimelineAsync(timeline: newEvent)
         
         return true
