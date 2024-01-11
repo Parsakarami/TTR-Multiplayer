@@ -34,21 +34,24 @@ struct MainView: View {
                                     HStack (alignment: .center, spacing: 10) {
                                         if viewModel.currentRoom != nil {
                                             Spacer()
-                                            ForEach(viewModel.playerCache.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
-                                                VStack{
-                                                    AsyncImage(url: URL(string: value.photoURL)) { image in
-                                                        image
-                                                            .resizable()
-                                                            .frame(width: 60,height: 60)
-                                                            .aspectRatio(contentMode: .fill)
-                                                            .clipShape(.circle)
-                                                            .padding(5)
-                                                    } placeholder: {
-                                                        ProgressView()
+                                            //ForEach(viewModel.playerCache.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                                            ForEach(viewModel.currentRoom!.playersIDs, id: \.self) { id in
+                                                if let value = viewModel.playerCache[id] {
+                                                    VStack{
+                                                        AsyncImage(url: URL(string: value.photoURL)) { image in
+                                                            image
+                                                                .resizable()
+                                                                .frame(width: 60,height: 60)
+                                                                .aspectRatio(contentMode: .fill)
+                                                                .clipShape(.circle)
+                                                                .padding(5)
+                                                        } placeholder: {
+                                                            ProgressView()
+                                                        }
+                                                        
+                                                        Text(value.player.fullName)
+                                                            .font(.system(size: 10))
                                                     }
-                                                    
-                                                    Text(value.player.fullName)
-                                                        .font(.system(size: 10))
                                                 }
                                             }
                                             Spacer()
@@ -64,7 +67,8 @@ struct MainView: View {
                                             Spacer()
                                             RoundedTTRButton(action: {
                                                 viewModel.pickDestinationTickets()
-                                            }, title: "Tickets", icon: "lanyardcard.fill", bgColor: .blue)
+                                            }, title: "Tickets", icon: "lanyardcard.fill", bgColor: room.inUsed ?  .blue : .gray)
+                                            .disabled(!room.inUsed)
                                             
                                             if let player = viewModel.player {
                                                 if room.ownerID == player.id {
@@ -93,7 +97,7 @@ struct MainView: View {
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             Divider()
                                             ScrollView {
-                                                ForEach (viewModel.timeline) { item in
+                                                ForEach (viewModel.timeline.reversed()) { item in
                                                     HStack {
                                                         if viewModel.playerCache.keys.contains(item.creatorID) {
                                                             let playerModel = viewModel.playerCache[item.creatorID]!

@@ -26,7 +26,7 @@ class MainViewModel : ObservableObject {
     }
     
     deinit{
-        let x = 10
+        //let x = 10
     }
     
     func pickDestinationTickets() {
@@ -122,8 +122,9 @@ class MainViewModel : ObservableObject {
                 await PlayerService.instance.addPlayerToCache(id: playerId)
             }
         }
+        
         //Update internal player cache from service
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
             self.playerCache = PlayerService.instance.playersCache
         }
     }
