@@ -17,6 +17,7 @@ class MainViewModel : ObservableObject {
     @Published var showDestinationPicker : Bool = false
     @Published var playerCache : [String:PlayerModel] = [:]
     @Published var timeline : [RoomTimeline] = []
+    @Published var playerThreeTickets : [GameDestinationCard] = []
     
     private var handler: AuthStateDidChangeListenerHandle?
     init() {
@@ -30,8 +31,14 @@ class MainViewModel : ObservableObject {
     }
     
     func pickDestinationTickets() {
-        //Add to timeline
-        showDestinationPicker = true
+        guard let room = currentRoom, let player = player else {
+            return
+        }
+        
+        Task(priority: .high) {
+            playerThreeTickets = try await RoomService.instance.pickThreeTickets(pid: player.id)
+            showDestinationPicker = true
+        }
     }
     
     func closeCurrentRoom() {

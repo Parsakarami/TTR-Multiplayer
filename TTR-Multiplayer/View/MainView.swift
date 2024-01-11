@@ -14,7 +14,7 @@ struct MainView: View {
     @State var lastOffset : CGFloat = 0
     @State private var isLoaded : Bool = false
     
-    private var tickets : [DestinationCardItem] = [DestinationCardItem(id: 0, origin: "Los Angeles", destination: "New York", point: 21),DestinationCardItem(id: 1, origin: "Toronto", destination: "Denver", point: 18),DestinationCardItem(id: 2, origin: "Chicago", destination: "Las Vegas", point: 14),DestinationCardItem(id: 3, origin: "San Francisco", destination: "Atlanta", point: 17)]
+//    private var tickets : [DestinationCardItem] = [DestinationCardItem(id: 0, origin: "Los Angeles", destination: "New York", point: 21),DestinationCardItem(id: 1, origin: "Toronto", destination: "Denver", point: 18),DestinationCardItem(id: 2, origin: "Chicago", destination: "Las Vegas", point: 14),DestinationCardItem(id: 3, origin: "San Francisco", destination: "Atlanta", point: 17)]
     
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
@@ -196,7 +196,7 @@ struct MainView: View {
                     }
                 }))
                 .sheet(isPresented: $viewModel.showDestinationPicker){
-                    DestinationPickerCardView(cards: self.tickets)
+                    DestinationPickerView(cards: viewModel.playerThreeTickets, sheetDismisser: $viewModel.showDestinationPicker)
                         .interactiveDismissDisabled()
                 }
             }

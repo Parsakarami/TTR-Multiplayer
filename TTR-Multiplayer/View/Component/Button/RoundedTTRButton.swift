@@ -12,6 +12,7 @@ struct RoundedTTRButton: View {
     @State var title : String
     @State var icon : String
     @State var bgColor : Color = .blue
+    @State var fgColor : Color = .blue
     var body: some View {
         Button(action: {action()}) {
             VStack{
@@ -29,7 +30,7 @@ struct RoundedTTRButton: View {
                 .aspectRatio(contentMode: .fit)
                 .clipShape(.circle)
                 Text(title)
-                    .foregroundColor(.blue)
+                    .foregroundColor(fgColor)
                     .font(.system(size: 12,weight:.bold))
                     .multilineTextAlignment(.center)
                     .padding([.top,.bottom],4)

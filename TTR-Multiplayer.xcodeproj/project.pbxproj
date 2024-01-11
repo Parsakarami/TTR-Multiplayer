@@ -18,7 +18,7 @@
 		4216619A2B4746AD00F47CE2 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661992B4746AD00F47CE2 /* Enums.swift */; };
 		422994AD2B4B27D200F1F112 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 422994AC2B4B27D200F1F112 /* FirebaseMessaging */; };
 		422994AF2B4B285100F1F112 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422994AE2B4B285100F1F112 /* Destination.swift */; };
-		422994B12B4B47A300F1F112 /* DestinationPickerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422994B02B4B47A300F1F112 /* DestinationPickerCardView.swift */; };
+		422994B12B4B47A300F1F112 /* DestinationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422994B02B4B47A300F1F112 /* DestinationPickerView.swift */; };
 		4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4229F9032B44E528008B04BB /* AnimatedHeader.swift */; };
 		422A7EE22B485E100063F2C2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE12B485E100063F2C2 /* ProfileView.swift */; };
 		422A7EE42B4865020063F2C2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */; };
@@ -39,6 +39,7 @@
 		425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */; };
 		4273E7202B4B9DA0005DFF41 /* RoomTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */; };
 		4273E7222B4B9FC6005DFF41 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273E7212B4B9FC6005DFF41 /* TimelineView.swift */; };
+		427893142B50562E0069B4FE /* DestinationCardPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427893132B50562E0069B4FE /* DestinationCardPickerViewModel.swift */; };
 		42A642202B4F24D900D1CA0D /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */; };
 		42A642222B4F3CD300D1CA0D /* RoundedTTRButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A642212B4F3CD300D1CA0D /* RoundedTTRButton.swift */; };
 		42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ACCE772B4A650800C059DC /* DestinationCard.swift */; };
@@ -74,7 +75,7 @@
 		421661972B473D0F00F47CE2 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		421661992B4746AD00F47CE2 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		422994AE2B4B285100F1F112 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
-		422994B02B4B47A300F1F112 /* DestinationPickerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPickerCardView.swift; sourceTree = "<group>"; };
+		422994B02B4B47A300F1F112 /* DestinationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPickerView.swift; sourceTree = "<group>"; };
 		4229F9032B44E528008B04BB /* AnimatedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHeader.swift; sourceTree = "<group>"; };
 		422A7EE12B485E100063F2C2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -94,6 +95,7 @@
 		425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackButton.swift; sourceTree = "<group>"; };
 		4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomTimeline.swift; sourceTree = "<group>"; };
 		4273E7212B4B9FC6005DFF41 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		427893132B50562E0069B4FE /* DestinationCardPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCardPickerViewModel.swift; sourceTree = "<group>"; };
 		42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
 		42A642212B4F3CD300D1CA0D /* RoundedTTRButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTTRButton.swift; sourceTree = "<group>"; };
 		42ACCE772B4A650800C059DC /* DestinationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCard.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			children = (
 				4215F60C2B45CD7A007AD086 /* NewRoomViewModel.swift */,
 				425707E72B47929E003932E4 /* JoinRoomViewModel.swift */,
+				427893132B50562E0069B4FE /* DestinationCardPickerViewModel.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -144,8 +147,9 @@
 		4215F6102B45D231007AD086 /* Room */ = {
 			isa = PBXGroup;
 			children = (
-				4215F6112B45D242007AD086 /* NewRoomView.swift */,
+				422994B02B4B47A300F1F112 /* DestinationPickerView.swift */,
 				425707E92B4792E2003932E4 /* JoinRoomView.swift */,
+				4215F6112B45D242007AD086 /* NewRoomView.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -175,7 +179,6 @@
 				422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */,
 				422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */,
 				4249E0EA2B4A1F700086B8F4 /* CardView.swift */,
-				422994B02B4B47A300F1F112 /* DestinationPickerCardView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */,
 				42B6AC812B4F8AD6008FBD9A /* GameDestinationCard.swift in Sources */,
 				42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */,
+				427893142B50562E0069B4FE /* DestinationCardPickerViewModel.swift in Sources */,
 				42DB26E02B439A930051C31A /* SideMenuItemLink.swift in Sources */,
 				42F085952B44FC9700F171EE /* Player.swift in Sources */,
 				4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */,
@@ -453,7 +457,7 @@
 				425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */,
 				4273E7202B4B9DA0005DFF41 /* RoomTimeline.swift in Sources */,
 				425707E82B47929E003932E4 /* JoinRoomViewModel.swift in Sources */,
-				422994B12B4B47A300F1F112 /* DestinationPickerCardView.swift in Sources */,
+				422994B12B4B47A300F1F112 /* DestinationPickerView.swift in Sources */,
 				422994AF2B4B285100F1F112 /* Destination.swift in Sources */,
 				421661962B472D7200F47CE2 /* PlayerService.swift in Sources */,
 				4215F6122B45D242007AD086 /* NewRoomView.swift in Sources */,

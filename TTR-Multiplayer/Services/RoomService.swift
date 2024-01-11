@@ -18,7 +18,7 @@ class RoomService {
     private var roomListener : ListenerRegistration? = nil
     private var timelineListener : ListenerRegistration? = nil
     private var allTickets : [Destination] = []
-    private var roomTikcets : [GameDestinationCard] = []
+    private var playerCurrentTickets : [GameDestinationCard] = []
     
     init() {
         let db = Firestore.firestore()
@@ -54,76 +54,7 @@ class RoomService {
         
     }
     
-    func isRoomInUsed(code: String) async throws -> Bool
-    {
-        let snapShots = try await roomCollection
-            .whereField("roomCode", isEqualTo: code)
-            .whereField("inUsed", isEqualTo: true)
-            .getDocuments()
-        
-        return !snapShots.isEmpty
-    }
-    
-    public func quitRoom(player: Player) {
-        guard let room = currentRoom else {
-            return
-        }
-        
-        var currentPlayersIDs = room.playersIDs
-        currentPlayersIDs.removeAll{ $0 == player.id}
-        roomCollection.document(room.id).updateData(["playersIDs" : currentPlayersIDs, "capacity": room.capacity + 1]) { [weak self] error in
-            guard error == nil else {
-                return
-            }
-            self?.currentRoom = nil
-            self?.currentTimeline.removeAll()
-            self?.disposeRoomListener()
-            self?.disposeTimelineListener()
-            NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.quited)
-        }
-        
-        Task {
-            let newEvent = RoomTimeline(id: UUID().uuidString,
-                                        roomID: room.id,
-                                        creatorID: player.id,
-                                        datetime: Date().timeIntervalSince1970,
-                                        eventType: roomTimelineEventType.playerQuit.rawValue,
-                                        description: "\(player.fullName) left the game.")
-            
-            try await self.addEventToRoomTimelineAsync(timeline: newEvent)
-        }
-    }
-    
-    public func closeRoom(id: String, completion: @escaping (Result<Bool,Error>) -> Void) {
-        roomCollection.document(id).updateData([
-            "inUsed" : false
-        ]) { [weak self] error in
-            if let error = error {
-                completion(.failure(error))
-            }
-            self?.disposeRoomListener()
-            self?.disposeTimelineListener()
-            
-            
-            guard let player = PlayerService.instance.player else {
-                completion(.success(true))
-                return
-            }
-            
-            let newEvent = RoomTimeline(id: UUID().uuidString,
-                                        roomID: id,
-                                        creatorID: player.id,
-                                        datetime: Date().timeIntervalSince1970,
-                                        eventType: roomTimelineEventType.closed.rawValue,
-                                        description: "\(player.fullName) closed the room.")
-            
-            self?.addEventToRoomTimeline(timeline: newEvent)
-            
-            NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.closed)
-            completion(.success(true))
-        }
-    }
-    
+    //Room Actions
     public func addRoom(room: Room, player: Player) async throws -> Bool {
         let isInUsed = try await RoomService.instance.isRoomInUsed(code: room.roomCode)
         if !isInUsed {
@@ -159,16 +90,64 @@ class RoomService {
         }
     }
     
-    public func pickThreeTickets() {
-        // fetch latest ticket from the room
-        
-        // choose three cards
-        
-        // return to the tickets
+    public func closeRoom(id: String, completion: @escaping (Result<Bool,Error>) -> Void) {
+        roomCollection.document(id).updateData([
+            "inUsed" : false
+        ]) { [weak self] error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            self?.disposeRoomListener()
+            self?.disposeTimelineListener()
+            
+            
+            guard let player = PlayerService.instance.player else {
+                completion(.success(true))
+                return
+            }
+            
+            let newEvent = RoomTimeline(id: UUID().uuidString,
+                                        roomID: id,
+                                        creatorID: player.id,
+                                        datetime: Date().timeIntervalSince1970,
+                                        eventType: roomTimelineEventType.closed.rawValue,
+                                        description: "\(player.fullName) closed the room.")
+            
+            self?.addEventToRoomTimeline(timeline: newEvent)
+            
+            NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.closed)
+            completion(.success(true))
+        }
     }
     
-    public func pickTickets(uid: String, ticketIds: [String]) {
-        // update tickets
+    public func quitRoom(player: Player) {
+        guard let room = currentRoom else {
+            return
+        }
+        
+        var currentPlayersIDs = room.playersIDs
+        currentPlayersIDs.removeAll{ $0 == player.id}
+        roomCollection.document(room.id).updateData(["playersIDs" : currentPlayersIDs, "capacity": room.capacity + 1]) { [weak self] error in
+            guard error == nil else {
+                return
+            }
+            self?.currentRoom = nil
+            self?.currentTimeline.removeAll()
+            self?.disposeRoomListener()
+            self?.disposeTimelineListener()
+            NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.quited)
+        }
+        
+        Task {
+            let newEvent = RoomTimeline(id: UUID().uuidString,
+                                        roomID: room.id,
+                                        creatorID: player.id,
+                                        datetime: Date().timeIntervalSince1970,
+                                        eventType: roomTimelineEventType.playerQuit.rawValue,
+                                        description: "\(player.fullName) left the game.")
+            
+            try await self.addEventToRoomTimelineAsync(timeline: newEvent)
+        }
     }
     
     public func joinRoom(roomCode: String) async throws -> Bool {
@@ -228,7 +207,159 @@ class RoomService {
         return false
     }
     
-    public func fetchActiveRoom(pid: String) async throws -> Room? {
+    //Card Actions
+    public func pickThreeTickets(pid: String) async throws -> [GameDestinationCard] {
+        // fetch latest ticket from the room
+        var threeTickets : [GameDestinationCard] = []
+        guard let room = currentRoom else {
+            return threeTickets
+        }
+        
+        
+        // Send notification
+        let player = PlayerService.instance.playersCache[pid]!.player
+        let newEvent = RoomTimeline(id: UUID().uuidString,
+                                    roomID: room.id,
+                                    creatorID: pid,
+                                    datetime: Date().timeIntervalSince1970,
+                                    eventType: roomTimelineEventType.playerRequestedTickets.rawValue,
+                                    description: "\(player.fullName) requested destination cards.")
+        try await addEventToRoomTimelineAsync(timeline: newEvent)
+        
+        
+        let tickets = try await getLatestDestinationCards(roomId: room.id)
+        //reset discarded tickets if there is no more available in the deck
+        
+        
+        // choose three cards which are not selected yet
+        threeTickets = Array(tickets
+            .filter({$0.isSelected == nil && $0.userID == nil})
+            .shuffled()
+            .prefix(3))
+        
+        // update taken tickets with userid
+        for ticket in threeTickets {
+            try await updateDestinationCards(roomId: room.id, ticketId: ticket.id, pid: pid)
+        }
+        
+        // return to the tickets
+        return threeTickets
+    }
+    
+    public func pickTickets(roomID: String, tickets: [GameDestinationCard]) async throws -> Bool {
+        guard !roomID.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return false
+        }
+        
+        var pid = ""
+        var selectionNumber = 0
+        // update tickets
+        for ticket in tickets.filter({ $0.isSelected == true}) {
+            
+            try await updateDestinationCards(roomId: roomID,
+                                             ticketId: ticket.id,
+                                             pid: ticket.userID!,
+                                             isSelcted: ticket.isSelected!)
+            
+            //update current cards
+            guard let isSelected = ticket.isSelected else{
+                continue
+            }
+            
+            if isSelected {
+                playerCurrentTickets.append(ticket)
+                selectionNumber += 1
+            }
+            
+            pid = ticket.userID!
+        }
+        
+        // Send notification
+        guard let playerModel = PlayerService.instance.playersCache[pid] else {
+            return true
+        }
+        
+        let player = playerModel.player
+        let newEvent = RoomTimeline(id: UUID().uuidString,
+                                    roomID: roomID,
+                                    creatorID: player.id,
+                                    datetime: Date().timeIntervalSince1970,
+                                    eventType: roomTimelineEventType.playerPickedTickets.rawValue,
+                                    description: "\(player.fullName) picked \(selectionNumber) destination cards.")
+        try await addEventToRoomTimelineAsync(timeline: newEvent)
+        
+        return true
+    }
+    
+    //Private memebers
+    private func isRoomInUsed(code: String) async throws -> Bool {
+        let snapShots = try await roomCollection
+            .whereField("roomCode", isEqualTo: code)
+            .whereField("inUsed", isEqualTo: true)
+            .getDocuments()
+        
+        return !snapShots.isEmpty
+    }
+    
+    private func populateTickets() async throws -> Void {
+        guard allTickets.count == 0 else {
+            return
+        }
+        
+        let snapShot = try await ticketCollection.getDocuments()
+        
+        guard !snapShot.isEmpty else {
+            return
+        }
+        
+        self.allTickets = try snapShot.documents.map { doc in
+            try doc.data(as: Destination.self)
+        }
+        
+        return
+    }
+    
+    private func addEventToRoomTimelineAsync(timeline: RoomTimeline) async throws -> Void {
+        
+        do {
+            try await timelineCollection.document(timeline.id).setData(timeline.asDictionary())
+        }
+        catch {
+            print(error)
+        }
+    }
+    
+    private func addEventToRoomTimeline(timeline: RoomTimeline) {
+        timelineCollection.document(timeline.id).setData(timeline.asDictionary())
+    }
+    
+    private func fetchFullTimeline(roomId: String) async throws -> [RoomTimeline] {
+        var fullTimeline : [RoomTimeline] = []
+        guard !roomId.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return fullTimeline
+        }
+        
+        do {
+            let snapShot = try await timelineCollection
+                .whereField("roomID", isEqualTo: roomId)
+                .order(by: "datetime", descending: false)
+                .getDocuments()
+            
+            guard !snapShot.isEmpty else {
+                return fullTimeline
+            }
+            
+            fullTimeline = try snapShot.documents.map { doc in
+                try doc.data(as: RoomTimeline.self)
+            }
+            
+        } catch {
+            print(error)
+        }
+        return fullTimeline
+    }
+    
+    private func fetchActiveRoom(pid: String) async throws -> Room? {
         var room : Room? = nil
         
         guard pid.trimmingCharacters(in: .whitespaces) != "" else {
@@ -257,25 +388,7 @@ class RoomService {
         return room
     }
     
-    private func populateTickets() async throws -> Void {
-        guard allTickets.count == 0 else {
-            return
-        }
-        
-        let snapShot = try await ticketCollection.getDocuments()
-        
-        guard !snapShot.isEmpty else {
-            return
-        }
-        
-        self.allTickets = try snapShot.documents.map { doc in
-            try doc.data(as: Destination.self)
-        }
-        
-        return
-    }
-    
-    public func fetchRooms(pid: String) async throws -> [Room] {
+    private func fetchRooms(pid: String) async throws -> [Room] {
         var rooms : [Room] = []
         
         guard pid.trimmingCharacters(in: .whitespaces) != "" else {
@@ -296,6 +409,35 @@ class RoomService {
         return rooms
     }
     
+    private func getLatestDestinationCards(roomId: String) async throws -> [GameDestinationCard] {
+        var gameDestinations : [GameDestinationCard] = []
+        guard roomId.trimmingCharacters(in: .whitespaces) != "" else {
+            return gameDestinations
+        }
+        
+        let snapShot = try await roomCollection.document(roomId).collection("tickets").getDocuments()
+        if !snapShot.isEmpty{
+            for doc in snapShot.documents {
+                let ticket = try doc.data(as: GameDestinationCard.self)
+                gameDestinations.append(ticket)
+            }
+        }
+        
+        return gameDestinations
+    }
+    
+    private func updateDestinationCards(roomId: String, ticketId: String, pid: String? = nil, isSelcted: Bool? = nil) async throws -> Void {
+        try await roomCollection
+            .document(roomId)
+            .collection("tickets")
+            .document(ticketId)
+            .updateData([
+                "isSelected" : isSelcted as Any,
+                "userID" : pid as Any
+            ])
+    }
+    
+    //Listeners
     private func listenToRoomDataChange(id: String) {
         guard !id.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
@@ -369,45 +511,5 @@ class RoomService {
             timelineListener?.remove()
             timelineListener = nil
         }
-    }
-    
-    private func addEventToRoomTimelineAsync(timeline: RoomTimeline) async throws -> Void {
-        
-        do {
-            try await timelineCollection.document(timeline.id).setData(timeline.asDictionary())
-        }
-        catch {
-            print(error)
-        }
-    }
-    
-    private func addEventToRoomTimeline(timeline: RoomTimeline) {
-        timelineCollection.document(timeline.id).setData(timeline.asDictionary())
-    }
-    
-    private func fetchFullTimeline(roomId: String) async throws -> [RoomTimeline] {
-        var fullTimeline : [RoomTimeline] = []
-        guard !roomId.trimmingCharacters(in: .whitespaces).isEmpty else {
-            return fullTimeline
-        }
-        
-        do {
-            let snapShot = try await timelineCollection
-                .whereField("roomID", isEqualTo: roomId)
-                .order(by: "datetime", descending: false)
-                .getDocuments()
-            
-            guard !snapShot.isEmpty else {
-                return fullTimeline
-            }
-            
-            fullTimeline = try snapShot.documents.map { doc in
-                try doc.data(as: RoomTimeline.self)
-            }
-            
-        } catch {
-            print(error)
-        }
-        return fullTimeline
     }
 }

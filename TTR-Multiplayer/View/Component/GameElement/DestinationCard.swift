@@ -9,8 +9,9 @@ import SwiftUI
 
 //Add destination struct
 struct DestinationCardView: View {
-    @State var card : DestinationCardItem
+    @Binding var card : DestinationCardItem
     @State var isReadOnly : Bool = false
+    @Binding var isSelected : Bool 
     var body: some View {
         ZStack (alignment: .center){
             VStack{
@@ -87,6 +88,7 @@ struct DestinationCardView: View {
                             Button(action:{
                                 withAnimation(.snappy) {
                                     card.isSelected = true
+                                    isSelected = true
                                 }
                             }){
                                 Image(systemName: "checkmark")
@@ -110,6 +112,6 @@ struct DestinationCardView: View {
     }
 }
 
-#Preview {
-    DestinationCardView(card: DestinationCardItem(id: 0, origin: "New York", destination: "Seattle", point: 22))
-}
+//#Preview {
+//    DestinationCardView(card: DestinationCardItem(id: 0,uniqueID: "2312323132132", origin: "New York", destination: "Seattle", point: 22),isSelected: .constant(false))
+//}
