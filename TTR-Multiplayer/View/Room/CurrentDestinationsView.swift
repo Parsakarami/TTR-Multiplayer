@@ -9,52 +9,52 @@ import SwiftUI
 
 struct CurrentDestinationsView: View {
     @State var playerCurrentTickets : [GameDestinationCard] = []
+    @State var compact : Bool = false
     var body: some View {
-        VStack{
+        VStack {
             Text("Total Points \(playerCurrentTickets.reduce(0) { $0 + $1.point })")
-                .padding([.leading,.trailing],40)
-                .padding([.top,.bottom],10)
+                .padding([.leading,.trailing], 40)
+                .padding([.top,.bottom], compact ? 2 : 10)
                 .font(.system(.headline))
                 .background(.teal)
                 .clipShape(.capsule)
-                .padding(.top,25)
-                .padding(5)
+                .padding(.top, compact ? 0 : 25)
+                .padding(compact ? 0 : 5)
             
             Divider()
-                .padding()
+                .padding(compact ? 0 : 10)
             
             ScrollView{
                 ForEach(playerCurrentTickets) { card in
                     HStack(alignment: .center, spacing: 0){
                         Spacer()
                         Text(card.origin)
-                            .frame(width:100,alignment: .center)
-                            .font(.system(.body).weight(.semibold))
+                            .frame(width:120,alignment: .center)
+                            .font(.system(compact ? .footnote : .body).weight(.semibold))
                             .multilineTextAlignment(.center)
                         VStack{
                             Text(String(card.point))
-                                .frame(width: 30, height: 30)
-                                .font(.system(.title3).weight(.bold))
+                                .frame(width: compact ? 20 : 30, height: compact ? 20 : 30)
+                                .font(.system(compact ? .footnote : .title3).weight(.bold))
                                 .foregroundColor(.indigo)
                                 .multilineTextAlignment(.center)
-                                .padding(6)
+                                .padding( compact ? 0 : 6)
                         }
                         .background(.white)
                         .clipShape(.circle)
-                        .padding(5)
+                        .padding(compact ? 2 : 5)
                         
                         Text(card.destination)
-                            .frame(width:100,alignment: .center)
-                            .font(.system(.body).weight(.semibold))
+                            .frame(width:120,alignment: .center)
+                            .font(.system(compact ? .footnote : .body).weight(.semibold))
                             .multilineTextAlignment(.center)
                         Spacer()
                     }
                     .frame(width: getScreenSize().width - 100)
                     .foregroundColor(.white)
-                    .padding(5)
+                    .padding(compact ? 1 : 5)
                     .background(.indigo)
                     .clipShape(.capsule)
-                    
                 }
             }
             .frame(maxWidth: .infinity)

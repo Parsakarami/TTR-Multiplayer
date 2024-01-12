@@ -29,9 +29,6 @@ struct DestinationPickerView: View {
     var body: some View {
         VStack{
             Spacer()
-            Text("Choose your destinations")
-                .font(.system(.title2))
-            Spacer()
             ZStack {
                 ForEach($viewModel.tickets.reversed()) { (card) in
                     HStack {
@@ -44,7 +41,6 @@ struct DestinationPickerView: View {
                                    CGFloat(card.id - scrolled) * 50)
                             .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                             .cornerRadius(18)
-                            
                         }
                         .offset(x: card.id - scrolled <= 2 ? CGFloat(card.id - scrolled) * 30 : 60)
                         Spacer(minLength: 0)
@@ -88,11 +84,16 @@ struct DestinationPickerView: View {
                 }
             }
             .frame(height: UIScreen.main.bounds.height / 1.8)
-            .padding(.horizontal,25)
-            .padding(.top,15)
+            .padding(.horizontal,5)
             .padding(.leading,10)
+            .padding(.top,30)
             
-            Spacer()
+            ScrollView {
+                CurrentDestinationsView(playerCurrentTickets: RoomService.instance.playerCurrentTickets, compact: true)
+            }
+            .frame(width: getScreenSize().width - 50)
+            .padding(.top,20)
+            
             HStack {
                 Spacer()
                 if !viewModel.isPicking {
@@ -128,8 +129,8 @@ struct DestinationPickerView: View {
                 }
                 Spacer()
             }
-            .frame(width: getScreenSize().width, height: 120, alignment: .bottom)
-        }
+            .frame(width: getScreenSize().width, alignment: .bottom)
+        }.ignoresSafeArea()
     }
     
     func calcwidth() -> CGFloat {
@@ -139,6 +140,6 @@ struct DestinationPickerView: View {
     }
 }
 
-//#Preview {
-//    DestinationPickerView(ticketCards: [])
-//}
+#Preview {
+    DestinationPickerView(cards: [], sheetDismisser: .constant(false))
+}
