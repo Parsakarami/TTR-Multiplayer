@@ -69,7 +69,8 @@ class RoomService {
                 // fill all of the destination card to the collection
                 for ticket in allTickets {
                     try await roomCollection.document(room.id)
-                        .collection("tickets").document(ticket.id).setData(ticket.asDictionary())
+                        .collection("tickets")
+                        .document(ticket.id).setData(ticket.asDictionary())
                 }
                 
                 currentRoom = room
@@ -103,7 +104,9 @@ class RoomService {
             }
             self?.disposeRoomListener()
             self?.disposeTimelineListener()
-            
+            self?.playerCurrentTickets = []
+            self?.currentRoom = nil
+            self?.currentTimeline.removeAll()
             
             guard let player = PlayerService.instance.player else {
                 completion(.success(true))
@@ -137,6 +140,7 @@ class RoomService {
             }
             self?.currentRoom = nil
             self?.currentTimeline.removeAll()
+            self?.playerCurrentTickets = []
             self?.disposeRoomListener()
             self?.disposeTimelineListener()
             NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.quited)
