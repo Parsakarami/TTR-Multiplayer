@@ -39,6 +39,24 @@ class StorageService {
         }
     }
     
+    func getProfilePhotoData(uid: String) async throws -> Data {
+        guard !uid.trimmingCharacters(in: .whitespaces).isEmpty else {
+            throw NSError(domain: "TicketToRide.StorageService.GetProfilePhotoURL", code: 0, userInfo: [NSLocalizedDescriptionKey:"Input id is invalid"])
+        }
+        
+        let photoName = "\(uid).png"
+        let profileStorageReference = storageReference.child("/profiles/\(photoName)")
+        
+        //Use default if file is not available
+        do {
+            let result = try await profileStorageReference.downloadURL()
+            return result.dataRepresentation
+        } catch {
+            let result = try await storageReference.child("/profiles/user.png").downloadURL()
+            return result.dataRepresentation
+        }
+    }
+    
     func uploadProfilePhoto(uid: String, data: Data, completion: @escaping (Result<URL?, Error>) -> Void) {
         let photoName = "\(uid).png"
         let profileStorageReference = storageReference.child("/profiles/\(photoName)")
