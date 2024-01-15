@@ -50,17 +50,12 @@ struct MainView: View {
                                             ForEach(viewModel.currentRoom!.playersIDs, id: \.self) { id in
                                                 if let value = viewModel.playerCache[id] {
                                                     VStack{
-                                                        AsyncImage(url: URL(string: value.photoURL)) { image in
-                                                            image
-                                                                .resizable()
-                                                                .frame(width: 60,height: 60)
-                                                                .aspectRatio(contentMode: .fill)
-                                                                .clipShape(.circle)
-                                                                .padding(5)
-                                                        } placeholder: {
-                                                            ProgressView()
-                                                        }
-                                                            
+                                                        Image(uiImage: getImage(uid: id))
+                                                            .resizable()
+                                                            .frame(width: 60,height: 60)
+                                                            .aspectRatio(contentMode: .fill)
+                                                            .clipShape(.circle)
+                                                            .padding(5)
                                                         Text(value.player.fullName)
                                                             .font(.system(.subheadline))
                                                     }
@@ -142,29 +137,12 @@ struct MainView: View {
                                                 ScrollView {
                                                     ForEach (viewModel.timeline.reversed()) { item in
                                                         HStack {
-                                                            if viewModel.playerCache.keys.contains(item.creatorID) {
-                                                                let playerModel = viewModel.playerCache[item.creatorID]!
-                                                                
-                                                                AsyncImage(url: URL(string: playerModel.photoURL)) { image in
-                                                                    image
-                                                                        .resizable()
-                                                                        .aspectRatio(contentMode: .fill)
-                                                                        .clipShape(.circle)
-                                                                } placeholder: {
-                                                                    ProgressView()
-                                                                }
+                                                            Image(uiImage:getImage(uid: item.creatorID))
+                                                                .resizable()
+                                                                .aspectRatio(contentMode: .fill)
+                                                                .clipShape(.circle)
                                                                 .padding([.leading,.trailing],3)
                                                                 .frame(width: 25,height: 25)
-                                                                
-                                                                
-                                                            } else {
-                                                                Image("User")
-                                                                    .resizable()
-                                                                    .aspectRatio(contentMode: .fill)
-                                                                    .clipShape(.circle)
-                                                                    .padding([.leading,.trailing],3)
-                                                                    .frame(width: 25,height: 25)
-                                                            }
                                                             
                                                             let time = getTimeSring(interval: item.datetime)
                                                             
@@ -257,8 +235,12 @@ struct MainView: View {
         return dateFormatter.string(from: currentDate)
     }
     
-    private func getImage(data: Data) -> UIImage {
-        var result = UIImage()
+    private func getImage(uid: String) -> UIImage {
+        var result = UIImage(imageLiteralResourceName: "User")
+        guard let data = StorageService.instance.playerImageCache[uid] else {
+            return result
+        }
+        
         if let UIImage = UIImage(data:data) {
             result = UIImage
         }
