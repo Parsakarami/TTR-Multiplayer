@@ -20,7 +20,6 @@ class PlayerService {
     public private(set) var playerProfilePhoto : String = ""
     public private(set) var playersCache : [String:PlayerModel] = [:]
     
-    
     init() {
         let storage = Storage.storage().reference()
         let db = Firestore.firestore()

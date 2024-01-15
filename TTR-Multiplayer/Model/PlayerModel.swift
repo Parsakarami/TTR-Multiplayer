@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PlayerModel : Identifiable, Codable {
+struct PlayerModel : Identifiable {
     let id: String
     let player: Player
     let photoURL : String
