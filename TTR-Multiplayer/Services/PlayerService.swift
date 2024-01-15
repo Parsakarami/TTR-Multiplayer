@@ -221,7 +221,7 @@ class PlayerService {
     public func addPlayerToCache(id: String) async -> Void {
         if !playersCache.keys.contains(id) {
             //fetch from db
-            var fetchResult = try? await fetchPlayerAsync(id: id)
+            let fetchResult = try? await fetchPlayerAsync(id: id)
             guard let player = fetchResult else {
                 return
             }
@@ -229,6 +229,7 @@ class PlayerService {
             guard let photoAddressURL = try? await StorageService.instance.getProfilePhotoURL(uid: id) else {
                 return
             }
+            
             let playerModel = PlayerModel(id: id, player: player, photoURL: photoAddressURL)
             playersCache[id] = playerModel
         }

@@ -17,6 +17,8 @@ struct MainView: View {
     @State var showConfirmationDialoge : Bool = false
     @State var showPickTicketDialoge : Bool = false
     @State var showTimeline : Bool = true
+    @State var imageCache : [String:UIImage] = [:]
+    
     var body: some View {
         let sideBarWidth = getScreenSize().width - 120
         if !isLoaded {
@@ -58,7 +60,7 @@ struct MainView: View {
                                                         } placeholder: {
                                                             ProgressView()
                                                         }
-                                                        
+                                                            
                                                         Text(value.player.fullName)
                                                             .font(.system(.subheadline))
                                                     }
@@ -253,6 +255,15 @@ struct MainView: View {
         dateFormatter.dateFormat = "HH:mm:ss"
         let currentDate = Date(timeIntervalSince1970: interval)
         return dateFormatter.string(from: currentDate)
+    }
+    
+    private func getImage(data: Data) -> UIImage {
+        var result = UIImage()
+        if let UIImage = UIImage(data:data) {
+            result = UIImage
+        }
+        
+        return result
     }
 }
 
