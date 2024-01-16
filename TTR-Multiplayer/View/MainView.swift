@@ -88,7 +88,7 @@ struct MainView: View {
                                             
                                             RoundedTTRButton(action: {
                                                 showMyDestinations = true
-                                            }, title: "Mine", icon: "square.stack.3d.up.fill", bgColor: .indigo, fgColor: .indigo)
+                                            }, title: "Mine", icon: "square.stack.3d.up.fill", bgColor: .mint, fgColor: .mint)
                                             
                                             if let player = viewModel.player {
                                                 if room.ownerID == player.id {
