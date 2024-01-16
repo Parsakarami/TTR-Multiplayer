@@ -16,7 +16,7 @@ struct CurrentDestinationsView: View {
                 .padding([.leading,.trailing], 40)
                 .padding([.top,.bottom], compact ? 2 : 10)
                 .font(.system(.headline))
-                .background(.teal)
+                .background(.mint)
                 .clipShape(.capsule)
                 .padding(.top, compact ? 0 : 25)
                 .padding(compact ? 0 : 5)
@@ -36,7 +36,7 @@ struct CurrentDestinationsView: View {
                             Text(String(card.point))
                                 .frame(width: compact ? 20 : 30, height: compact ? 20 : 30)
                                 .font(.system(compact ? .footnote : .title3).weight(.bold))
-                                .foregroundColor(.indigo)
+                                .foregroundColor(.black)
                                 .multilineTextAlignment(.center)
                                 .padding( compact ? 0 : 6)
                         }
@@ -51,9 +51,9 @@ struct CurrentDestinationsView: View {
                         Spacer()
                     }
                     .frame(width: getScreenSize().width - 100)
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
                     .padding(compact ? 1 : 5)
-                    .background(.indigo)
+                    .background(.orange)
                     .clipShape(.capsule)
                 }
             }
