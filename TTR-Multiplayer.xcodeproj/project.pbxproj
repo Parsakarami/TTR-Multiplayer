@@ -38,7 +38,6 @@
 		425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */; };
 		425B77C22B448F2D00F30BAF /* NavigationBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */; };
 		4273E7202B4B9DA0005DFF41 /* RoomTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */; };
-		4273E7222B4B9FC6005DFF41 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273E7212B4B9FC6005DFF41 /* TimelineView.swift */; };
 		427893142B50562E0069B4FE /* DestinationCardPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427893132B50562E0069B4FE /* DestinationCardPickerViewModel.swift */; };
 		427893162B508F340069B4FE /* CurrentDestinationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427893152B508F340069B4FE /* CurrentDestinationsView.swift */; };
 		42A642202B4F24D900D1CA0D /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */; };
@@ -95,7 +94,6 @@
 		425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		425B77C12B448F2D00F30BAF /* NavigationBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackButton.swift; sourceTree = "<group>"; };
 		4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomTimeline.swift; sourceTree = "<group>"; };
-		4273E7212B4B9FC6005DFF41 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		427893132B50562E0069B4FE /* DestinationCardPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCardPickerViewModel.swift; sourceTree = "<group>"; };
 		427893152B508F340069B4FE /* CurrentDestinationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDestinationsView.swift; sourceTree = "<group>"; };
 		42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
@@ -207,7 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				42ACCE772B4A650800C059DC /* DestinationCard.swift */,
-				4273E7212B4B9FC6005DFF41 /* TimelineView.swift */,
 			);
 			path = GameElement;
 			sourceTree = "<group>";
@@ -443,7 +440,6 @@
 				421661942B47218700F47CE2 /* RoomService.swift in Sources */,
 				425707EA2B4792E2003932E4 /* JoinRoomView.swift in Sources */,
 				4215F60D2B45CD7A007AD086 /* NewRoomViewModel.swift in Sources */,
-				4273E7222B4B9FC6005DFF41 /* TimelineView.swift in Sources */,
 				425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */,
 				42B6AC812B4F8AD6008FBD9A /* GameDestinationCard.swift in Sources */,
 				42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */,
