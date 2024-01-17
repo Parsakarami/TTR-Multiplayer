@@ -50,12 +50,27 @@ struct MainView: View {
                                             ForEach(viewModel.currentRoom!.playersIDs, id: \.self) { id in
                                                 if let value = viewModel.playerCache[id] {
                                                     VStack{
-                                                        Image(uiImage: getImage(uid: id))
-                                                            .resizable()
-                                                            .frame(width: 60,height: 60)
-                                                            .aspectRatio(contentMode: .fill)
-                                                            .clipShape(.circle)
-                                                            .padding(5)
+                                                        ZStack (alignment: .topTrailing) {
+                                                            Image(uiImage: getImage(uid: id))
+                                                                .resizable()
+                                                                .frame(width: 60,height: 60)
+                                                                .aspectRatio(contentMode: .fill)
+                                                                .clipShape(.circle)
+                                                                .padding(5)
+                                                            
+                                                            ZStack (alignment: .center) {
+                                                                Circle()
+                                                                    .fill(.blue)
+                                                                    .shadow(radius: 1, x: -1, y: 1)
+                                                                
+                                                                Text("5")
+                                                                    .font(.system(.body))
+                                                                    .foregroundStyle(.white)
+                                                            }
+                                                            .frame(width: 25, height: 25)
+                                                            
+                                                        }
+                                                        
                                                         Text(value.player.fullName)
                                                             .font(.system(.subheadline))
                                                     }
