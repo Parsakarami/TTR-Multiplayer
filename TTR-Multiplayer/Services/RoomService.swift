@@ -15,10 +15,12 @@ class RoomService {
     private var ticketCollection : CollectionReference
     public private(set) var currentRoom : Room?
     public private(set) var currentTimeline : [RoomTimeline] = []
+    public private(set) var currentRoomTickets : [GameDestinationCard] = []
     private var roomListener : ListenerRegistration? = nil
     private var timelineListener : ListenerRegistration? = nil
     private var allTickets : [Destination] = []
     public private(set) var playerCurrentTickets : [GameDestinationCard] = []
+    public private(set) var playerTicketsCount : [String:Int] = [:]
     
     init() {
         let db = Firestore.firestore()
@@ -44,8 +46,7 @@ class RoomService {
                     self.currentRoom = room
                     
                     //fetch tickets
-                    playerCurrentTickets = try await getPlayerDestinationCards(roomId: room.id, playerId: pid)
-                    
+                    try await fetchRoomDestinationCards(roomId: room.id)
                     self.listenToRoomDataChange(id:room.id)
                     self.listenToRoomTimelineDataChange(id: room.id)
                     NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.fetchedCurrentRoom)
@@ -74,9 +75,9 @@ class RoomService {
                 }
                 
                 currentRoom = room
+                try await fetchRoomDestinationCards(roomId: room.id)
                 listenToRoomDataChange(id:room.id)
                 listenToRoomTimelineDataChange(id: room.id)
-                
                 let newEvent = RoomTimeline(id: UUID().uuidString,
                                             roomID: room.id,
                                             creatorID: player.id,
@@ -102,11 +103,8 @@ class RoomService {
             if let error = error {
                 completion(.failure(error))
             }
-            self?.disposeRoomListener()
-            self?.disposeTimelineListener()
-            self?.playerCurrentTickets = []
-            self?.currentRoom = nil
-            self?.currentTimeline.removeAll()
+             
+            self?.disposeRoom()
             
             guard let player = PlayerService.instance.player else {
                 completion(.success(true))
@@ -138,11 +136,7 @@ class RoomService {
             guard error == nil else {
                 return
             }
-            self?.currentRoom = nil
-            self?.currentTimeline.removeAll()
-            self?.playerCurrentTickets = []
-            self?.disposeRoomListener()
-            self?.disposeTimelineListener()
+            self?.disposeRoom()
             NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.quited)
         }
         
@@ -446,28 +440,54 @@ class RoomService {
             ])
     }
     
-    private func getPlayerDestinationCards(roomId: String, playerId : String) async throws -> [GameDestinationCard] {
-        var playerCards : [GameDestinationCard] = []
-    
+    private func getRoomDestinationCards(roomId: String) async throws -> [GameDestinationCard] {
+        var result : [GameDestinationCard] = []
         guard roomId.trimmingCharacters(in: .whitespaces) != "" else {
-            return playerCards
+            return result
         }
         
         let snapShot = try await roomCollection
             .document(roomId)
             .collection("tickets")
-            .whereField("userID", isEqualTo: playerId)
-            .whereField("isSelected", isEqualTo: true)
             .getDocuments()
-            
+        
         if !snapShot.isEmpty{
             for doc in snapShot.documents {
                 let ticket = try doc.data(as: GameDestinationCard.self)
-                playerCards.append(ticket)
+                result.append(ticket)
             }
         }
         
-        return playerCards
+        return result
+    }
+    
+    private func fetchRoomDestinationCards(roomId: String) async throws -> Void {
+        self.playerTicketsCount.removeAll()
+        self.playerCurrentTickets.removeAll()
+        self.currentRoomTickets = try await getRoomDestinationCards(roomId: roomId)
+        for ticket in self.currentRoomTickets {
+            guard let pid = ticket.userID else {
+                continue
+            }
+            
+            guard ticket.isSelected == true else {
+                continue
+            }
+            
+            if pid == PlayerService.instance.player!.id {
+                if !playerCurrentTickets.contains(where: {$0.id == ticket.id}) {
+                    playerCurrentTickets.append(ticket)
+                }
+            }
+            
+            if !self.playerTicketsCount.contains(where: { $0.key == pid}) {
+                self.playerTicketsCount[pid] = 1
+            } else {
+                var count = self.playerTicketsCount[pid]!
+                count += 1
+                self.playerTicketsCount[pid] = count
+            }
+        }
     }
     
     //Listeners
@@ -523,7 +543,16 @@ class RoomService {
                                 self.currentTimeline.append(event)
                             }
                             
-                            NotificationCenter.default.post(name: .roomTimelineAdded, object:event)
+                            //Update room destinations
+                            if (event.eventType == roomTimelineEventType.playerPickedTickets.rawValue) {
+                                
+                                Task {
+                                    try await self.fetchRoomDestinationCards(roomId: event.roomID)
+                                    NotificationCenter.default.post(name: .roomTimelineAdded, object:event)
+                                }
+                            } else {
+                                NotificationCenter.default.post(name: .roomTimelineAdded, object:event)
+                            }
                         }
                     } catch {
                         print("Error decoding documents: \(error.localizedDescription)")
@@ -544,5 +573,15 @@ class RoomService {
             timelineListener?.remove()
             timelineListener = nil
         }
+    }
+    
+    private func disposeRoom(){
+        self.currentRoom = nil
+        self.currentTimeline.removeAll()
+        self.playerCurrentTickets = []
+        self.playerTicketsCount.removeAll()
+        self.currentRoomTickets.removeAll()
+        self.disposeRoomListener()
+        self.disposeTimelineListener()
     }
 }

@@ -18,6 +18,7 @@ class MainViewModel : ObservableObject {
     @Published var playerCache : [String:PlayerModel] = [:]
     @Published var timeline : [RoomTimeline] = []
     @Published var playerThreeTickets : [GameDestinationCard] = []
+    @Published var playersTicketCounts : [String:Int] = [:]
     
     private var handler: AuthStateDidChangeListenerHandle?
     init() {
@@ -31,7 +32,7 @@ class MainViewModel : ObservableObject {
     }
     
     func pickDestinationTickets() {
-        guard let room = currentRoom, let player = player else {
+        guard let _ = currentRoom, let player = player else {
             return
         }
         
@@ -48,6 +49,7 @@ class MainViewModel : ObservableObject {
         
         RoomService.instance.closeRoom(id: room.id) { [weak self] result in
             self?.currentRoom = nil
+            self?.playersTicketCounts.removeAll()
         }
     }
     
@@ -57,6 +59,7 @@ class MainViewModel : ObservableObject {
         }
         
         RoomService.instance.quitRoom(player: player)
+        self.playersTicketCounts.removeAll()
     }
     
     private func subscribeToAuthChange(){
@@ -114,6 +117,10 @@ class MainViewModel : ObservableObject {
                 
                 if ((self?.timeline.contains { $0.id == newEvent.id}) != nil) {
                     self?.timeline.append(newEvent)
+                }
+                
+                if newEvent.eventType == roomTimelineEventType.playerPickedTickets.rawValue {
+                    self?.playersTicketCounts = RoomService.instance.playerTicketsCount
                 }
             }
     }

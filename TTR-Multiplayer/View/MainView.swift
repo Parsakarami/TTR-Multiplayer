@@ -58,17 +58,19 @@ struct MainView: View {
                                                                 .clipShape(.circle)
                                                                 .padding(5)
                                                             
-                                                            ZStack (alignment: .center) {
-                                                                Circle()
-                                                                    .fill(.blue)
-                                                                    .shadow(radius: 1, x: -1, y: 1)
-                                                                
-                                                                Text("5")
-                                                                    .font(.system(.body))
-                                                                    .foregroundStyle(.white)
+                                                            if let numberOfTickers = viewModel.playersTicketCounts[id] { 
+                                                                ZStack (alignment: .center) {
+                                                                    Circle()
+                                                                        .fill(.blue)
+                                                                        .shadow(radius: 1, x: -1, y: 1)
+                                                                    
+                                                                    Text(String(numberOfTickers))
+                                                                        .font(.system(.body))
+                                                                        .foregroundStyle(.white)
+                                                                    
+                                                                }
+                                                                .frame(width: 25, height: 25)
                                                             }
-                                                            .frame(width: 25, height: 25)
-                                                            
                                                         }
                                                         
                                                         Text(value.player.fullName)
