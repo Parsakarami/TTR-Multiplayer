@@ -83,7 +83,8 @@ struct DestinationPickerView: View {
                 }
                 Spacer()
             }
-            .frame(width: getScreenSize().width, alignment: .bottom)
+            .frame(width: getScreenSize().width, alignment: .center)
+            .padding(.bottom, 25)
         }.ignoresSafeArea()
     }
 }

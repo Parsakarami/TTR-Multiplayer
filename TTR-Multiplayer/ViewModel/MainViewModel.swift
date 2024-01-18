@@ -138,8 +138,9 @@ class MainViewModel : ObservableObject {
         }
         
         //Update internal player cache from service
-        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.playerCache = PlayerService.instance.playersCache
+            self.playersTicketCounts = RoomService.instance.playerTicketsCount
         }
     }
 }
