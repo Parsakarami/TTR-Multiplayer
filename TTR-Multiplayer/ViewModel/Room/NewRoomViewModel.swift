@@ -29,8 +29,6 @@ class NewRoomViewModel : ObservableObject {
             return
         }
         
-        isAdding = true
-        
         guard validate() else {
             return
         }
@@ -39,6 +37,7 @@ class NewRoomViewModel : ObservableObject {
             return
         }
         
+        isAdding = true
         let newRoom = Room(id: UUID().uuidString,
                            ownerID: userID,
                            roomCode: roomCode,

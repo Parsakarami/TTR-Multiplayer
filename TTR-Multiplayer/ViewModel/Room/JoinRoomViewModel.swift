@@ -33,7 +33,7 @@ class JoinRoomViewModel : ObservableObject {
     
     func canJoin() -> Bool {
         guard !roomAccessCode.trimmingCharacters(in: .whitespaces).isEmpty else {
-            message = "Access cannot be empty."
+            message = "Access code cannot be empty."
             return false
         }
         
