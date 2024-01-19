@@ -181,6 +181,8 @@ class RoomService {
                 let canJoin = room.ownerID != player.id && room.capacity > 0
                 if canJoin {
                     
+                    try await fetchRoomDestinationCards(roomId: room.id)
+                    
                     let fullTimeline = try await fetchFullTimeline(roomId: room.id)
                     for event in fullTimeline {
                         NotificationCenter.default.post(name: .roomTimelineAdded, object:event)
