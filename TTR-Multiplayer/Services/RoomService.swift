@@ -132,23 +132,32 @@ class RoomService {
         
         var currentPlayersIDs = room.playersIDs
         currentPlayersIDs.removeAll{ $0 == player.id}
-        roomCollection.document(room.id).updateData(["playersIDs" : currentPlayersIDs, "capacity": room.capacity + 1]) { [weak self] error in
-            guard error == nil else {
-                return
+        var currentRoomCapacity = room.capacity
+        roomCollection.document(room.id).getDocument() { document, error in
+            if let doc = document, document!.exists {
+                if let capacity = doc.data()?["capacity"] as? Int {
+                    currentRoomCapacity = capacity
+                }
             }
-            self?.disposeRoom()
-            NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.quited)
-        }
-        
-        Task {
-            let newEvent = RoomTimeline(id: UUID().uuidString,
-                                        roomID: room.id,
-                                        creatorID: player.id,
-                                        datetime: Date().timeIntervalSince1970,
-                                        eventType: roomTimelineEventType.playerQuit.rawValue,
-                                        description: "\(player.fullName) left the game.")
             
-            try await self.addEventToRoomTimelineAsync(timeline: newEvent)
+            self.roomCollection.document(room.id).updateData(["playersIDs" : currentPlayersIDs, "capacity": currentRoomCapacity + 1]) { [weak self] error in
+                guard error == nil else {
+                    return
+                }
+                self?.disposeRoom()
+                NotificationCenter.default.post(name: .roomStatusChanged, object: roomStatus.quited)
+            }
+            
+            Task {
+                let newEvent = RoomTimeline(id: UUID().uuidString,
+                                            roomID: room.id,
+                                            creatorID: player.id,
+                                            datetime: Date().timeIntervalSince1970,
+                                            eventType: roomTimelineEventType.playerQuit.rawValue,
+                                            description: "\(player.fullName) left the game.")
+                
+                try await self.addEventToRoomTimelineAsync(timeline: newEvent)
+            }
         }
     }
     
