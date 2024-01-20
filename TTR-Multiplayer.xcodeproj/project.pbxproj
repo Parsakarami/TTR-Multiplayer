@@ -54,6 +54,9 @@
 		42DB26DA2B4390500051C31A /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB26D92B4390500051C31A /* SideMenu.swift */; };
 		42DB26DD2B43968F0051C31A /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB26DC2B43968F0051C31A /* ViewExtensions.swift */; };
 		42DB26E02B439A930051C31A /* SideMenuItemLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB26DF2B439A930051C31A /* SideMenuItemLink.swift */; };
+		42EB71A12B5C3D15007B2451 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB71A02B5C3D15007B2451 /* HistoryViewModel.swift */; };
+		42EB71A32B5C3D21007B2451 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB71A22B5C3D21007B2451 /* HistoryView.swift */; };
+		42EB71A52B5C3EBA007B2451 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB71A42B5C3EBA007B2451 /* History.swift */; };
 		42F085932B44FB1300F171EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 42F085922B44FB1300F171EE /* FirebaseAuth */; };
 		42F085952B44FC9700F171EE /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F085942B44FC9700F171EE /* Player.swift */; };
 		42F085972B44FD6100F171EE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 42F085962B44FD6100F171EE /* FirebaseFirestore */; };
@@ -111,6 +114,9 @@
 		42DB26D92B4390500051C31A /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		42DB26DC2B43968F0051C31A /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		42DB26DF2B439A930051C31A /* SideMenuItemLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuItemLink.swift; sourceTree = "<group>"; };
+		42EB71A02B5C3D15007B2451 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+		42EB71A22B5C3D21007B2451 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		42EB71A42B5C3EBA007B2451 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		42F085942B44FC9700F171EE /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		42F085982B44FDD300F171EE /* JsonEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonEncoder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -257,6 +263,7 @@
 				4215F6102B45D231007AD086 /* Room */,
 				42DB268F2B430DE20051C31A /* MainView.swift */,
 				425B77B52B44556300F30BAF /* LoginView.swift */,
+				42EB71A22B5C3D21007B2451 /* HistoryView.swift */,
 				422A7EE12B485E100063F2C2 /* ProfileView.swift */,
 				425B77BC2B44691200F30BAF /* RegisterView.swift */,
 				4215F6152B460E50007AD086 /* SplashScreen.swift */,
@@ -273,6 +280,7 @@
 				425B77B72B44557100F30BAF /* LoginViewModel.swift */,
 				425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */,
 				422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */,
+				42EB71A02B5C3D15007B2451 /* HistoryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -286,6 +294,7 @@
 				4273E71F2B4B9DA0005DFF41 /* RoomTimeline.swift */,
 				42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */,
 				42B6AC802B4F8AD6008FBD9A /* GameDestinationCard.swift */,
+				42EB71A42B5C3EBA007B2451 /* History.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -434,6 +443,7 @@
 				4258F0C42B56EA61006D09BF /* DestinationCompactCard.swift in Sources */,
 				42A642202B4F24D900D1CA0D /* PlayerModel.swift in Sources */,
 				425B77BD2B44691200F30BAF /* RegisterView.swift in Sources */,
+				42EB71A32B5C3D21007B2451 /* HistoryView.swift in Sources */,
 				421661982B473D0F00F47CE2 /* Notification.swift in Sources */,
 				422A7EEA2B4894E60063F2C2 /* PhotoPickerPreview.swift in Sources */,
 				425B77BB2B44614800F30BAF /* TTRButton.swift in Sources */,
@@ -462,6 +472,8 @@
 				4273E7202B4B9DA0005DFF41 /* RoomTimeline.swift in Sources */,
 				425707E82B47929E003932E4 /* JoinRoomViewModel.swift in Sources */,
 				422994B12B4B47A300F1F112 /* DestinationPickerView.swift in Sources */,
+				42EB71A52B5C3EBA007B2451 /* History.swift in Sources */,
+				42EB71A12B5C3D15007B2451 /* HistoryViewModel.swift in Sources */,
 				422994AF2B4B285100F1F112 /* Destination.swift in Sources */,
 				421661962B472D7200F47CE2 /* PlayerService.swift in Sources */,
 				4215F6122B45D242007AD086 /* NewRoomView.swift in Sources */,

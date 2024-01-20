@@ -44,7 +44,7 @@ struct SideMenu: View {
                             
                             SideMenuItemLink(text: "Join a room", icon: "point.3.connected.trianglepath.dotted", destination: getView(name: "join-room"))
                         }
-                        SideMenuItemButton(text: "History", icon: "chart.bar.doc.horizontal", action: {})
+                        SideMenuItemLink(text: "History", icon: "chart.bar.doc.horizontal", destination: getView(name: "history"))
                         SideMenuItemLink(text: "Profile", icon: "gear", destination: getView(name: "profile"))
                         Spacer()
                     }
@@ -105,6 +105,8 @@ struct SideMenu: View {
             return AnyView(JoinRoomView())
         case "profile":
             return AnyView(ProfileView())
+        case "history":
+            return AnyView(HistoryView())
         default:
             return AnyView(MainView())
         }

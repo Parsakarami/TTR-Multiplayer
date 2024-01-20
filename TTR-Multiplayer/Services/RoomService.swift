@@ -305,6 +305,37 @@ class RoomService {
         return true
     }
     
+    public func getHistory(pid: String) async throws -> [History] {
+        var history : [History] = []
+        
+        let snapShot = try await roomCollection
+            .whereField("playersIDs", arrayContainsAny: [pid])
+            .whereField("inUsed", isEqualTo: false)
+            .getDocuments()
+        
+        
+        if !snapShot.isEmpty{
+            for doc in snapShot.documents {
+                let room = try doc.data(as: Room.self)
+                var playersPoints : [String:Int] = [:]
+                var playersTickets : [String: GameDestinationCard] = [:]
+                
+                var newHistoryRecord = History(id: UUID().uuidString,
+                                               roomId: room.id,
+                                               winner: room.winner ?? "",
+                                               datetime: room.createdDateTime,
+                                               playersPoints: playersPoints,
+                                               playersTickets: playersTickets)
+                history.append(newHistoryRecord)
+                break
+            }
+        }
+        
+        
+        return history
+    }
+    
+    
     //Private memebers
     private func isRoomInUsed(code: String) async throws -> Bool {
         let snapShots = try await roomCollection
@@ -381,7 +412,6 @@ class RoomService {
         }
         
         let snapShot = try await roomCollection
-        //.whereField("ownerID", isEqualTo: pid)
             .whereField("playersIDs", arrayContainsAny: [pid])
             .whereField("inUsed", isEqualTo: true)
             .getDocuments()
