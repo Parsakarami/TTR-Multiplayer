@@ -167,8 +167,7 @@ class PlayerService {
                                email: email,
                                joinedDate: Date().timeIntervalSince1970)
         
-        let db = Firestore.firestore()
-        db.collection("players")
+        playerCollection
             .document(id)
             .setData(newPlayer.asDictionary()) { [weak self] error in
                 
