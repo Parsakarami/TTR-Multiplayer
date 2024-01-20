@@ -332,8 +332,8 @@ class RoomService {
                     playersTickets[playerId] = []
                 }
                 
-                var newHistoryRecord = History(id: UUID().uuidString,
-                                               roomId: room.id,
+                let newHistoryRecord = History(id: UUID().uuidString,
+                                               roomId: room.roomCode,
                                                winner: room.winner ?? "",
                                                datetime: room.createdDateTime,
                                                playersPoints: playersPoints,

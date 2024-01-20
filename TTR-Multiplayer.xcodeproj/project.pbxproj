@@ -57,6 +57,7 @@
 		42EB71A12B5C3D15007B2451 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB71A02B5C3D15007B2451 /* HistoryViewModel.swift */; };
 		42EB71A32B5C3D21007B2451 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB71A22B5C3D21007B2451 /* HistoryView.swift */; };
 		42EB71A52B5C3EBA007B2451 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB71A42B5C3EBA007B2451 /* History.swift */; };
+		42EB71A72B5C608A007B2451 /* HistoryRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB71A62B5C608A007B2451 /* HistoryRecordView.swift */; };
 		42F085932B44FB1300F171EE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 42F085922B44FB1300F171EE /* FirebaseAuth */; };
 		42F085952B44FC9700F171EE /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F085942B44FC9700F171EE /* Player.swift */; };
 		42F085972B44FD6100F171EE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 42F085962B44FD6100F171EE /* FirebaseFirestore */; };
@@ -117,6 +118,7 @@
 		42EB71A02B5C3D15007B2451 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		42EB71A22B5C3D21007B2451 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		42EB71A42B5C3EBA007B2451 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		42EB71A62B5C608A007B2451 /* HistoryRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRecordView.swift; sourceTree = "<group>"; };
 		42F085942B44FC9700F171EE /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		42F085982B44FDD300F171EE /* JsonEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonEncoder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -214,6 +216,7 @@
 			children = (
 				42ACCE772B4A650800C059DC /* DestinationCard.swift */,
 				4258F0C32B56EA61006D09BF /* DestinationCompactCard.swift */,
+				42EB71A62B5C608A007B2451 /* HistoryRecordView.swift */,
 			);
 			path = GameElement;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				4215F60F2B45CE77007AD086 /* Room.swift in Sources */,
 				425B77B62B44556400F30BAF /* LoginView.swift in Sources */,
 				422A7EE82B4889D80063F2C2 /* PhotoPicker.swift in Sources */,
+				42EB71A72B5C608A007B2451 /* HistoryRecordView.swift in Sources */,
 				42A642222B4F3CD300D1CA0D /* RoundedTTRButton.swift in Sources */,
 				421661942B47218700F47CE2 /* RoomService.swift in Sources */,
 				425707EA2B4792E2003932E4 /* JoinRoomView.swift in Sources */,
