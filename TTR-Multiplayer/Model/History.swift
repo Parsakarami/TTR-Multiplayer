@@ -12,6 +12,6 @@ struct History : Identifiable {
     let roomId : String
     let winner : String
     let datetime : TimeInterval
-    let playersPoints : [String:Int]
-    let playersTickets : [String:GameDestinationCard]
+    var playersPoints : [String:Int]
+    var playersTickets : [String:[GameDestinationCard]]
 }

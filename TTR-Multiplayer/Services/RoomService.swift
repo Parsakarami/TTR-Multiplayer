@@ -103,7 +103,7 @@ class RoomService {
             if let error = error {
                 completion(.failure(error))
             }
-             
+            
             self?.disposeRoom()
             
             guard let player = PlayerService.instance.player else {
@@ -131,12 +131,18 @@ class RoomService {
         }
         
         var currentPlayersIDs = room.playersIDs
-        currentPlayersIDs.removeAll{ $0 == player.id}
         var currentRoomCapacity = room.capacity
         roomCollection.document(room.id).getDocument() { document, error in
             if let doc = document, document!.exists {
                 if let capacity = doc.data()?["capacity"] as? Int {
                     currentRoomCapacity = capacity
+                }
+                
+                // prevent removing the player id if the room was already eneded
+                if let inUsed = doc.data()?["inUsed"] as? Bool {
+                    if inUsed {
+                        currentPlayersIDs.removeAll{ $0 == player.id}
+                    }
                 }
             }
             
@@ -306,19 +312,25 @@ class RoomService {
     }
     
     public func getHistory(pid: String) async throws -> [History] {
-        var history : [History] = []
+        var result : [History] = []
+        var roomsHistory : [History] = []
         
         let snapShot = try await roomCollection
             .whereField("playersIDs", arrayContainsAny: [pid])
             .whereField("inUsed", isEqualTo: false)
             .getDocuments()
         
-        
         if !snapShot.isEmpty{
             for doc in snapShot.documents {
+                
                 let room = try doc.data(as: Room.self)
                 var playersPoints : [String:Int] = [:]
-                var playersTickets : [String: GameDestinationCard] = [:]
+                var playersTickets : [String: [GameDestinationCard]] = [:]
+                
+                for playerId in room.playersIDs {
+                    playersPoints[playerId] = 0
+                    playersTickets[playerId] = []
+                }
                 
                 var newHistoryRecord = History(id: UUID().uuidString,
                                                roomId: room.id,
@@ -326,13 +338,49 @@ class RoomService {
                                                datetime: room.createdDateTime,
                                                playersPoints: playersPoints,
                                                playersTickets: playersTickets)
-                history.append(newHistoryRecord)
+                roomsHistory.append(newHistoryRecord)
                 break
             }
         }
         
+        let optionalIsSelectedValue: Bool? = nil
         
-        return history
+        for var item in roomsHistory {
+            var roomSelectedTickets : [GameDestinationCard] = []
+            let ticketSnapShot = try await roomCollection
+                .document(item.roomId)
+                .collection("tickets")
+                .whereField("isSelected", isNotEqualTo: optionalIsSelectedValue as Any)
+                .getDocuments()
+            
+            if !ticketSnapShot.isEmpty{
+                for doc in ticketSnapShot.documents {
+                    let ticket = try doc.data(as: GameDestinationCard.self)
+                    roomSelectedTickets.append(ticket)
+                }
+            }
+            
+            //Add ticket and points to the history record
+            for ticket in roomSelectedTickets {
+                //Add tickets
+                guard let playerId = ticket.userID else {
+                    continue
+                }
+                item.playersTickets[playerId]?.append(ticket)
+                
+                //Add points
+                guard let point = item.playersPoints[playerId] else {
+                    continue
+                }
+                
+                item.playersPoints[playerId] = point + ticket.point
+            }
+            
+            //Add the histort record to the return value
+            result.append(item)
+        }
+        
+        return result
     }
     
     
