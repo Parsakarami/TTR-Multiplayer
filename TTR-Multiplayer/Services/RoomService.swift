@@ -333,9 +333,7 @@ class RoomService {
                 }
                 
                 let newHistoryRecord = History(id: UUID().uuidString,
-                                               roomId: room.roomCode,
-                                               winner: room.winner ?? "",
-                                               datetime: room.createdDateTime,
+                                               room: room,
                                                playersPoints: playersPoints,
                                                playersTickets: playersTickets)
                 roomsHistory.append(newHistoryRecord)
@@ -348,7 +346,7 @@ class RoomService {
         for var item in roomsHistory {
             var roomSelectedTickets : [GameDestinationCard] = []
             let ticketSnapShot = try await roomCollection
-                .document(item.roomId)
+                .document(item.room.id)
                 .collection("tickets")
                 .whereField("isSelected", isNotEqualTo: optionalIsSelectedValue as Any)
                 .getDocuments()

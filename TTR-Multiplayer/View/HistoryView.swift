@@ -31,7 +31,7 @@ struct HistoryView: View {
                 VStack{
                     if let history = viewModel.selectedHistory {
                         Text("Hi")
-                        Text(history.roomId)
+                        Text(history.room.roomCode)
                     }
                 }
             })

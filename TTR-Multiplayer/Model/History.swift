@@ -9,9 +9,7 @@ import Foundation
 
 struct History : Identifiable {
     let id : String
-    let roomId : String
-    let winner : String
-    let datetime : TimeInterval
+    let room : Room
     var playersPoints : [String:Int]
     var playersTickets : [String:[GameDestinationCard]]
     var playersNames : [String:String]?

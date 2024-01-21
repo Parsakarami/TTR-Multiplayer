@@ -12,11 +12,11 @@ struct HistoryRecordView: View {
     var body: some View {
         HStack{
             VStack (alignment: .leading){
-                Text(history.roomId)
+                Text(history.room.roomCode)
                     .font(.system(.title3).weight(.semibold))
                     .foregroundStyle(.white)
                 
-                let datetime = Date(timeIntervalSince1970: history.datetime)
+                let datetime = Date(timeIntervalSince1970: history.room.createdDateTime)
                     Text(datetime.formatted(date: .abbreviated, time: .omitted))
                         .font(.system(.caption).weight(.medium))
                         .foregroundStyle(.white.opacity(0.9))
@@ -63,5 +63,21 @@ struct HistoryRecordView: View {
 }
 
 #Preview {
-    HistoryRecordView(history: History(id: "1000", roomId: "1000", winner: "Parsa", datetime: 1705779046.79571, playersPoints: [:], playersTickets: {[:]}()))
+    HistoryRecordView(
+        history: History(id: "1000",
+                         room: Room(
+                            id: "1",
+                            ownerID: "1",
+                            roomCode: "1",
+                            capacity: 3,
+                            inUsed: false,
+                            winner: "",
+                            createdDateTime: 1705779046.79571,
+                            playersIDs: ["1","2"]
+                         ),
+                         playersPoints: [:],
+                         playersTickets: {
+                             [:]
+                         }())
+    )
 }
