@@ -42,9 +42,11 @@ struct DestinationPickerView: View {
             Text("Current destinations")
                 .font(.system(.title3))
                 
-            
             ScrollView {
-                CurrentDestinationsView(playerCurrentTickets: RoomService.instance.playerCurrentTickets, compact: true)
+                CurrentDestinationsView(
+                    playerCurrentTickets: .constant(RoomService.instance.playerCurrentTickets),
+                    compact: true
+                )
             }
             .frame(width: getScreenSize().width - 50)
             

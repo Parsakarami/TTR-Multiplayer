@@ -239,7 +239,9 @@ struct MainView: View {
                         .interactiveDismissDisabled()
                 }
                 .sheet(isPresented: $showMyDestinations) {
-                    CurrentDestinationsView(playerCurrentTickets: RoomService.instance.playerCurrentTickets)
+                    CurrentDestinationsView(
+                        playerCurrentTickets: .constant(RoomService.instance.playerCurrentTickets)
+                    )
                 }
             }
         }

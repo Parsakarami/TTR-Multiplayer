@@ -46,6 +46,7 @@
 		42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ACCE772B4A650800C059DC /* DestinationCard.swift */; };
 		42AF08302B44D634002EB696 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AF082F2B44D634002EB696 /* GoogleService-Info.plist */; };
 		42B6AC812B4F8AD6008FBD9A /* GameDestinationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B6AC802B4F8AD6008FBD9A /* GameDestinationCard.swift */; };
+		42B763CE2B5D7F92002551F9 /* HistoryDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B763CD2B5D7F92002551F9 /* HistoryDetailsViewModel.swift */; };
 		42B9CB832B4BB69B00B20554 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 42B9CB822B4BB69B00B20554 /* FirebaseFirestoreSwift */; };
 		42DB268E2B430DE20051C31A /* TTR_MultiplayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */; };
 		42DB26902B430DE20051C31A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DB268F2B430DE20051C31A /* MainView.swift */; };
@@ -108,6 +109,7 @@
 		42ACCE772B4A650800C059DC /* DestinationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCard.swift; sourceTree = "<group>"; };
 		42AF082F2B44D634002EB696 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42B6AC802B4F8AD6008FBD9A /* GameDestinationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDestinationCard.swift; sourceTree = "<group>"; };
+		42B763CD2B5D7F92002551F9 /* HistoryDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDetailsViewModel.swift; sourceTree = "<group>"; };
 		42DB268A2B430DE20051C31A /* TTR-Multiplayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TTR-Multiplayer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42DB268D2B430DE20051C31A /* TTR_MultiplayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTR_MultiplayerApp.swift; sourceTree = "<group>"; };
 		42DB268F2B430DE20051C31A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				425B77BE2B44691F00F30BAF /* RegisterViewModel.swift */,
 				422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */,
 				42EB71A02B5C3D15007B2451 /* HistoryViewModel.swift */,
+				42B763CD2B5D7F92002551F9 /* HistoryDetailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4215F6162B460E50007AD086 /* SplashScreen.swift in Sources */,
+				42B763CE2B5D7F92002551F9 /* HistoryDetailsViewModel.swift in Sources */,
 				42DB26DA2B4390500051C31A /* SideMenu.swift in Sources */,
 				422A7EE42B4865020063F2C2 /* ProfileViewModel.swift in Sources */,
 				427893162B508F340069B4FE /* CurrentDestinationsView.swift in Sources */,

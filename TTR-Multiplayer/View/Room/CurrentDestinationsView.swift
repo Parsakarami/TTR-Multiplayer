@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CurrentDestinationsView: View {
-    @State var playerCurrentTickets : [GameDestinationCard] = []
+    @Binding var playerCurrentTickets : [GameDestinationCard]
     @State var compact : Bool = false
     var body: some View {
         VStack {
@@ -64,12 +64,56 @@ struct CurrentDestinationsView: View {
 }
 
 #Preview {
-    CurrentDestinationsView(playerCurrentTickets: [
-        GameDestinationCard(destination: Destination(id: "0", origin: "Salt Lake City", destination: "San Francisco", point: 9)),
-        GameDestinationCard(destination: Destination(id: "1", origin: "LA", destination: "LA", point: 20)),
-        GameDestinationCard(destination: Destination(id: "2", origin: "LA", destination: "LA", point: 11)),
-        GameDestinationCard(destination: Destination(id: "3", origin: "LA", destination: "LA", point: 19)),
-        GameDestinationCard(destination: Destination(id: "4", origin: "LA", destination: "LA", point: 5)),
-        GameDestinationCard(destination: Destination(id: "5", origin: "LA", destination: "LA", point: 10))
-    ])
+    CurrentDestinationsView(
+        playerCurrentTickets: .constant([
+            GameDestinationCard(
+                destination: Destination(
+                    id: "0",
+                    origin: "Salt Lake City",
+                    destination: "San Francisco",
+                    point: 9
+                )
+            ),
+            GameDestinationCard(
+                destination: Destination(
+                    id: "1",
+                    origin: "LA",
+                    destination: "LA",
+                    point: 20
+                )
+            ),
+            GameDestinationCard(
+                destination: Destination(
+                    id: "2",
+                    origin: "LA",
+                    destination: "LA",
+                    point: 11
+                )
+            ),
+            GameDestinationCard(
+                destination: Destination(
+                    id: "3",
+                    origin: "LA",
+                    destination: "LA",
+                    point: 19
+                )
+            ),
+            GameDestinationCard(
+                destination: Destination(
+                    id: "4",
+                    origin: "LA",
+                    destination: "LA",
+                    point: 5
+                )
+            ),
+            GameDestinationCard(
+                destination: Destination(
+                    id: "5",
+                    origin: "LA",
+                    destination: "LA",
+                    point: 10
+                )
+            )
+        ])
+    )
 }

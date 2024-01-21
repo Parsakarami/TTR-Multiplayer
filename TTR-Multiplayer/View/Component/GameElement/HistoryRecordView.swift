@@ -27,6 +27,7 @@ struct HistoryRecordView: View {
             .padding()
             Spacer()
             HStack (spacing: 0) {
+                Spacer()
                 ForEach(Array(history.playersTickets.keys.enumerated()), id: \.element) { index, key in
                         VStack (spacing: 0) {
                             Image(uiImage: getImage(uid: key))
@@ -34,13 +35,14 @@ struct HistoryRecordView: View {
                                     .frame(width: 60,height: 60)
                                     .aspectRatio(contentMode: .fill)
                                     .clipShape(.circle)
-                                    .padding(5)
-                                    .shadow(radius: 2, x:-1, y: -1)
+                                    .padding([.leading,.trailing], -13)
+                                    .shadow(radius: 3, x:1, y: 0)
                         }
-                        .offset(x: -CGFloat((index - 1) * 30))
+                        .zIndex(-Double(index))
                 }
             }
-            .padding([.trailing],15)
+            .padding([.trailing],25)
+            .frame(minWidth: 200)
         }
         .padding([.leading,.trailing],5)
         .background(LinearGradient(colors: [.indigo,.blue], startPoint: .topLeading, endPoint: .bottomTrailing))
@@ -65,15 +67,21 @@ struct HistoryRecordView: View {
         history: History(id: "1000",
                          room: Room(
                             id: "1",
-                            ownerID: "1",
-                            roomCode: "1",
-                            capacity: 3,
+                            ownerID: "eXlunqDKT1MtM4CJJDsRKuGSiqt2",
+                            roomCode: "7",
+                            capacity: 4,
                             inUsed: false,
                             winner: "",
-                            createdDateTime: 1705779046.79571,
-                            playersIDs: ["1","2"]
+                            createdDateTime: 1705858540.4567142,
+                            playersIDs: ["eXlunqDKT1MtM4CJJDsRKuGSiqt2",
+                                         "EIUQ8ORoL6b7BJ99vXk2TGDjCXG3",
+                                         "akGYW62E0vTfZ6jURYNoITeD4L22",
+                                         "al0mjFChFCNsDRIce2rXz87HOMa2"]
                          ),
-                         playersPoints: [:],
+                         playersPoints: ["eXlunqDKT1MtM4CJJDsRKuGSiqt2":30,
+                                         "EIUQ8ORoL6b7BJ99vXk2TGDjCXG3":40,
+                                         "akGYW62E0vTfZ6jURYNoITeD4L22":50,
+                                         "al0mjFChFCNsDRIce2rXz87HOMa2":75],
                          playersTickets: {
                              [:]
                          }())
