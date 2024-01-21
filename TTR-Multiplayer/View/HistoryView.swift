@@ -23,7 +23,7 @@ struct HistoryView: View {
                     }) {
                         HistoryRecordView(history: item)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .padding([.leading,.trailing],10)
+                            .padding([.leading,.trailing],15)
                     }
                 }
             }

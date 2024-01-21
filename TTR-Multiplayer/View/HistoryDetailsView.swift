@@ -44,10 +44,10 @@ struct HistoryDetailsView: View {
                         VStack (spacing: 0) {
                             Image(uiImage: getImage(uid: keyValue.key))
                                 .resizable()
-                                .frame(width: 70 - CGFloat(index * 7), height: 70 - CGFloat(index * 7))
+                                .frame(width: 65 - CGFloat(index * 5), height: 65 - CGFloat(index * 5))
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
-                                .shadow(radius: 3, x:-1, y: 1)
+                                .shadow(radius: 3)
                             
                             HStack {
                                 //Winner
@@ -59,25 +59,26 @@ struct HistoryDetailsView: View {
                                 Text(String(keyValue.value))
                                     .offset(x:index == 0 ? -5 : 0)
                             }
-                            .frame(minWidth:70 - CGFloat(index * 7))
-                            .font(.system(.headline).weight(.bold))
+                            .frame(minWidth:65 - CGFloat(index * 5))
+                            .font(.system(size:CGFloat(17 - index)).weight(.bold))
                             .foregroundColor(.indigo)
                             .background(.white)
                             .clipShape(Capsule())
-                            .padding(.top,10)
+                            .padding(.top, 10 - CGFloat(index))
                         }
                     }
                     
                     if index + 1 != ranks.count {
                         Divider()
-                            .padding()
+                            .padding([.top,.bottom])
+                            .padding([.leading,.trailing], ranks.count > 3 ? 0 : 10)
                     }
                 }
                 Spacer()
             }
             .background(.indigo)
             .frame(width: getScreenSize().width - 50, alignment: .center)
-            .frame(maxHeight:150)
+            .frame(maxHeight:135)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(5)
             Spacer()

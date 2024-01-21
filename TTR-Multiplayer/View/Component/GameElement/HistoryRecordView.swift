@@ -32,7 +32,7 @@ struct HistoryRecordView: View {
                         VStack (spacing: 0) {
                             Image(uiImage: getImage(uid: key))
                                     .resizable()
-                                    .frame(width: 60,height: 60)
+                                    .frame(width: 55,height: 55)
                                     .aspectRatio(contentMode: .fill)
                                     .clipShape(.circle)
                                     .padding([.leading,.trailing], -13)
