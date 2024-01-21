@@ -14,7 +14,6 @@ struct HistoryView: View {
         VStack {
             Text("History")
                 .font(.system(size: 22,weight: .bold, design: .default))
-            
             ScrollView {
                 ForEach (viewModel.history) { item in
                     Button (action: {
@@ -36,6 +35,7 @@ struct HistoryView: View {
             })
             .padding()
         }
+        .frame(width:getScreenSize().width, height: getScreenSize().height)
     }
 }
 
