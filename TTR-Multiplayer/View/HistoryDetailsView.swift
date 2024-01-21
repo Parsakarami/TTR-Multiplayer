@@ -26,37 +26,43 @@ struct HistoryDetailsView: View {
                 let ranks = findTheWinner(playerTickets: history.playersTickets).sorted { $0.value > $1.value }
                 
                 ForEach (Array(ranks.enumerated()), id: \.1.key) { index, keyValue in
-                    VStack {
+                    VStack (spacing: 0) {
                         Image(uiImage: getImage(uid: keyValue.key))
                             .resizable()
-                            .frame(width: 100 - CGFloat((index * 15)),
-                                   height: 100 - CGFloat((index * 15)))
+                            .frame(width: 70 - CGFloat(index * 7), height: 70 - CGFloat(index * 7))
                             .aspectRatio(contentMode: .fill)
                             .clipShape(Circle())
-                            .padding(5)
                             .shadow(radius: 3, x:-1, y: 1)
-                            .overlay {
-                                VStack{
-                                Spacer()
-                                Text(String(keyValue.value))
-                                    .font(.system(size: 16 - CGFloat(index + 1)))
-                                    .foregroundColor(.white)
-                                    .frame(width: 30 - CGFloat(index * 3),
-                                           height: 30 - CGFloat(index * 3),
-                                           alignment: .center)
-                                    .background(.pink)
-                                    .clipShape(Circle())
-                                }
-                                .offset(y:5)
+                        
+                        HStack {
+                            //Winner
+                            if index == 0 {
+                                Image(systemName: "checkmark.diamond.fill")
+                                    .aspectRatio(contentMode: .fit)
+                                    .padding(0)
                             }
-                        
-                        
+                            Text(String(keyValue.value))
+                        }
+                            .frame(minWidth:70 - CGFloat(index * 7))
+                            .font(.system(.headline))
+                            .foregroundColor(.indigo)
+                            .background(.white)
+                            .clipShape(Capsule())
+                            .padding(.top,10)
                     }
-                    .offset(x: -(CGFloat(index * 30)))
-                    .zIndex(Double(-index))
+                    
+                    if index + 1 != ranks.count {
+                        Divider()
+                            .padding()
+                    }
                 }
                 Spacer()
             }
+            .background(.indigo)
+            .frame(width: getScreenSize().width - 50, alignment: .center)
+            .frame(maxHeight:150)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .padding(5)
             Spacer()
         }
     }
