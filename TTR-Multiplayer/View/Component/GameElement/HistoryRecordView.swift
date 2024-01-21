@@ -28,7 +28,6 @@ struct HistoryRecordView: View {
             Spacer()
             HStack (spacing: 0) {
                 ForEach(Array(history.playersTickets.keys.enumerated()), id: \.element) { index, key in
-                    if let value = history.playersTickets[key] {
                         VStack (spacing: 0) {
                             Image(uiImage: getImage(uid: key))
                                     .resizable()
@@ -39,7 +38,6 @@ struct HistoryRecordView: View {
                                     .shadow(radius: 2, x:-1, y: -1)
                         }
                         .offset(x: -CGFloat((index - 1) * 30))
-                    }
                 }
             }
             .padding([.trailing],15)

@@ -337,7 +337,7 @@ class RoomService {
                                                playersPoints: playersPoints,
                                                playersTickets: playersTickets)
                 roomsHistory.append(newHistoryRecord)
-                break
+                continue
             }
         }
         

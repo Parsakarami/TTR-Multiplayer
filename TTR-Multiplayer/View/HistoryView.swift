@@ -30,8 +30,7 @@ struct HistoryView: View {
             .sheet(isPresented: $showHistoryDetails, content: {
                 VStack{
                     if let history = viewModel.selectedHistory {
-                        Text("Hi")
-                        Text(history.room.roomCode)
+                        HistoryDetailsView(history: history)
                     }
                 }
             })
