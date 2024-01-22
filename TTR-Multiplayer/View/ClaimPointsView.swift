@@ -47,6 +47,10 @@ struct ClaimPointsView: View {
             }
             .padding(.top,25)
             
+            Divider()
+                .frame(maxWidth: getScreenSize().width - 180)
+                .padding([.top,.bottom],5)
+            
             ScrollView {
                 VStack (alignment:.center) {
                     Spacer()
@@ -134,7 +138,7 @@ struct ClaimPointsView: View {
             }
         }
         .padding([.leading,.trailing], 20)
-        .background(.gray.opacity(0.22))
+        .background(.gray.opacity(0.15))
     }
     
     private func generateStepper(property: Binding<Int>, number: Int) -> some View {
