@@ -9,14 +9,12 @@ import Foundation
 
 class ClaimPointsViewModel : ObservableObject {
     @Published var playerPoint : PlayerPoint
-    @Published var totalPoints : Int = 0
     @Published var oneTrain : Int = 0
     @Published var twoTrain : Int = 0
     @Published var threeTrain : Int = 0
     @Published var fourTrain : Int = 0
     @Published var fiveTrain : Int = 0
     @Published var sixTrain : Int = 0
-    @Published var isLongest : Bool = false
     
     @Published var message : String = ""
     @Published var isSuccessful : Bool = false
@@ -51,8 +49,7 @@ class ClaimPointsViewModel : ObservableObject {
         }
         
         //claimed longest path
-        playerPoint.isLongestPath = isLongest
-        let longestPathPoint = isLongest ? 10 : 0
+        let longestPathPoint = playerPoint.isLongestPath ? 10 : 0
         
         //claimed trains
         playerPoint.claimedTrains[1] = oneTrain
@@ -66,8 +63,7 @@ class ClaimPointsViewModel : ObservableObject {
         //claimed destinations
         let destinationPoints = 0
         
-        self.totalPoints = trainPoints + longestPathPoint + destinationPoints
-        playerPoint.totalPoint = self.totalPoints
+        playerPoint.totalPoint = trainPoints + longestPathPoint + destinationPoints
         
         // update claim in room service
         Task() {

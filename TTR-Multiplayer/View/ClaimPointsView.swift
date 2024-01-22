@@ -12,7 +12,7 @@ struct ClaimPointsView: View {
     var body: some View {
         VStack (alignment:.center) {
             Spacer()
-            Text("Total Points: \(viewModel.totalPoints)")
+            Text("Total Points: \(viewModel.playerPoint.totalPoint)")
                 .foregroundColor(.white)
                 .frame(alignment: .center)
                 .padding([.leading,.trailing],80)
@@ -35,7 +35,7 @@ struct ClaimPointsView: View {
                     generateStepper(property: $viewModel.fiveTrain, number: 5)
                     generateStepper(property: $viewModel.sixTrain, number: 6)
                     
-                    Toggle(isOn: $viewModel.isLongest) {
+                    Toggle(isOn: $viewModel.playerPoint.isLongestPath) {
                         Text("Longest path")
                             .foregroundStyle(.indigo)
                     }
