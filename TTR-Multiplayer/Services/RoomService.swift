@@ -263,7 +263,7 @@ class RoomService {
         
         // update taken tickets with userid
         for ticket in threeTickets {
-            try await updateDestinationCards(roomId: room.id, ticketId: ticket.id, pid: pid)
+            try await updateDestinationCards(ticketId: ticket.id, pid: pid)
         }
         
         // return to the tickets
@@ -280,8 +280,7 @@ class RoomService {
         // update tickets
         for ticket in tickets.filter({ $0.isSelected == true}) {
             
-            try await updateDestinationCards(roomId: roomID,
-                                             ticketId: ticket.id,
+            try await updateDestinationCards(ticketId: ticket.id,
                                              pid: ticket.userID!,
                                              isSelcted: ticket.isSelected!)
             
@@ -297,6 +296,29 @@ class RoomService {
             
             pid = ticket.userID!
         }
+        
+        // Add selected tickets to the player point array
+        guard let room = currentRoom else {
+            return false
+        }
+        
+        var newPlayerPoints = room.playersPoints
+        guard var currentPlayerPoint = newPlayerPoints.first(where: {$0.pid == pid}) else {
+            return false
+        }
+        
+        //remove the old records
+        newPlayerPoints.removeAll(where: {$0.pid == pid})
+        
+        for selectedTicket in playerCurrentTickets {
+            if !currentPlayerPoint.allTickets.contains(where: {$0.id == selectedTicket.id}) {
+                currentPlayerPoint.allTickets.append(selectedTicket)
+            }
+        }
+        
+        newPlayerPoints.append(currentPlayerPoint)
+        let playerPointsDictionary = newPlayerPoints.map { $0.asDictionary() }
+        try await roomCollection.document(roomID).updateData(["playersPoints": playerPointsDictionary])
         
         // Send notification
         guard let playerModel = PlayerService.instance.playersCache[pid] else {
@@ -541,9 +563,14 @@ class RoomService {
         return gameDestinations
     }
     
-    private func updateDestinationCards(roomId: String, ticketId: String, pid: String? = nil, isSelcted: Bool? = nil) async throws -> Void {
+    private func updateDestinationCards(ticketId: String, pid: String? = nil, isSelcted: Bool? = nil) async throws -> Void {
+        
+        guard let room = currentRoom else {
+            return
+        }
+        
         try await roomCollection
-            .document(roomId)
+            .document(room.id)
             .collection("tickets")
             .document(ticketId)
             .updateData([

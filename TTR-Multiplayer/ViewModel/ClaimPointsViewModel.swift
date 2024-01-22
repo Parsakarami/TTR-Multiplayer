@@ -18,6 +18,8 @@ class ClaimPointsViewModel : ObservableObject {
     
     @Published var message : String = ""
     @Published var isSuccessful : Bool = false
+    @Published var claimedTickets : [String:Bool] = [:]
+    
     init() {
         let emptyPlayerPoint = PlayerPoint(playerId: "")
         self.playerPoint = emptyPlayerPoint
@@ -41,6 +43,15 @@ class ClaimPointsViewModel : ObservableObject {
         self.fourTrain = playerPoint.claimedTrains[4]!
         self.fiveTrain = playerPoint.claimedTrains[5]!
         self.sixTrain = playerPoint.claimedTrains[6]!
+        self.claimedTickets = playerPoint.claimedTickets
+    }
+    
+    func setClaimedTicketValue(_ value: Bool, forKey key: String) {
+        claimedTickets[key] = value
+    }
+    
+    func getClaimedTicketValue(forKey key: String) -> Bool? {
+            return claimedTickets[key]
     }
     
     func updateClaim() {
@@ -61,7 +72,8 @@ class ClaimPointsViewModel : ObservableObject {
         let trainPoints = calculateTrainsPoints()
         
         //claimed destinations
-        let destinationPoints = 0
+        playerPoint.claimedTickets = self.claimedTickets
+        let destinationPoints = calculateTicketsPoints()
         
         playerPoint.totalPoint = trainPoints + longestPathPoint + destinationPoints
         
@@ -95,6 +107,24 @@ class ClaimPointsViewModel : ObservableObject {
         + (fourTrain * 7)
         + (fiveTrain * 10)
         + (sixTrain * 15)
+        
+        return result
+    }
+    
+    private func calculateTicketsPoints() -> Int {
+        var result = 0
+        
+        for ticket in playerPoint.allTickets {
+            guard let claimed = self.claimedTickets[ticket.id] else {
+                continue
+            }
+            
+            if claimed {
+                result += ticket.point
+            } else {
+                result -= ticket.point
+            }
+        }
         
         return result
     }

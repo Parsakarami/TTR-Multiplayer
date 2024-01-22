@@ -41,14 +41,52 @@ struct ClaimPointsView: View {
                     }
                     .padding(3)
                 }
-                
-                Section("Destinations") {
-                    VStack{
-                        Divider()
-                            .padding([.top,.bottom])
-                    }
-                }
             }
+                    VStack{
+                        ForEach(viewModel.playerPoint.allTickets) { ticket in
+                            let claimed = viewModel.getClaimedTicketValue(forKey: ticket.id)
+                            
+                            HStack{
+                                Text("\(ticket.point)")
+                                Divider()
+                                    .padding([.top,.bottom])
+                                Text("\(ticket.origin) to \(ticket.destination)")
+                                Spacer()
+                                Button(action: {
+                                    viewModel.setClaimedTicketValue(false, forKey: ticket.id)
+                                }) {
+                                    Image(systemName: "xmark")
+                                }
+                                .padding(10)
+                                .background(claimed == nil ? .gray : !claimed! ? .red : .gray)
+                                .clipShape(.circle)
+                                .foregroundStyle(.white)
+                                
+                                Button(action: {
+                                    viewModel.setClaimedTicketValue(true, forKey: ticket.id)
+                                }) {
+                                    Image(systemName: "checkmark")
+                                }
+                                .padding(10)
+                                .background(claimed == nil ? .gray : claimed! ? .green : .gray)
+                                .clipShape(.circle)
+                                .foregroundStyle(.white)
+                            }
+                            .frame(maxHeight: 55)
+                            .padding(5)
+                            .background(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 14))
+                            .padding(5)
+                            
+                            if viewModel.playerPoint.allTickets.last!.id != ticket.id {
+                                Divider()
+                            }
+                        }
+                    }
+                    .frame(maxWidth: getScreenSize().width - 50)
+                    .padding(10)
+                    .background(.gray.opacity(0.1))
+                    .foregroundStyle(.indigo)
             
             if !viewModel.isSuccessful {
                 RoundedTTRButton(action: {
