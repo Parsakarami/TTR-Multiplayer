@@ -12,6 +12,7 @@ struct PlayerPoint : Identifiable, Codable {
     init(playerId: String) {
         self.id = UUID().uuidString
         self.pid = playerId
+        self.isLongestPath = false
         self.claimedRoots = []
         self.totalPoint = 0
         self.claimedTrains = [:]
@@ -27,6 +28,7 @@ struct PlayerPoint : Identifiable, Codable {
     let id : String
     let pid : String
     var totalPoint : Int
+    var isLongestPath : Bool
     var claimedRoots : [GameDestinationCard]
     var claimedTrains : [Int:Int]
 }

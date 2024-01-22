@@ -16,6 +16,7 @@ class ClaimPointsViewModel : ObservableObject {
     @Published var fourTrain : Int = 0
     @Published var fiveTrain : Int = 0
     @Published var sixTrain : Int = 0
+    @Published var isLongest : Bool = false
     
     @Published var message : String = ""
     init() {
@@ -47,6 +48,26 @@ class ClaimPointsViewModel : ObservableObject {
         guard validate() else {
             return
         }
+        
+        //claimed longest path
+        playerPoint.isLongestPath = isLongest
+        let longestPathPoint = isLongest ? 10 : 0
+        
+        //claimed trains
+        playerPoint.claimedTrains[1] = oneTrain
+        playerPoint.claimedTrains[2] = twoTrain
+        playerPoint.claimedTrains[3] = threeTrain
+        playerPoint.claimedTrains[4] = fourTrain
+        playerPoint.claimedTrains[5] = fiveTrain
+        playerPoint.claimedTrains[6] = sixTrain
+        let trainPoints = calculateTrainsPoints()
+        
+        //claimed destinations
+        let destinationPoints = 0
+        
+        self.totalPoints = trainPoints + longestPathPoint + destinationPoints
+        playerPoint.totalPoint = self.totalPoints
+        
         // update claim in room service
         Task() {
             let updateResult = try await RoomService.instance.updateRoomClaimedPoints(playerPoins: self.playerPoint)
@@ -65,5 +86,18 @@ class ClaimPointsViewModel : ObservableObject {
         }
         
         return true
+    }
+    
+    private func calculateTrainsPoints() -> Int {
+        var result = 0
+        
+        result = oneTrain
+        + (twoTrain * 2)
+        + (threeTrain * 4)
+        + (fourTrain * 7)
+        + (fiveTrain * 10)
+        + (sixTrain * 15)
+        
+        return result
     }
 }

@@ -20,7 +20,6 @@ struct ClaimPointsView: View {
                 .background(.indigo)
                 .clipShape(.capsule)
                 .padding([.top,.bottom])
-
             
             if !viewModel.message.isEmpty {
                 Text(viewModel.message)
@@ -34,6 +33,12 @@ struct ClaimPointsView: View {
                     generateStepper(property: $viewModel.fourTrain, number: 4)
                     generateStepper(property: $viewModel.fiveTrain, number: 5)
                     generateStepper(property: $viewModel.sixTrain, number: 6)
+                    
+                    Toggle(isOn: $viewModel.isLongest) {
+                        Text("Longest path")
+                            .foregroundStyle(.indigo)
+                    }
+                    .padding(3)
                 }
                 
                 Section("Destinations") {
@@ -55,8 +60,9 @@ struct ClaimPointsView: View {
             {
                 HStack{
                     generateTrainLabel(number: number)
+                    Spacer()
                     Text("\(property.wrappedValue)")
-                        .padding(.leading,10)
+                        .padding(.trailing,10)
                 }
                 .foregroundColor(.indigo)
             })
