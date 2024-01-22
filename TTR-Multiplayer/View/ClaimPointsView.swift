@@ -23,8 +23,9 @@ struct ClaimPointsView: View {
             
             if !viewModel.message.isEmpty {
                 Text(viewModel.message)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(viewModel.isSuccessful ? .green : .red)
             }
+            
             Form {
                 Section("Trains") {
                     generateStepper(property: $viewModel.oneTrain, number: 1)
@@ -48,9 +49,13 @@ struct ClaimPointsView: View {
                     }
                 }
             }
-            RoundedTTRButton(action: {
-                viewModel.updateClaim()
-            }, title: "Claim Points", icon: "checkmark")
+            
+            if !viewModel.isSuccessful {
+                RoundedTTRButton(action: {
+                    viewModel.updateClaim()},
+                                 title: "Claim Points",
+                                 icon: "checkmark")
+            }
         }
     }
     

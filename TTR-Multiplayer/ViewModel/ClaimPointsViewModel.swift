@@ -19,6 +19,7 @@ class ClaimPointsViewModel : ObservableObject {
     @Published var isLongest : Bool = false
     
     @Published var message : String = ""
+    @Published var isSuccessful : Bool = false
     init() {
         let emptyPlayerPoint = PlayerPoint(playerId: "")
         self.playerPoint = emptyPlayerPoint
@@ -73,7 +74,8 @@ class ClaimPointsViewModel : ObservableObject {
             let updateResult = try await RoomService.instance.updateRoomClaimedPoints(playerPoins: self.playerPoint)
             if updateResult {
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    //Do something
+                    self.isSuccessful = true
+                    self.message = "Successful"
                 }
             }
         }
