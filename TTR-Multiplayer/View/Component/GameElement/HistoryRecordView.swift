@@ -76,7 +76,8 @@ struct HistoryRecordView: View {
                             playersIDs: ["eXlunqDKT1MtM4CJJDsRKuGSiqt2",
                                          "EIUQ8ORoL6b7BJ99vXk2TGDjCXG3",
                                          "akGYW62E0vTfZ6jURYNoITeD4L22",
-                                         "al0mjFChFCNsDRIce2rXz87HOMa2"]
+                                         "al0mjFChFCNsDRIce2rXz87HOMa2"],
+                            playersPoints: []
                          ),
                          playersPoints: ["eXlunqDKT1MtM4CJJDsRKuGSiqt2":30,
                                          "EIUQ8ORoL6b7BJ99vXk2TGDjCXG3":40,

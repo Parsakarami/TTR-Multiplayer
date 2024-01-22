@@ -16,6 +16,7 @@
 		421661962B472D7200F47CE2 /* PlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661952B472D7200F47CE2 /* PlayerService.swift */; };
 		421661982B473D0F00F47CE2 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661972B473D0F00F47CE2 /* Notification.swift */; };
 		4216619A2B4746AD00F47CE2 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421661992B4746AD00F47CE2 /* Enums.swift */; };
+		421841E72B5DDC520064B08D /* PlayerPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421841E62B5DDC520064B08D /* PlayerPoint.swift */; };
 		422994AD2B4B27D200F1F112 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 422994AC2B4B27D200F1F112 /* FirebaseMessaging */; };
 		422994AF2B4B285100F1F112 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422994AE2B4B285100F1F112 /* Destination.swift */; };
 		422994B12B4B47A300F1F112 /* DestinationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422994B02B4B47A300F1F112 /* DestinationPickerView.swift */; };
@@ -25,6 +26,8 @@
 		422A7EE62B486DCC0063F2C2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 422A7EE52B486DCC0063F2C2 /* FirebaseStorage */; };
 		422A7EE82B4889D80063F2C2 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */; };
 		422A7EEA2B4894E60063F2C2 /* PhotoPickerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */; };
+		422D182E2B5DF22C00273F62 /* ClaimPointsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422D182D2B5DF22C00273F62 /* ClaimPointsViewModel.swift */; };
+		422D18302B5DF25600273F62 /* ClaimPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422D182F2B5DF25600273F62 /* ClaimPointsView.swift */; };
 		4249E0E92B49C3B10086B8F4 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4249E0E82B49C3B10086B8F4 /* StorageService.swift */; };
 		4249E0EB2B4A1F700086B8F4 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4249E0EA2B4A1F700086B8F4 /* CardView.swift */; };
 		425707E52B478195003932E4 /* GradientStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425707E42B478195003932E4 /* GradientStack.swift */; };
@@ -81,6 +84,7 @@
 		421661952B472D7200F47CE2 /* PlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerService.swift; sourceTree = "<group>"; };
 		421661972B473D0F00F47CE2 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		421661992B4746AD00F47CE2 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		421841E62B5DDC520064B08D /* PlayerPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPoint.swift; sourceTree = "<group>"; };
 		422994AE2B4B285100F1F112 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
 		422994B02B4B47A300F1F112 /* DestinationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPickerView.swift; sourceTree = "<group>"; };
 		4229F9032B44E528008B04BB /* AnimatedHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHeader.swift; sourceTree = "<group>"; };
@@ -88,6 +92,8 @@
 		422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		422A7EE72B4889D80063F2C2 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		422A7EE92B4894E60063F2C2 /* PhotoPickerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerPreview.swift; sourceTree = "<group>"; };
+		422D182D2B5DF22C00273F62 /* ClaimPointsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimPointsViewModel.swift; sourceTree = "<group>"; };
+		422D182F2B5DF25600273F62 /* ClaimPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimPointsView.swift; sourceTree = "<group>"; };
 		4249E0E82B49C3B10086B8F4 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		4249E0EA2B4A1F700086B8F4 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		425707E42B478195003932E4 /* GradientStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientStack.swift; sourceTree = "<group>"; };
@@ -270,6 +276,7 @@
 				4215F6102B45D231007AD086 /* Room */,
 				42DB268F2B430DE20051C31A /* MainView.swift */,
 				425B77B52B44556300F30BAF /* LoginView.swift */,
+				422D182F2B5DF25600273F62 /* ClaimPointsView.swift */,
 				42EB71A22B5C3D21007B2451 /* HistoryView.swift */,
 				42EB71A82B5CBBBC007B2451 /* HistoryDetailsView.swift */,
 				422A7EE12B485E100063F2C2 /* ProfileView.swift */,
@@ -290,6 +297,7 @@
 				422A7EE32B4865020063F2C2 /* ProfileViewModel.swift */,
 				42EB71A02B5C3D15007B2451 /* HistoryViewModel.swift */,
 				42B763CD2B5D7F92002551F9 /* HistoryDetailsViewModel.swift */,
+				422D182D2B5DF22C00273F62 /* ClaimPointsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -304,6 +312,7 @@
 				42A6421F2B4F24D900D1CA0D /* PlayerModel.swift */,
 				42B6AC802B4F8AD6008FBD9A /* GameDestinationCard.swift */,
 				42EB71A42B5C3EBA007B2451 /* History.swift */,
+				421841E62B5DDC520064B08D /* PlayerPoint.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -458,6 +467,7 @@
 				422A7EEA2B4894E60063F2C2 /* PhotoPickerPreview.swift in Sources */,
 				425B77BB2B44614800F30BAF /* TTRButton.swift in Sources */,
 				4215F60F2B45CE77007AD086 /* Room.swift in Sources */,
+				422D182E2B5DF22C00273F62 /* ClaimPointsViewModel.swift in Sources */,
 				425B77B62B44556400F30BAF /* LoginView.swift in Sources */,
 				422A7EE82B4889D80063F2C2 /* PhotoPicker.swift in Sources */,
 				42EB71A72B5C608A007B2451 /* HistoryRecordView.swift in Sources */,
@@ -474,6 +484,7 @@
 				42F085952B44FC9700F171EE /* Player.swift in Sources */,
 				4229F9042B44E528008B04BB /* AnimatedHeader.swift in Sources */,
 				42DB26902B430DE20051C31A /* MainView.swift in Sources */,
+				422D18302B5DF25600273F62 /* ClaimPointsView.swift in Sources */,
 				425B77B82B44557100F30BAF /* LoginViewModel.swift in Sources */,
 				42F085992B44FDD300F171EE /* JsonEncoder.swift in Sources */,
 				422A7EE22B485E100063F2C2 /* ProfileView.swift in Sources */,
@@ -494,6 +505,7 @@
 				4216619A2B4746AD00F47CE2 /* Enums.swift in Sources */,
 				4249E0EB2B4A1F700086B8F4 /* CardView.swift in Sources */,
 				4215F6142B45F361007AD086 /* SideMenuItemButton.swift in Sources */,
+				421841E72B5DDC520064B08D /* PlayerPoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

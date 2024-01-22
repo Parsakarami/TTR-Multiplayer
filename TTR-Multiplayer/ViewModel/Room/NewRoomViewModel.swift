@@ -45,7 +45,8 @@ class NewRoomViewModel : ObservableObject {
                            inUsed: true,
                            winner: nil,
                            createdDateTime: Date().timeIntervalSince1970,
-                           playersIDs: [userID])
+                           playersIDs: [userID],
+                           playersPoints: [PlayerPoint(playerId: userID)])
         
         do {
             let result = try await RoomService.instance.addRoom(room: newRoom , player: player)

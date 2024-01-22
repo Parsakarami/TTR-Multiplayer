@@ -14,6 +14,7 @@ struct MainView: View {
     @State var lastOffset : CGFloat = 0
     @State private var isLoaded : Bool = false
     @State var showMyDestinations : Bool = false
+    @State var showClaim : Bool = false
     @State var showConfirmationDialoge : Bool = false
     @State var showPickTicketDialoge : Bool = false
     @State var showTimeline : Bool = true
@@ -83,8 +84,16 @@ struct MainView: View {
                                     }
                                     
                                     if let room = viewModel.currentRoom {
-                                        HStack {
+                                        HStack (spacing:0) {
                                             Spacer()
+                                            
+                                            RoundedTTRButton(action: {
+                                                withAnimation(.snappy){
+                                                    showClaim.toggle()
+                                                }
+                                            }, title: "Claim", icon: "map.fill", bgColor: .cyan, fgColor: .cyan)
+                                            
+                                            
                                             RoundedTTRButton(action: { showPickTicketDialoge = true },
                                                              title: "Pick",
                                                              icon: "rectangle.stack.badge.plus",
@@ -101,7 +110,7 @@ struct MainView: View {
                                                 withAnimation(.snappy){
                                                     showTimeline.toggle()
                                                 }
-                                            }, title: "Events", icon: "clock.arrow.circlepath", bgColor: .indigo, fgColor: .indigo)
+                                            }, title: "Event", icon: "clock.arrow.circlepath", bgColor: .indigo, fgColor: .indigo)
                                             
                                             RoundedTTRButton(action: {
                                                 showMyDestinations = true
@@ -242,6 +251,9 @@ struct MainView: View {
                     CurrentDestinationsView(
                         playerCurrentTickets: .constant(RoomService.instance.playerCurrentTickets)
                     )
+                }
+                .sheet(isPresented: $showClaim) {
+                    ClaimPointsView()
                 }
             }
         }

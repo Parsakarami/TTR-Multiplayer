@@ -196,15 +196,20 @@ class RoomService {
                     
                     listenToRoomDataChange(id:room.id)
                     
-                    //Update room players and capacity
+                    //Update room players, capacity, and add player to the points array
                     var newPlayerIDs: [String] = room.playersIDs
+                    var newPlayerPoints: [PlayerPoint] = room.playersPoints
                     var newCapacity = room.capacity
                     let isNewPlayer = !newPlayerIDs.contains(player.id)
                     if isNewPlayer {
                         newPlayerIDs.append(player.id)
                         newCapacity -= 1
+                        
+                        newPlayerPoints.append(PlayerPoint(playerId: player.id))
+                        let playerPointsDictionary = newPlayerPoints.map { $0.asDictionary() }
                         try await roomCollection.document(room.id).updateData(["capacity": newCapacity,
-                                                                               "playersIDs":newPlayerIDs])
+                                                                               "playersIDs": newPlayerIDs,
+                                                                               "playersPoints": playerPointsDictionary])
                         
                         //Add timeline event
                         let newEvent = RoomTimeline(id: UUID().uuidString,
@@ -379,6 +384,26 @@ class RoomService {
         }
         
         return result
+    }
+    
+    public func updateRoomClaimedPoints(playerPoins: PlayerPoint) async throws -> Bool {
+        
+        // get latest room points
+        guard let room = currentRoom else {
+            return false
+        }
+        
+        guard let index = room.playersPoints.firstIndex(where: {$0.pid == playerPoins.pid}) else {
+            return false
+        }
+        
+        var newPlayerPoints = room.playersPoints
+        newPlayerPoints.remove(at: index)
+        newPlayerPoints.append(playerPoins)
+        let playerPointsDictionary = newPlayerPoints.map { $0.asDictionary() }
+        try await roomCollection.document(room.id).updateData(["playersPoints": playerPointsDictionary])
+        
+        return true
     }
     
     

@@ -16,4 +16,5 @@ struct Room : Codable {
     let winner : String?
     let createdDateTime : TimeInterval
     var playersIDs : [String]
+    var playersPoints : [PlayerPoint]
 }

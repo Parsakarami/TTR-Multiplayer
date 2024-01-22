@@ -130,7 +130,8 @@ struct HistoryDetailsView: View {
                             inUsed: false,
                             winner: "",
                             createdDateTime: 1705779046.79571,
-                            playersIDs: ["1","2"]
+                            playersIDs: ["1","2"],
+                            playersPoints: []
                          ),
                          playersPoints: [:],
                          playersTickets: {

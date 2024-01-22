@@ -37,7 +37,7 @@ struct RoundedTTRButton: View {
             }
             .padding()
         }
-        .frame(maxWidth:80)
+        .frame(maxWidth:72)
     }
 }
 
