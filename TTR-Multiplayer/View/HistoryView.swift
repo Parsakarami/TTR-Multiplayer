@@ -21,7 +21,7 @@ struct HistoryView: View {
                         self.showHistoryDetails = true
                     }) {
                         HistoryRecordView(history: item)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                             .padding([.leading,.trailing],15)
                     }
                 }

@@ -409,6 +409,27 @@ class RoomService {
         return result
     }
     
+    public func getAllRooms(pid: String) async throws -> [Room] {
+        var rooms : [Room] = []
+        
+        let query = roomCollection
+            .whereField("playersIDs", arrayContainsAny: [pid])
+            .whereField("inUsed", isEqualTo: false)
+        
+        let snapShot = try await query.getDocuments()
+        
+        if !snapShot.isEmpty{
+            for doc in snapShot.documents {
+                
+                let room = try doc.data(as: Room.self)
+                rooms.append(room)
+                continue
+            }
+        }
+        
+        return rooms
+    }
+    
     public func updateRoomClaimedPoints(playerPoins: PlayerPoint) async throws -> Bool {
         
         // get latest room points

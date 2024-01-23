@@ -8,26 +8,26 @@
 import Foundation
 
 class HistoryViewModel : ObservableObject {
-    @Published var history : [History] = []
-    @Published var selectedHistory : History?
+    @Published var history : [Room] = []
+    @Published var selectedHistory : Room?
     init(){
         Task {
             guard let player = PlayerService.instance.player else {
                 return
             }
             
-            let result = try await RoomService.instance.getHistory(pid: player.id)
-            history = result.sorted(by: {$0.room.createdDateTime > $1.room.createdDateTime})
+            let result = try await RoomService.instance.getAllRooms(pid: player.id)
+            history = result.sorted(by: {$0.createdDateTime > $1.createdDateTime})
             DispatchQueue.main.asyncAfter(deadline: .now()) {
-                for var record in self.history {
-                    var playerNames : [String:String] = [:]
-                    for pid in record.playersPoints.keys {
-                        if let player = PlayerService.instance.playersCache[pid] {
-                            playerNames[pid] = player.player.fullName
-                        }
-                    }
-                    record.playersNames = playerNames
-                }
+//                for var room in self.history {
+//                    var playerNames : [String:String] = [:]
+//                    for item in room.playersPoints {
+//                        if let player = PlayerService.instance.playersCache[item.pid] {
+//                            playerNames[pid] = player.player.fullName
+//                        }
+//                    }
+//                    record.playersNames = playerNames
+//                }
             }
         }
     }
