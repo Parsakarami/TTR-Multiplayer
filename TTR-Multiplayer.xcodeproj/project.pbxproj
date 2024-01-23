@@ -67,6 +67,7 @@
 		42F085952B44FC9700F171EE /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F085942B44FC9700F171EE /* Player.swift */; };
 		42F085972B44FD6100F171EE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 42F085962B44FD6100F171EE /* FirebaseFirestore */; };
 		42F085992B44FDD300F171EE /* JsonEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F085982B44FDD300F171EE /* JsonEncoder.swift */; };
+		42F9266F2B60370D00FD1920 /* ClaimPointsReadOnlyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F9266E2B60370D00FD1920 /* ClaimPointsReadOnlyView.swift */; };
 		42FA97EB2B44B48D00B89772 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 42FA97EA2B44B48D00B89772 /* FirebaseAnalytics */; };
 		42FA97ED2B44B48D00B89772 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 42FA97EC2B44B48D00B89772 /* FirebaseAnalyticsOnDeviceConversion */; };
 		42FA97EF2B44B48D00B89772 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 42FA97EE2B44B48D00B89772 /* FirebaseAnalyticsSwift */; };
@@ -131,6 +132,7 @@
 		42EB71A82B5CBBBC007B2451 /* HistoryDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDetailsView.swift; sourceTree = "<group>"; };
 		42F085942B44FC9700F171EE /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		42F085982B44FDD300F171EE /* JsonEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonEncoder.swift; sourceTree = "<group>"; };
+		42F9266E2B60370D00FD1920 /* ClaimPointsReadOnlyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimPointsReadOnlyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +279,7 @@
 				42DB268F2B430DE20051C31A /* MainView.swift */,
 				425B77B52B44556300F30BAF /* LoginView.swift */,
 				422D182F2B5DF25600273F62 /* ClaimPointsView.swift */,
+				42F9266E2B60370D00FD1920 /* ClaimPointsReadOnlyView.swift */,
 				42EB71A22B5C3D21007B2451 /* HistoryView.swift */,
 				42EB71A82B5CBBBC007B2451 /* HistoryDetailsView.swift */,
 				422A7EE12B485E100063F2C2 /* ProfileView.swift */,
@@ -478,6 +481,7 @@
 				425B77BF2B44691F00F30BAF /* RegisterViewModel.swift in Sources */,
 				42B6AC812B4F8AD6008FBD9A /* GameDestinationCard.swift in Sources */,
 				42ACCE782B4A650800C059DC /* DestinationCard.swift in Sources */,
+				42F9266F2B60370D00FD1920 /* ClaimPointsReadOnlyView.swift in Sources */,
 				42EB71A92B5CBBBC007B2451 /* HistoryDetailsView.swift in Sources */,
 				427893142B50562E0069B4FE /* DestinationCardPickerViewModel.swift in Sources */,
 				42DB26E02B439A930051C31A /* SideMenuItemLink.swift in Sources */,

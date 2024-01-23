@@ -9,4 +9,5 @@ import Foundation
 
 class HistoryDetailsViewModel : ObservableObject {
     @Published var selectedPlayerTickets : [GameDestinationCard] = []
+    @Published var selectedPlayerPoint : PlayerPoint?
 }

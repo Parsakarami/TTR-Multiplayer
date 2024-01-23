@@ -19,7 +19,7 @@ struct HistoryRecordView: View {
                 VStack (alignment:.leading) {
                     let datetime = Date(timeIntervalSince1970: history.createdDateTime)
                     Text(datetime.formatted(date: .numeric, time: .shortened))
-                        .font(.system(.caption2).weight(.semibold))
+                        .font(.system(.caption2))
                         .foregroundStyle(.white.opacity(0.9))
                 }
             }

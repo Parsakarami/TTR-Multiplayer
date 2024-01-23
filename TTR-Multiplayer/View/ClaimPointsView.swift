@@ -98,7 +98,7 @@ struct ClaimPointsView: View {
                                 HStack{
                                     Text("\(ticket.point)")
                                         .font(.system(.body).weight(.semibold))
-                                        .frame(maxWidth: 20)
+                                        .frame(maxWidth: 25)
                                     
                                     Divider()
                                         .padding([.top,.bottom])

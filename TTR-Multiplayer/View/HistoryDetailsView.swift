@@ -39,7 +39,8 @@ struct HistoryDetailsView: View {
                         withAnimation(.snappy) {
                             if let playerPoint = history.playersPoints.first(where:{$0.pid == item.pid})
                             {
-                                viewModel.selectedPlayerTickets = playerPoint.allTickets
+                                viewModel.selectedPlayerPoint = nil
+                                viewModel.selectedPlayerPoint = playerPoint
                             }
                         }
                     }){
@@ -85,27 +86,14 @@ struct HistoryDetailsView: View {
             .clipShape(RoundedRectangle(cornerRadius: 18))
             .padding(5)
             Spacer()
-            if viewModel.selectedPlayerTickets.count > 0 {
+            if let playerPoint = viewModel.selectedPlayerPoint {
                 ScrollView {
-                    CurrentDestinationsView(
-                        playerCurrentTickets: $viewModel.selectedPlayerTickets,
-                        compact: false
-                    )
+                    ClaimPointsReadOnlyView(playerPoint: playerPoint)
                     .padding()
                 }
             }
             Spacer()
         }
-    }
-    
-    private func findTheWinner(playerTickets : [String:[GameDestinationCard]]) -> [String:Int] {
-        var result : [String:Int] = [:]
-        for player in playerTickets {
-            result[player.key] = player.value.reduce(0) { (r,p) in
-                return r + p.point
-            }
-        }
-        return result
     }
     
     private func getImage(uid: String) -> UIImage {
@@ -117,7 +105,6 @@ struct HistoryDetailsView: View {
         if let UIImage = UIImage(data:data) {
             result = UIImage
         }
-        
         return result
     }
 }
