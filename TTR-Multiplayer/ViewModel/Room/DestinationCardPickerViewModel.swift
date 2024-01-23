@@ -11,7 +11,7 @@ class DestinationPickerViewModel : ObservableObject {
     @Published var tickets : [DestinationCardItem] = []
     private var cards : [GameDestinationCard]
     @Published var isPicking = false
-    @Published var isAtLeastOneSelected = false
+    @Published var isValidSelection = false
     init(ticketCards: [GameDestinationCard]) {
         self.cards = ticketCards
         var counter : Int = 0
@@ -29,16 +29,30 @@ class DestinationPickerViewModel : ObservableObject {
     }
     
     func finilizeSelection() async throws -> Bool {
-        isAtLeastOneSelected = tickets.filter({ $0.isSelected == true }).count > 0
-        guard isAtLeastOneSelected else {
-            return false
-        }
-        
         guard let player = PlayerService.instance.player,
               let room = RoomService.instance.currentRoom
         else {
             return false
         }
+        
+        // check two tickets selection in the first round
+        guard let playerPoints = room.playersPoints.first(where: {$0.pid == player.id}) else {
+            return false
+        }
+        
+        let selectionCount = tickets.filter({ $0.isSelected == true }).count
+        // first round selection
+        if playerPoints.allTickets.isEmpty {
+            isValidSelection = selectionCount >= 2
+        } else {
+            isValidSelection = selectionCount >= 1
+        }
+        
+        guard isValidSelection else {
+            isValidSelection = true
+            return false
+        }
+        
         
         //change the given cards and send them back to the service
         //var updatesCard : [GameDestinationCard]

@@ -30,7 +30,7 @@ struct DestinationPickerView: View {
             Spacer()
             VStack {
                 ForEach($viewModel.tickets.reversed()) { (card) in
-                                DestinationCompactCard(card:card, isSelected: $viewModel.isAtLeastOneSelected)
+                                DestinationCompactCard(card:card, isSelected: $viewModel.isValidSelection)
                         .padding([.leading,.trailing],25)
                 }
                 Divider()
@@ -53,17 +53,19 @@ struct DestinationPickerView: View {
             HStack {
                 Spacer()
                 if !viewModel.isPicking {
-                    if viewModel.isAtLeastOneSelected {
+                    if viewModel.isValidSelection {
                         RoundedTTRButton(action: {
                             Task(priority: .high) {
                                 let isSuccessful = try await viewModel.finilizeSelection()
                                 if isSuccessful {
                                     showTheSheet = false
                                 }
+                                else {
+                                    viewModel.isValidSelection = false
+                                }
                             }
                         }, title: "Select", icon: "checkmark", bgColor: .blue, fgColor: .blue)
                     } else {
-                        
                         if viewModel.tickets.isEmpty {
                             RoundedTTRButton(action: { showTheSheet = false },
                                              title: "back",

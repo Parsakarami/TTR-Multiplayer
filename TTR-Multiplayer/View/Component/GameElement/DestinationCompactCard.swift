@@ -50,7 +50,11 @@ struct DestinationCompactCard: View {
                         return
                     }
                     
+                    
                     self.card.isSelected?.toggle()
+                    if isSelected == false {
+                        isSelected = true
+                    }
                 }
             }
     }
