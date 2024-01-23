@@ -342,10 +342,11 @@ class RoomService {
         var result : [History] = []
         var roomsHistory : [History] = []
         
-        let snapShot = try await roomCollection
+        let query = roomCollection
             .whereField("playersIDs", arrayContainsAny: [pid])
             .whereField("inUsed", isEqualTo: false)
-            .getDocuments()
+        
+        let snapShot = try await query.getDocuments()
         
         if !snapShot.isEmpty{
             for doc in snapShot.documents {

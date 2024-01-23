@@ -16,7 +16,8 @@ class HistoryViewModel : ObservableObject {
                 return
             }
             
-            history = try await RoomService.instance.getHistory(pid: player.id)
+            let result = try await RoomService.instance.getHistory(pid: player.id)
+            history = result.sorted(by: {$0.room.createdDateTime > $1.room.createdDateTime})
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 for var record in self.history {
                     var playerNames : [String:String] = [:]
