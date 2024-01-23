@@ -82,8 +82,7 @@ class ClaimPointsViewModel : ObservableObject {
             let updateResult = try await RoomService.instance.updateRoomClaimedPoints(playerPoins: self.playerPoint)
             if updateResult {
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    self.isSuccessful = true
-                    self.message = "Successful"
+                    self.isSuccessful = true 
                 }
             }
         }

@@ -42,7 +42,7 @@ struct ClaimPointsView: View {
                 
                 if !viewModel.message.isEmpty {
                     Text(viewModel.message)
-                        .foregroundStyle(viewModel.isSuccessful ? .green : .red)
+                        .foregroundStyle(.red)
                 }
             }
             .padding(.top,25)
@@ -97,9 +97,12 @@ struct ClaimPointsView: View {
                                 let claimed = viewModel.getClaimedTicketValue(forKey: ticket.id)
                                 HStack{
                                     Text("\(ticket.point)")
+                                        .font(.system(.body).weight(.semibold))
+                                        .frame(maxWidth: 20)
+                                    
                                     Divider()
                                         .padding([.top,.bottom])
-                                    Text("\(ticket.origin) to \(ticket.destination)")
+                                    Text("\(ticket.origin) - \(ticket.destination)")
                                     Spacer()
                                     Button(action: {
                                         viewModel.setClaimedTicketValue(false, forKey: ticket.id)
