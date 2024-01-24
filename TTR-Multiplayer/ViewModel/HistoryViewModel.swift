@@ -10,6 +10,7 @@ import Foundation
 class HistoryViewModel : ObservableObject {
     @Published var history : [Room] = []
     @Published var selectedHistory : Room?
+    @Published var isLoaded : Bool = false
     init(){
         Task {
             guard let player = PlayerService.instance.player else {
@@ -17,17 +18,24 @@ class HistoryViewModel : ObservableObject {
             }
             
             let result = try await RoomService.instance.getAllRooms(pid: player.id)
+            
+            var playerIDs : [String] = [player.id]
+            //Get the list of all players in history
+            for room in result {
+                for playerID in room.playersIDs {
+                    if !playerIDs.contains(where: {$0 == playerID}) {
+                        playerIDs.append(playerID)
+                    }
+                }
+            }
+            //Update player information in playerCache
+            for pid in playerIDs {
+                await PlayerService.instance.addPlayerToCache(id: pid)
+            }
+            
             history = result.sorted(by: {$0.createdDateTime > $1.createdDateTime})
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
-//                for var room in self.history {
-//                    var playerNames : [String:String] = [:]
-//                    for item in room.playersPoints {
-//                        if let player = PlayerService.instance.playersCache[item.pid] {
-//                            playerNames[pid] = player.player.fullName
-//                        }
-//                    }
-//                    record.playersNames = playerNames
-//                }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.isLoaded = true
             }
         }
     }
