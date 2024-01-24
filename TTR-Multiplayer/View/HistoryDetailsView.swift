@@ -105,6 +105,35 @@ struct HistoryDetailsView: View {
             Spacer()
             if let playerPoint = viewModel.selectedPlayerPoint {
                 ScrollView {
+                    VStack {
+                        Button(action:{
+                            withAnimation(.snappy) {
+                                viewModel.selectedPlayerPoint = nil
+                            }
+                        }){
+                            HStack{
+                                Text("Hide")
+                                Image(systemName: "chevron.up")
+                            }
+                            .foregroundColor(.white)
+                            .frame(width:200, alignment: .center)
+                            .padding([.leading,.trailing])
+                            .padding([.top,.bottom], 10)
+                            .background(.pink)
+                            .clipShape(.capsule)
+                        }
+                        
+                        Text("Total Points: \(playerPoint.totalPoint)")
+                            .foregroundColor(.white)
+                            .frame(width:200, alignment: .center)
+                            .padding([.leading,.trailing])
+                            .padding([.top,.bottom], 10)
+                            .background(.indigo)
+                            .clipShape(.capsule)
+                    }
+                    .padding(.top,25)
+                    
+                    
                     ClaimPointsReadOnlyView(playerPoint: playerPoint)
                         .padding()
                 }

@@ -11,17 +11,6 @@ struct ClaimPointsReadOnlyView: View {
     @State var playerPoint : PlayerPoint
     var body: some View {
         VStack {
-            VStack {
-                Text("Total Points: \(playerPoint.totalPoint)")
-                    .foregroundColor(.white)
-                    .frame(alignment: .center)
-                    .padding([.leading,.trailing],80)
-                    .padding([.top,.bottom], 10)
-                    .background(.indigo)
-                    .clipShape(.capsule)
-            }
-            .padding(.top,25)
-            
             ScrollView {
                 VStack (alignment:.center) {
                     Spacer()
@@ -108,6 +97,7 @@ struct ClaimPointsReadOnlyView: View {
             }
         }
         .padding([.leading,.trailing], 20)
+        .padding(.top,10)
         .background(.gray.opacity(0.15))
     }
     
