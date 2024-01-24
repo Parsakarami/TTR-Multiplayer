@@ -27,7 +27,7 @@ struct HistoryDetailsView: View {
                 }
                 .foregroundColor(.white)
                 .frame(alignment: .center)
-                .padding([.top], 10)
+                .padding([.top], 18)
                 
                 HStack {
                     Spacer()
