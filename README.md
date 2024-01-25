@@ -26,6 +26,7 @@ Take your Ticket to Ride sessions to the next level with the Ticket to Ride exte
    <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/LoginLight.png" width="200" />
   <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/SignUpLight.png" width="200" />
   <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/ProfileLight.png" width="200" />
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/MenuLight.png" width="200" />
   <ul>
     <li>
     Dark
@@ -34,6 +35,7 @@ Take your Ticket to Ride sessions to the next level with the Ticket to Ride exte
   <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/LoginDark.png" width="200" />
   <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/SignUpDark.png" width="200" />
   <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/ProfileDark.png" width="200" />
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/MenuDark.png" width="200" />
 </div>
 
 
