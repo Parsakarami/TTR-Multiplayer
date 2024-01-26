@@ -16,8 +16,28 @@ Enhance your Ticket to Ride board game experience with the Ticket to Ride extens
 
 Take your Ticket to Ride sessions to the next level with the Ticket to Ride extension App – where strategy meets convenience!
 
+<h2>ScreenShots</h2>
 <div style="text-alignment: center">
-  <h3>ScreenShots</h3>
+  <h3>Gameplay</h3>
+  <ul>
+    <li>
+      Light
+    </li>
+  </ul>
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/RoomLight.png" width="200" />
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/ClaimLight.png" width="200" />
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/DestinationLight.png" width="200" />
+  <ul>
+    <li>
+      Dark
+    </li>
+  </ul>
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/RoomDark.png" width="200" />
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/ClaimDark.png" width="200" />
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/DestinationDark.png" width="200" />
+
+<div style="text-alignment: center">
+  <h3>Player pages</h3>
   <ul>
     <li>
       Light
