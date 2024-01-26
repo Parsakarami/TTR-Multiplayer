@@ -25,16 +25,18 @@ Take your Ticket to Ride sessions to the next level with the Ticket to Ride exte
     </li>
   </ul>
   <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/RoomLight.png" width="200" />
-  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/ClaimLight.png" width="200" />
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/PickTicketLight.png" width="200" />
   <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/DestinationLight.png" width="200" />
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Light/ClaimLight.png" width="200" />
   <ul>
     <li>
       Dark
     </li>
   </ul>
   <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/RoomDark.png" width="200" />
-  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/ClaimDark.png" width="200" />
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/PickTicketDark.png" width="200" />
   <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/DestinationDark.png" width="200" />
+  <img src="https://github.com/Parsakarami/TTR-Multiplayer/blob/main/ScreenShots/Dark/ClaimDark.png" width="200" />
 
 <div style="text-alignment: center">
   <h3>Player pages</h3>
