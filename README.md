@@ -1,9 +1,9 @@
-<h1>Ticket to Ride extension application</h1>
+<h1>🚞 Ticket to Ride extension application</h1>
 <p style="text-alignment: justify">
 Enhance your Ticket to Ride board game experience with the Ticket to Ride extension App for iOS! This app extends the functionality of the classic game by providing a convenient platform for players to manage their destination cards, calculate points, keep game history, and introduce new, unpredicted destinations to spice up the competition.
 </p>
 
-<h2>Key Features:</h2>
+<h2>🌐 Key Features:</h2>
 <p>
   <ul>
     <li><b>Unpredicted Destinations: </b>Add surprise to the game with new destination cards.</li>
